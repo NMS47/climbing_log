@@ -1,0 +1,17 @@
+.navbar-nav {
+    text-align: right;
+    padding-left: 30%;
+}
+
+.new_entry {
+    width: 40%;
+}
+
+.btn-outline-success{
+    margin: 0.2rem auto;
+}
+
+body {
+
+    padding: 7% 2%;
+}

@@ -1,0 +1,97 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{% load static %}
+{% block title %}Nueva entrada{%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+
+{%block content%}
+<div>   
+    <h1>Agrega escaladas:</h1>
+</div> 
+<div class="new_entry">
+    <form  action="">
+        <label for="date">Fecha del pegue:</label>
+        <input type="date" name="date">
+        <br><br>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="place">Lugar</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Sector de escalada/Palestra" aria-label="Sector de escalada/Palestra" aria-describedby="basic-addon1">
+          </div>
+        <br><br>
+        <div class="radio-selection">
+            <input type="radio" class="btn-check" name="enviroment" id="palestra" autocomplete="off">
+            <label class="btn btn-outline-success" for="palestra">Palestra</label>
+            
+            <input type="radio" class="btn-check" name="enviroment" id="roca" autocomplete="off">
+            <label class="btn btn-outline-success" for="roca">Roca</label>
+            </div>
+        <br>
+        <div class="radio-selection">
+            <input type="radio" class="btn-check" name="climb-style" id="boulder" autocomplete="off">
+            <label class="btn btn-outline-success" for="boulder">Boulder </label>
+            
+            <input type="radio" class="btn-check" name="climb-style" id="sport" autocomplete="off">
+            <label class="btn btn-outline-success" for="sport">Deportiva</label>
+            
+            <input type="radio" class="btn-check" name="climb-style" id="trad" autocomplete="off">
+            <label class="btn btn-outline-success" for="trad">Clasica</label>
+        </div>
+        <br>
+        <div class="radio-selection">
+            <input type="radio" class="btn-check" name="pitches" id="single-pitch" autocomplete="off"checked>
+            <label class="btn btn-outline-success" for="single-pitch">Monolargo</label>
+
+            <input type="radio" class="btn-check" name="pitches" id="multi-pitch" autocomplete="off">
+            <label class="btn btn-outline-success" for="multi-pitch" >Multilargo</label>
+
+
+
+            <div class="" id="number-of-pitches">
+                <label for="num-pitches">Numero de largos:</label>
+                <input type="number" name="num-pitches" min="1" max="20">
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="select-grade">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Selecciona el grado que corresponda</option>
+                {%  for grade in grades_list %}
+                    <option value="{{grade}}">{{grade}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <br>
+        <div class="radio-selection">
+            <input type="radio" class="btn-check" name="top-position" id="lead" autocomplete="off">
+            <label class="btn btn-outline-success" for="lead">De primero</label>
+
+            <input type="radio" class="btn-check" name="top-position" id="top-rope" autocomplete="off">
+            <label class="btn btn-outline-success" for="top-rope">Top Rope</label>
+        </div>
+        <br>
+        <div class="radio-selection">
+            <input type="radio" class="btn-check" name="ascent-type" id="onsight" autocomplete="off">
+            <label class="btn btn-outline-success" for="onsight">A vista (On sight)</label>
+
+            <input type="radio" class="btn-check" name="ascent-type" id="red-point" autocomplete="off">
+            <label class="btn btn-outline-success" for="red-point">Red Point</label>
+
+            <input type="radio" class="btn-check" name="ascent-type" id="flash" autocomplete="off">
+            <label class="btn btn-outline-success" for="flash">Flash</label>
+
+            <input type="radio" class="btn-check" name="ascent-type" id="fall-take" autocomplete="off">
+            <label class="btn btn-outline-success" for="fall-take">Con caida o tension</label>
+
+            <input type="radio" class="btn-check" name="ascent-type" id="incomplete" autocomplete="off">
+            <label class="btn btn-outline-success" for="incomplete">No completada</label>            
+        </div>
+        <br>
+        <input type="button" value="Agregar pegue">
+    </form>
+</div>
+{%endblock%}
