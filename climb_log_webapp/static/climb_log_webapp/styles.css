@@ -1,3 +1,4 @@
+
 .navbar-nav {
     text-align: right;
     padding-left: 30%;
@@ -7,11 +8,17 @@
     width: 40%;
 }
 
-.btn-outline-success{
+.btn-outline-success {
     margin: 0.2rem auto;
+    color: #F4F4F4 !important;
+}
+
+.btn-warning{
+    color:#F4F4F4 !important;
 }
 
 body {
-
+    background-color: #232020;
     padding: 7% 2%;
+    color: #F4F4F4;
 }

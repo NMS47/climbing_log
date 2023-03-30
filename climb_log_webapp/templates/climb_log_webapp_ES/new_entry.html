@@ -46,16 +46,26 @@
 
             <input type="radio" class="btn-check" name="pitches" id="multi-pitch" autocomplete="off">
             <label class="btn btn-outline-success" for="multi-pitch" >Multilargo</label>
-
-
-
+            <div class="form-group">
+                <label for="num-pitches">Numero de largos:</label>
+                <select class="form-control" id="num-pitches">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                </select>
+{% comment %} 
             <div class="" id="number-of-pitches">
                 <label for="num-pitches">Numero de largos:</label>
                 <input type="number" name="num-pitches" min="1" max="20">
-            </div>
+            </div> {% endcomment %}
         </div>
 
-        <br><br>
+        <br>
 
         <div class="select-grade">
             <select class="form-select" aria-label="Default select example">
@@ -91,7 +101,25 @@
             <label class="btn btn-outline-success" for="incomplete">No completada</label>            
         </div>
         <br>
-        <input type="button" value="Agregar pegue">
+        <div class="form-group">
+            <label for="num-pitches">Intentos:</label>
+            <select class="form-control" id="num-pitches">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="notes">Notas:</label>
+            <textarea class="form-control" id="notes" rows="3" placeholder="Nombre de la via, Es plaquera o de desplome? Calidad de la roca, etc."></textarea>
+          </div>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Agregar pegue">
     </form>
 </div>
 {%endblock%}
