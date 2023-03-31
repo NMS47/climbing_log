@@ -19,5 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('climb_log_webapp.urls')),
-    path('new_entry', include('climb_log_webapp.urls'))
+    
 ]

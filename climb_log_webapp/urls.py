@@ -3,5 +3,5 @@ from django.urls import path
 
 urlpatterns = [
 	path('', views.home, name='homepage'),
-    path('new_entry', views.new_entry, name='new-entry-form')
+    path('add_new_entry', views.new_entry, name='new-entry-form')
 ]
