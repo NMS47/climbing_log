@@ -1,0 +1,28 @@
+form {
+    border-radius: 2%;
+    background-color: rgb(62, 63, 62);
+    
+    padding: 1rem;
+}
+
+.form-group {
+    margin: 0.5rem;
+}
+.age-input{
+    width: 75%;
+}
+
+@media only screen and (min-width: 700px) {
+    main {
+        margin:auto;
+        width: 75%;
+    } 
+}
+
+
+@media only screen and (min-width: 400px) {
+    main {
+        margin:auto;
+        width: 75%;
+    } 
+}

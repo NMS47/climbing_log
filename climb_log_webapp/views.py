@@ -11,3 +11,9 @@ def home(request):
 def new_entry(request):
     return render(request, 'climb_log_webapp_ES/new_entry.html', {'grades_list': grades_list,
                                                                   'date_today':(datetime.today().strftime('%Y-%m-%d'))})
+
+def login(request):
+    return render(request, 'climb_log_webapp_ES/login.html')
+
+def sign_up(request):
+    return render(request, 'climb_log_webapp_ES/sign_up.html')

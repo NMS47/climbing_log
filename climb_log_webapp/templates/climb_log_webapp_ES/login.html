@@ -1,0 +1,42 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{% load static %}
+{% block title %}Iniciar sesion{%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/login.css' %}">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+
+{%block content%}
+<main>
+<div class="container">
+<form class="form-signin">
+    <div class="row">
+    <h1 class="h3 mb-3 font-weight-normal">Inicia sesion</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+    <label for="inputEmail" class="sr-only">Email:</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+    <label for="inputPassword" class="sr-only">Contrasena</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-md-6">
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Mantener sesion iniciada
+      </label>
+    </div>
+    </div>
+</div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesion</button>
+    <p class="mt-5 mb-3 text-muted">© 2023-2025</p>
+  </form>
+</div>
+</main>
+{%endblock%}
