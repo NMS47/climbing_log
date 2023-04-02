@@ -17,3 +17,7 @@ def login(request):
 
 def sign_up(request):
     return render(request, 'climb_log_webapp_ES/sign_up.html')
+
+def user_page(request):
+    user = next(user for users in user_id if users_name['user_name']== user_name)
+    pass
