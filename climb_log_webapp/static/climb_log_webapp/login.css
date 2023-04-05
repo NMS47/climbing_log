@@ -1,15 +1,35 @@
 form {
     border-radius: 2%;
     background-color: rgb(62, 63, 62);
+    width: fit-content;
+    padding: 5rem;
+
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
-    padding: 1rem;
+}
+.row {
+    justify-content: center;
+    padding: 0.3rem;
+    
+}
+.col{
+    justify-content: center;
 }
 
-.form-group {
-    margin: 0.5rem;
+.form-control{
+    width: 20rem;
 }
+
 .age-input{
-    width: 75%;
+    width: 30%;
+}
+
+.gender{
+    flex-grow: 4;
 }
 
 @media only screen and (min-width: 700px) {
