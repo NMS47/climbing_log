@@ -1,0 +1,22 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{%load static%}
+{% block title %}Users {%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+{%block content%}
+<main>
+    {%for user in users%}
+    <h2>{{user.username}} </h2>
+    <ul>
+        <li>User id:{{user.user_id}}</li>
+        <li>Username:{{user.username}}</li>
+        <li>Email: {{user.email}}</li>
+        <li>Age: {{user.age}}</li>
+        <li>Gender: {{user.gender}}</li>
+        <li>PW: {{user.user_pw}}</li>
+    </ul>
+    {%endfor%}
+
+</main>
+{%endblock%}
