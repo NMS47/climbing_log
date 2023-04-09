@@ -11,7 +11,8 @@
     <h1>Agrega escaladas:</h1>
 </div> 
 <div class="new_entry">
-    <form  action="">
+    <form  action="" method="POST">
+        {% csrf_token %}
         <label for="date">Fecha del pegue:</label>
         <input type="date" name="date" value='{{date_today}}'>
         <br><br>

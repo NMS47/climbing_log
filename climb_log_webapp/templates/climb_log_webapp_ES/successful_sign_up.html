@@ -1,0 +1,13 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{%load static%}
+{% block title %}Bienvenido! {%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+{%block content%}
+   <h1>Bienvenido a la comunidad de Climbing Log!!</h1>
+   <br><br>
+   <h2>Tu usuario ha sido creado y ya puedes empezar a cargar tus pegues!</h2> 
+   <br><br>
+   <p> Agrega una nueva entrada <a href="{% url 'new-entry-form' %}">Aqui</a> </p>
+{%endblock%}

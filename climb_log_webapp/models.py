@@ -10,9 +10,13 @@ class Users(models.Model):
     gender = models.CharField(max_length=7)
     user_pw = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"{self.username}, {self.email}"
+
+
 class Climb_entry(models.Model):
-    # user_id = models.ForeignKey(Users.user_id)
-    user_id = models.PositiveIntegerField(primary_key=True, unique=True)
+    entry_num = models.PositiveIntegerField(primary_key=True, unique=True)
+    username = models.ForeignKey(Users, on_delete=models.CASCADE, default="")
     date = models.DateField()
     place_name = models.CharField(max_length=40)
     place_coord = models.CharField(max_length=30)
