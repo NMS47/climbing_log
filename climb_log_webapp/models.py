@@ -3,12 +3,13 @@ from django.core.validators import MaxValueValidator, MinValueValidator, EmailVa
 
 # Create your models here.
 class Users(models.Model):
-    user_id = models.PositiveIntegerField(primary_key=True, unique=True)
+    id = models.PositiveIntegerField(primary_key=True, unique=True)
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=30, unique=True, validators=[EmailValidator])
     age = models.PositiveSmallIntegerField(validators=[MinValueValidator(3) ,MaxValueValidator(100)])
     gender = models.CharField(max_length=7)
     user_pw = models.CharField(max_length=100)
+    creation_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.username}, {self.email}"

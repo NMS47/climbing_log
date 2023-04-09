@@ -3,7 +3,7 @@
 {% block title %}Crear una cuenta {%endblock%}
 {%block css_files%}
 <link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
-<link rel="stylesheet" href="{% static 'climb_log_webapp/login.css' %}">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/sign_up.css' %}">
 {%endblock%}
 {%block content%}
 <main>
@@ -14,9 +14,9 @@
         <br><br>
     </div>
     <div class="container sign-up-form">
-        <form class="" method="POST">
+        <form action="/" method="POST">
             {%csrf_token%}
-            <div class="row">
+            {% comment %} <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label for="username">Nombre de usuario</label>
@@ -73,6 +73,18 @@
 
             </div>
 
+            <button type="submit" class="btn btn-primary">Submit</button> {% endcomment %}
+            {%for field in form%}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        {{field.label}}
+                        {{field}}
+
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
     </div>
