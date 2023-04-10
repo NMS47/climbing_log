@@ -9,12 +9,12 @@
 <main>
     <div>
         <h1>Aca comienza tu bitadora de escalada!</h1>
-        <br><br>
-        <h2>Crea una cuenta para empezar a guardar el historial de tus escaladas</h2> 
-        <br><br>
+        <br>
+        <h3>Crea una cuenta para empezar a guardar el historial de tus escaladas</h3> 
+        <br>
     </div>
     <div class="container sign-up-form">
-        <form action="/" method="POST">
+        <form action="sign_up" method="POST">
             {%csrf_token%}
             {% comment %} <div class="row">
                 <div class="col">
@@ -77,14 +77,20 @@
             {%for field in form%}
             <div class="row">
                 <div class="col">
-                    <div class="form-group">
-                        {{field.label}}
-                        {{field}}
-
-                    </div>
+                    {{field.label}}
+                    {{field}}
+                    {%for error in field.errors%}
+                    <p>{{error}}</p>
+                    {%endfor%}
                 </div>
             </div>
             {%endfor%}
+            <div class="row">
+                <div class="col">
+                    <label for="verify-pw">Escribe de nuevo la contraseña:</label>
+                    <input type="password">
+                </div>
+            </div>                
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
     </div>

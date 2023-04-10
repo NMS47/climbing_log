@@ -20,13 +20,23 @@ def login(request):
 
 def sign_up(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        age = request.POST['age']
-        gender = request.POST['gender']
-        email = request.POST['email']
-        pw = request.POST['pw']
-        return HttpResponseRedirect("/successful_sign_up")
-    form = SignUpForm()
+        form = SignUpForm(request.POST)
+        print('1')
+        if form.is_valid():
+            print('success')
+            new_username = Users(
+                username = form.cleaned_data['username'],
+                age = form.cleaned_data['age'],
+                gender = form.cleaned_data['gender'],
+                email = form.cleaned_data['email'],
+                user_pw =form.cleaned_data['user_pw'],
+                )
+            new_username.save()
+            return HttpResponseRedirect("/successful_sign_up")
+    else:
+        form = SignUpForm()
+        print('3')
+
     return render(request, 'climb_log_webapp_ES/sign_up.html', {'form':form})
 
 def successful_sign_up(request):

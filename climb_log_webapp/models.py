@@ -1,17 +1,24 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator, EmailValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, EmailValidator, MinLengthValidator
+
+
+GENDERS = [
+    ('female','Mujer'),
+    ('male', 'Hombre'),
+    ('other', 'Otro')
+]
 
 # Create your models here.
 class Users(models.Model):
-    id = models.PositiveIntegerField(primary_key=True, unique=True)
+    id = id = models.AutoField(primary_key=True, unique=True)
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=30, unique=True, validators=[EmailValidator])
     age = models.PositiveSmallIntegerField(validators=[MinValueValidator(3) ,MaxValueValidator(100)])
-    gender = models.CharField(max_length=7)
-    user_pw = models.CharField(max_length=100)
+    gender = models.CharField(max_length=10, choices=GENDERS)
+    user_pw = models.CharField(max_length=100, validators=[MinLengthValidator(6)])
     creation_date = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __str__(self): 
         return f"{self.username}, {self.email}"
 
 

@@ -48,26 +48,43 @@
 } */
 body{
     margin: 0;
-
 }
 
 form {
-    margin: 3rem auto;
+    margin: auto;
     border-radius: 16px;
     background-color: rgb(62, 63, 62);
-    max-width: 30rem;
-    padding: 5rem;
+    max-width: 40rem;
+    padding: 1rem 5rem;
     box-shadow: 0 2px 8px rgb(40, 95, 49);}
 
-form input {
+form input{
+    width: 20rem;
+}
+
+form input, form select {
     display: block;
     border-radius: 5px;
+}
+
+p {
+    color:rgb(179, 24, 24)
 }
 
 .col {
     padding: .5rem 0;
 }
+form div:nth-child(4), form div:nth-child(5){
+    display: inline-flex; 
+    margin:auto,   
+}
+form div:nth-child(4) input{
+    max-width: 4rem;
+}
 
+form div:nth-child(5) div{
+    margin-left: 3rem;
+}
 button{
-    margin-left: -.7rem;
+    margin: 0 0 0 -.7rem;
 }
