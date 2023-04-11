@@ -23,21 +23,25 @@ def sign_up(request):
         form = SignUpForm(request.POST)
         print('1')
         if form.is_valid():
-            print('success')
-            new_username = Users(
-                username = form.cleaned_data['username'],
-                age = form.cleaned_data['age'],
-                gender = form.cleaned_data['gender'],
-                email = form.cleaned_data['email'],
-                user_pw =form.cleaned_data['user_pw'],
-                )
-            new_username.save()
-            return HttpResponseRedirect("/successful_sign_up")
+            if form.cleaned_data['user_pw'] ==form.cleaned_data['verify_pw']:
+                print('success')
+                new_username = Users(
+                    username = form.cleaned_data['username'],
+                    age = form.cleaned_data['age'],
+                    gender = form.cleaned_data['gender'],
+                    email = form.cleaned_data['email'],
+                    user_pw =form.cleaned_data['user_pw'],
+                    )
+                new_username.save()
+                return HttpResponseRedirect("/successful_sign_up")
+            else:
+                verify_pw_error = True
     else:
+        verify_pw_error = False
         form = SignUpForm()
         print('3')
 
-    return render(request, 'climb_log_webapp_ES/sign_up.html', {'form':form})
+    return render(request, 'climb_log_webapp_ES/sign_up.html', {'form':form, 'verify_pw_error':verify_pw_error})
 
 def successful_sign_up(request):
     return render(request, 'climb_log_webapp_ES/successful_sign_up.html')

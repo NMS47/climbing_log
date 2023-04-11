@@ -87,8 +87,11 @@
             {%endfor%}
             <div class="row">
                 <div class="col">
-                    <label for="verify-pw">Escribe de nuevo la contraseña:</label>
-                    <input type="password">
+                    <label for="verify_pw">Escribe de nuevo la contraseña:</label>
+                    <input type="password" name="verify_pw" id="verify_pw">
+                    {%if verify_pw_error%}
+                    <p>Las contraseñas no coinciden, intenta de nuevo.</p>
+                    {%endif%}
                 </div>
             </div>                
             <button type="submit" class="btn btn-primary">Submit</button>
