@@ -23,7 +23,7 @@ def sign_up(request):
         form = SignUpForm(request.POST)
         print('1')
         if form.is_valid():
-            if form.cleaned_data['user_pw'] ==form.cleaned_data['verify_pw']:
+            if form.cleaned_data['user_pw'] == request.POST['verify_pw']:
                 print('success')
                 new_username = Users(
                     username = form.cleaned_data['username'],
