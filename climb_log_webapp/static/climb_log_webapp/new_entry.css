@@ -8,14 +8,14 @@
     margin-left: 0.3rem;
 }
 
-#num-pitches, #place, .short-num, .grade-options{
+#num-pitches, #place, .short-num, .grade, .grade-options{
     background-color: #232020;
     color: #F4F4F4;
     border: #014104;
     border-style: solid;
     box-shadow: #014104;
 }
-.grade, .grade:nth-child(1) {
+ .grade:nth-child(1) {
     background-color: #232020;
     color: #363333;
     border: #014104;
@@ -40,7 +40,7 @@
     border-style: solid;
 }
 
-.short-num:hover, .short-num:active, .short-num:target, .grade:active, .grade:hover, .grade:checked {
+.short-num:hover, .short-num:active, .short-num:target, .grade:active, .grade:hover, .grade:checked, .grade:focus {
     background-color: #363333;
     color: #F4F4F4;
 }
