@@ -1,3 +1,47 @@
 .new_entry {
-    width: 40%;
+    width: 40rem;
+    margin: auto;
 }
+
+#num-pitches, #place, #grade{
+    display: inline-flex;
+    margin-left: 0.3rem;
+}
+
+#num-pitches, #place, .short-num, .grade-options{
+    background-color: #232020;
+    color: #F4F4F4;
+    border: #014104;
+    border-style: solid;
+    box-shadow: #014104;
+}
+.grade, .grade:nth-child(1) {
+    background-color: #232020;
+    color: #363333;
+    border: #014104;
+    border-style: solid;
+    box-shadow: #014104;
+}
+
+#place{
+    max-width: 20rem;
+}
+#grade {
+    max-width: 6rem;
+    
+}
+
+.short-num{
+    max-width: 3rem;
+    text-align: center;
+    background-color: #232020;
+    color: #F4F4F4;
+    border: #014104;
+    border-style: solid;
+}
+
+.short-num:hover, .short-num:active, .short-num:target, .grade:active, .grade:hover, .grade:checked {
+    background-color: #363333;
+    color: #F4F4F4;
+}
+

@@ -17,12 +17,8 @@
         <input type="date" name="date" value='{{date_today}}'>
         <br><br>
         <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                <span class="input-group-text" id="place">Lugar</span>
-                </div>
-                <input type="text" class="form-control" placeholder="Sector de escalada/Palestra" aria-label="Sector de escalada/Palestra" aria-describedby="basic-addon1">
-            </div>
+                <label for="place">Lugar: </label>
+                <input type="text" class="form-control" placeholder="Sector de escalada/Palestra" aria-label="Sector de escalada/Palestra" aria-describedby="basic-addon1" name="place" id="place">
         </div>
         <br><br>
         <div class="radio-selection form-group">
@@ -44,35 +40,36 @@
             <label class="btn btn-outline-success" for="trad">Clasica</label>
         </div>
         <br>
+
         <div class="radio-selection form-group">
             <input type="radio" class="btn-check" name="pitches" id="single-pitch" autocomplete="off"checked>
             <label class="btn btn-outline-success" for="single-pitch">Monolargo</label>
-
             <input type="radio" class="btn-check" name="pitches" id="multi-pitch" autocomplete="off">
             <label class="btn btn-outline-success" for="multi-pitch" >Multilargo</label>
-            <div class="form-group">
-                <label for="num-pitches">Numero de largos:</label>
-                <select class="form-control" id="num-pitches">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                </select>
-            </div>
+            <label for="num-pitches">Largos:</label>
+            <select class="form-control short-num" id="num-pitches">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+            </select>
         </div>
         <br>
 
         <div class="select-grade form-group">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Selecciona el grado que corresponda</option>
-                {%  for grade in grades_list %}
-                    <option value="{{grade}}">{{grade}}</option>
+            <label for="grade">Grado:</label>
+            {%for grade_list in grades_list%}
+            <select class="form-select grade" name="grade" id="grade" aria-label="{{grade_list.0.0}}">
+                <option value="" selected>{{grade_list.0.0}} </option>
+                {%  for grade in grade_list.1 %}
+                    <option class="grade-options" value="{{grade}}">{{grade}}</option>
                 {%endfor%}
             </select>
+            {%endfor%}
         </div>
         <br>
         <div class="radio-selection form-group">
@@ -85,7 +82,7 @@
         <br>
         <div class="radio-selection form-group">
             <input type="radio" class="btn-check" name="ascent-type" id="onsight" autocomplete="off">
-            <label class="btn btn-outline-success" for="onsight">A vista (On sight)</label>
+            <label class="btn btn-outline-success" for="onsight">A vista</label>
 
             <input type="radio" class="btn-check" name="ascent-type" id="red-point" autocomplete="off">
             <label class="btn btn-outline-success" for="red-point">Red Point</label>
@@ -102,7 +99,7 @@
         <br>
         <div class="form-group">
             <label for="num-attempts">Intentos:</label>
-            <select class="form-control" id="num-attempts">
+            <select class="form-control short-num" id="num-attempts" name="num-attempts">
               <option>1</option>
               <option>2</option>
               <option>3</option>
