@@ -14,9 +14,11 @@ def home(request):
     return render(request, 'climb_log_webapp_ES/home.html')
 
 def new_entry(request):
+    numbers = [i for i in range(1,9)]
+    print(numbers)
     return render(request, 'climb_log_webapp_ES/new_entry.html', {'grades_list': grades_list,
                                                                   'date_today':(datetime.today().strftime('%Y-%m-%d')),
-                                                                  'attempts': [i for i in range(1,9)]})
+                                                                  'attempts': numbers})
 
 def login(request):
     return render(request, 'climb_log_webapp_ES/login.html')

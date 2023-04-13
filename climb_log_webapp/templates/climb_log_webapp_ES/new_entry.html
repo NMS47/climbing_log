@@ -13,14 +13,17 @@
 <div class="new_entry">
     <form  action="" method="POST">
         {% csrf_token %}
-        <label for="date">Fecha del pegue:</label>
-        <input type="date" name="date" value='{{date_today}}'>
-        <br><br>
+        <div class="form-group">
+            <label for="date">Fecha del pegue:</label>
+            <input class="themed" type="date" name="date" default="{{date_today}}" value="{{date_today}}">
+        </div>
+        <hr>
+
         <div class="form-group">
                 <label for="place">Lugar: </label>
-                <input type="text" class="form-control" placeholder="Sector de escalada/Palestra" aria-label="Sector de escalada/Palestra" aria-describedby="basic-addon1" name="place" id="place">
+                <input class="themed" type="text" class="form-control" placeholder="Sector de escalada/Palestra" aria-label="Sector de escalada/Palestra" aria-describedby="basic-addon1" name="place" id="place">
         </div>
-        <br><br>
+        <hr>
         <div class="radio-selection form-group">
             <input type="radio" class="btn-check" name="enviroment" id="palestra" autocomplete="off">
             <label class="btn btn-outline-success" for="palestra">Palestra</label>
@@ -28,7 +31,7 @@
             <input type="radio" class="btn-check" name="enviroment" id="roca" autocomplete="off">
             <label class="btn btn-outline-success" for="roca">Roca</label>
             </div>
-        <br>
+        <hr>
         <div class="radio-selection form-group">
             <input type="radio" class="btn-check" name="climb-style" id="boulder" autocomplete="off">
             <label class="btn btn-outline-success" for="boulder">Boulder </label>
@@ -39,7 +42,7 @@
             <input type="radio" class="btn-check" name="climb-style" id="trad" autocomplete="off">
             <label class="btn btn-outline-success" for="trad">Clasica</label>
         </div>
-        <br>
+        <hr>
 
         <div class="radio-selection form-group">
             <input type="radio" class="btn-check" name="pitches" id="single-pitch" autocomplete="off"checked>
@@ -48,17 +51,12 @@
             <label class="btn btn-outline-success" for="multi-pitch" >Multilargo</label>
             <label for="num-pitches">Largos:</label>
             <select class="form-control short-num" id="num-pitches">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
+                {%for num in attempts%}
+                <option value="{{num}}">{{num}}</option>
+                {%endfor%}
             </select>
         </div>
-        <br>
+        <hr>
 
         <div class="select-grade form-group">
             <label for="grade">Grado:</label>
@@ -67,13 +65,14 @@
                 <optgroup label="{{grade_list.0.0}}">
                     <option value="">-{{grade_list.0.0}}-</option>
                 {%  for grade in grade_list.1 %}
-                    <option class="grade-options" value="{{grade}}">{{grade}}</option>
+                    <option class="themed" value="{{grade}}">{{grade}}</option>
                 {%endfor%}
                 </optgroup>
             </select>
             {%endfor%}
         </div>
-        <br>
+        <hr>
+
         <div class="radio-selection form-group">
             <input type="radio" class="btn-check" name="climber_position" id="lead" autocomplete="off">
             <label class="btn btn-outline-success" for="lead">De primero</label>
@@ -81,7 +80,8 @@
             <input type="radio" class="btn-check" name="climber_position" id="top-rope" autocomplete="off">
             <label class="btn btn-outline-success" for="top-rope">Top Rope</label>
         </div>
-        <br>
+        <hr>
+
         <div class="radio-selection form-group">
             <input type="radio" class="btn-check" name="ascent-type" id="onsight" autocomplete="off">
             <label class="btn btn-outline-success" for="onsight">A vista</label>
@@ -98,25 +98,24 @@
             <input type="radio" class="btn-check" name="ascent-type" id="incomplete" autocomplete="off">
             <label class="btn btn-outline-success" for="incomplete">No completada</label>            
         </div>
-        <br>
+        <hr>
+
         <div class="form-group">
             <label for="num-attempts">Intentos:</label>
             <select class="form-control short-num" id="num-attempts" name="num-attempts">
-              {%for nun in attempts%}
-              <option>1{{num}}</option>
-              {%endfor%}
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
+                <option disabled selected value="">-</option>
+                {%for num in attempts%}
+                <option value="{{num}}">{{num}}</option>
+                {%endfor%}
+
+
             </select>
         </div>
+        <hr>
+
         <div class="form-group">
             <label for="notes">Notas:</label>
-            <textarea class="form-control" id="notes" rows="3" placeholder="Nombre de la via, Es plaquera o de desplome? Calidad de la roca, etc."></textarea>
+            <textarea class="themed" class="form-control" id="notes" rows="3" placeholder="Nombre de la via, Es plaquera o de desplome? Calidad de la roca, etc."></textarea>
           </div>
         <br>
         <input class="btn btn-primary" type="submit" value="Agregar pegue">

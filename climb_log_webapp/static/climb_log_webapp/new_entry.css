@@ -1,30 +1,35 @@
+hr {
+    background-color: #026807;
+    border: none;
+    height: 3px !important; 
+}
+
+textarea{
+    width: 30rem;
+}
+
 .new_entry {
     width: 40rem;
     margin: auto;
 }
 
-#num-pitches, #place, #grade{
+#place, #grade, .short-num {
     display: inline-flex;
     margin-left: 0.3rem;
 }
 
-#num-pitches, #place, .short-num, .grade, .grade-options{
+.themed, .short-num, .grade{
     background-color: #232020;
     color: #F4F4F4;
     border: #014104;
     border-style: solid;
-    box-shadow: #014104;
 }
- .grade:nth-child(1) {
-    background-color: #232020;
+.grade:nth-child(1) {
     color: #363333;
-    border: #014104;
-    border-style: solid;
-    box-shadow: #014104;
 }
 
 #place{
-    max-width: 20rem;
+    width: 15rem;
 }
 #grade {
     max-width: 6rem;
@@ -34,10 +39,6 @@
 .short-num{
     max-width: 3rem;
     text-align: center;
-    background-color: #232020;
-    color: #F4F4F4;
-    border: #014104;
-    border-style: solid;
 }
 
 .short-num:hover, .short-num:active, .short-num:target, .grade:active, .grade:hover, .grade:checked, .grade:focus {

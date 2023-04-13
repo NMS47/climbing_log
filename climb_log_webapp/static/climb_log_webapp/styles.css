@@ -13,3 +13,8 @@ body {
     padding: 7% 2%;
     color: #F4F4F4;
 }
+
+hr {
+    background-color: #014104;
+    border: none
+}
