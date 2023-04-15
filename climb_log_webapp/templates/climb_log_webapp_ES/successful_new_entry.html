@@ -1,0 +1,23 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{%load static%}
+{% block title %}Pegue guardado! {%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+{%block content%}
+<div>
+   <h1>Tu pegue a sido guardado en Climbing Log!!</h1>
+   <br><br>
+   <h2>Ya puedes ir a tu perfil a ver todos tu pegues haciendo click <a href="#">Perfil</a></h2> 
+   <br><br>
+   <p> O puedes agregar otro pegue <a href="{% url 'new-entry-form' %}">Aqui</a> </p>
+</div>
+<div>
+    {%for entry in entries%}
+    <h2><a href="{% url 'entry_details' pk=1 %}">{{entry.username.email}}</a></h2>
+    <p>{{entry.enviroment}}</p>
+    <p>{{entry.grade}}</p>
+    <p>{{entry.date}}</p>
+    {%endfor%}
+</div>
+{%endblock%}

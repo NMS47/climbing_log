@@ -4,16 +4,17 @@ hr {
     height: 3px !important; 
 }
 
+.new_entry {
+    max-width: 45rem;
+    margin: auto;
+}
+
 textarea{
     width: 30rem;
 }
 
-.new_entry {
-    width: 40rem;
-    margin: auto;
-}
 
-#place, #grade, .short-num {
+#place, #grade {
     display: inline-flex;
     margin-left: 0.3rem;
 }
@@ -24,9 +25,9 @@ textarea{
     border: #014104;
     border-style: solid;
 }
-.grade:nth-child(1) {
+/* .grade:nth-child(1) {
     color: #363333;
-}
+} */
 
 #place{
     width: 15rem;
@@ -46,3 +47,7 @@ textarea{
     color: #F4F4F4;
 }
 
+.error{
+    font-size: 1.5rem;
+    color: rgb(155, 7, 7)
+}

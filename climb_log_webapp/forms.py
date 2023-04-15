@@ -16,6 +16,6 @@ class SignUpForm(forms.ModelForm):
         widgets = {
             'user_pw': forms.PasswordInput()
         }
-        
+        error_messages = 'Las contraseñas no coinciden, intenta de nuevo.'
         
         

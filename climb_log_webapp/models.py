@@ -10,7 +10,7 @@ GENDERS = [
 
 # Create your models here.
 class Users(models.Model):
-    id = id = models.AutoField(primary_key=True, unique=True)
+    id = models.AutoField(primary_key=True, unique=True)
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=30, unique=True, validators=[EmailValidator])
     age = models.PositiveSmallIntegerField(validators=[MinValueValidator(3) ,MaxValueValidator(100)])
@@ -23,7 +23,7 @@ class Users(models.Model):
 
 
 class Climb_entry(models.Model):
-    entry_num = models.PositiveIntegerField(primary_key=True, unique=True)
+    entry_num = models.AutoField(primary_key=True, unique=True)
     username = models.ForeignKey(Users, on_delete=models.CASCADE, default="")
     date = models.DateField()
     place_name = models.CharField(max_length=40)
