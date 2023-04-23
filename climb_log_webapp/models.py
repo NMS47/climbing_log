@@ -13,7 +13,7 @@ class Climb_entry(models.Model):
     climb_style = models.CharField(max_length=15)
     multipitches = models.BooleanField()
     num_pitches = models.PositiveSmallIntegerField(default=1, validators=[MaxValueValidator(15)] )
-    grade = models.CharField(max_length=6)
+    grade = models.CharField(max_length=20)
     climber_position = models.CharField(max_length=15)
     ascent_type = models.CharField(max_length=20)
     num_attempts = models.PositiveSmallIntegerField()

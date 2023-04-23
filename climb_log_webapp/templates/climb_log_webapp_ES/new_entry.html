@@ -107,16 +107,18 @@
                     <label for="grade">Grado:</label>
                 </div>
                 <div class="col-auto">
-                    {%for grade_list in grades_list%}
-                    <select class="form-select grade" name="grade" id="grade" aria-label="{{grade_list.0.0}}">
+                    <select class="form-select grade" name="grade" id="grade" aria-label="grade" >
+                        <option value selected>---</option>
+                        {%for grade_list in grades_list%}
                         <optgroup label="{{grade_list.0.0}}">
-                            <option value="">-{{grade_list.0.0}}-</option>
+                            
                         {%  for grade in grade_list.1 %}
                             <option class="themed" value="{{grade}}">{{grade|title}}</option>
                         {%endfor%}
                         </optgroup>
+                        {%endfor%}
                     </select>
-                    {%endfor%}
+                    
                 </div>
             </div>
         <hr>

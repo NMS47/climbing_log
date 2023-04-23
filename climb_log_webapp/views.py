@@ -39,6 +39,7 @@ def new_entry(request):
             num_attempts = request.POST['num-attempts'],
             notes = request.POST['notes']
             )
+            print(request.POST['grade'])
             add_new_entry.save()
             return HttpResponseRedirect("/successful_new_entry")
         # #    except:
