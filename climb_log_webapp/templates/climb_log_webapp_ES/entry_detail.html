@@ -6,9 +6,19 @@
 {%endblock%}
 {%block content%}
 <div>
-    <h2>{{entry.username.email}}</h2>
-    <p>{{entry.enviroment}}</p>
-    <p>{{entry.grade}}</p>
-    <p>{{entry.date_of_climb}}</p>
+    <ul>
+        <li>{{entry.date_of_climb}}</li>
+        <li>{{entry.place_name}}</li>
+        <li>{{entry.enviroment}}</li>
+        <li>{{entry.climb_style}}</li>
+        <li>{{entry.multipitches}}</li>
+        <li> {{entry.num_pitches}}</li>
+        <li>{{entry.grade}}</li>
+        <li>{{entry.climber_position}}</li>
+        <li>{{entry.ascent_type}}</li>
+        <li>{{entry.num_attempts}}</li>
+        <li>{{entry.notes}}</li>
+        <li>{{entry.date_of_entry}}</li>
+    </ul>
 </div>
 {%endblock%}

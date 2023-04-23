@@ -9,6 +9,6 @@ urlpatterns = [
     path('users',views.users, name='users'),
     path('successful_sign_up', views.successful_sign_up, name='successful_sign_up'),
     path('successful_new_entry', views.SuccessfulNewEntry.as_view(), name='successful-new-entry'),
-    path('entry_details/<int:pk>', views.EntryDetail.as_view(), name='entry-details'),
+    path('entry_detail/<int:pk>', views.EntryDetail.as_view(), name='entry-detail'),
     path('entry_list', views.EntryList.as_view(), name='entry-list')
 ]

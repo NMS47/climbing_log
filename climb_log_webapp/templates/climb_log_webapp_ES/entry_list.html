@@ -3,12 +3,44 @@
 {% block title %}Pegues de usuario {%endblock%}
 {%block css_files%}
 <link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/entry_list.css' %}">
 {%endblock%}
 {%block content%}
 <div>
-    <h2>{{entry.username.email}}</h2>
-    <p>{{entry.enviroment}}</p>
-    <p>{{entry.grade}}</p>
-    <p>{{entry.date_of_climb}}</p>
+    <table>
+        <tr>
+            <th>Fecha del pegue</th>
+            <th>Lugar</th>
+            <th>Entorno</th>
+            <th>Estilo</th>
+            <th>Multilargo</th>
+            <th>Num largos</th>
+            <th>Grado</th>
+            <th>Pocision</th>
+            <th>Encadenamiento</th>
+            <th>Intentos</th>
+            <th>Notes</th>
+            <th>Date of entry</th>
+            <th>Ver</th>
+        </tr>
+    {%for entry in entries%}
+        <tr>
+            <td>{{entry.date_of_climb}}</td>
+            <td>{{entry.place_name}}</td>
+            <td>{{entry.enviroment}}</td>
+            <td>{{entry.climb_style}}</td>
+            <td>{{entry.multipitches}}</td>
+            <td>{{entry.num_pitches}}</td>
+            <td>{{entry.grade}}</td>
+            <td>{{entry.climber_position}}</td>
+            <td>{{entry.ascent_type}}</td>
+            <td>{{entry.num_attempts}}</td>
+            <td>{{entry.notes|default_if_none:"--"|truncatechars:10}}</td>
+            <td>{{entry.date_of_entry}}</td>
+            <td><a href="{% url 'entry-detail' entry.id %}">Ver</a></td>
+        </tr>
+        {%endfor%}
+    </table>
 </div>
+
 {%endblock%}
