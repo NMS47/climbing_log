@@ -1,0 +1,14 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{%load static%}
+{% block title %}Pegues de usuario {%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+{%block content%}
+<div>
+    <h2>{{entry.username.email}}</h2>
+    <p>{{entry.enviroment}}</p>
+    <p>{{entry.grade}}</p>
+    <p>{{entry.date_of_climb}}</p>
+</div>
+{%endblock%}

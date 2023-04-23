@@ -1,0 +1,41 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{% load static %}
+{% block title %}Iniciar sesion{%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/login.css' %}">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+
+{%block content%}
+<main>
+  {%if form.errors%}
+  <p>Something is wrong</p>
+  {{form.errors.as_text }}
+    {% comment %} {%for error in form.errors%}
+      {{error.__all__}}
+    {%endfor%} {% endcomment %}
+  {%endif%}
+<div class="container">
+<form class="form-signin" method="post">
+  {%csrf_token%}
+    <div class="row form-group">
+      <h1 class="h3 mb-3 font-weight-normal">Iniciar sesion:</h1>
+    </div>
+    <div class="row form-group">
+        <div class="col">
+          <label for="username" class="sr-only">Usuario:</label>
+          <input type="text" id="username" name="username" class="form-control" placeholder="Usuario" required autofocus="">
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col">
+          <label for="inputPassword" class="sr-only">Contraseña:</label>
+          <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+      </div>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesion</button>
+    <p class="mt-5 mb-3 text-muted">© 2023-2025</p>
+  </form>
+</div>
+</main>
+{%endblock%}

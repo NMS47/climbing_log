@@ -1,0 +1,121 @@
+* [33mcommit ca26b55396193fc08d27127365b5b17912072936[m[33m ([m[1;36mHEAD -> [m[1;32mModelFroms[m[33m, [m[1;31morigin/ModelFroms[m[33m)[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Sat Apr 15 11:25:59 2023 -0500
+[31m|[m 
+[31m|[m     new entry fully operational
+[31m|[m 
+* [33mcommit 985174c293a51cf5ccf2d8219e5ed194465aadb5[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Wed Apr 12 19:57:50 2023 -0500
+[31m|[m 
+[31m|[m     before transforming new entry in grid system
+[31m|[m 
+* [33mcommit ab59e892c7a345ed759a3bc3fffecb2a2f05c7dc[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Wed Apr 12 18:53:58 2023 -0500
+[31m|[m 
+[31m|[m     added password check
+[31m|[m 
+* [33mcommit 22f96377994f8ef27ba1856c2ab18ea122b56baa[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Tue Apr 11 21:16:13 2023 -0500
+[31m|[m 
+[31m|[m     edited styling in add new entry
+[31m|[m 
+* [33mcommit 2f61431cc39e3540025a33d9aba71166779666db[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Tue Apr 11 18:34:16 2023 -0500
+[31m|[m 
+[31m|[m     sign_up page completed
+[31m|[m 
+* [33mcommit 69f9d9b32782dc39a668e83cf69b2f64ab97233b[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Tue Apr 11 18:30:29 2023 -0500
+[31m|[m 
+[31m|[m     SignUp section almost completed, still missing matching pws2
+[31m|[m 
+* [33mcommit 62481a9a7349fa6e80ddf40d1dac3ad432297dc9[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Sun Apr 9 21:48:28 2023 -0500
+[31m|[m 
+[31m|[m     SignUp section almost completed, still missing matching pws
+[31m|[m 
+* [33mcommit f8df5f398c64bf3eb57efe8e58422ef7e83ce08d[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Sun Apr 9 17:14:53 2023 -0500
+[31m|[m 
+[31m|[m     Changed sign up form to a modelform
+[31m|[m 
+* [33mcommit 209772910b6a6b3d2faebb33ab64c33ddfdec95e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Sun Apr 9 11:04:14 2023 -0500
+[31m|[m 
+[31m|[m     created entries table and post methods
+[31m|[m 
+* [33mcommit f2e035059760a5cfa2489a3f291832e1526f0951[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Wed Apr 5 20:43:29 2023 -0500
+[31m|[m 
+[31m|[m     added tha database
+[31m|[m 
+* [33mcommit da0314ff5a1c57c63fd131fd19bf119a8f423015[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Wed Apr 5 16:35:36 2023 -0500
+[31m|[m 
+[31m|[m     fixed design in sing up form
+[31m|[m 
+* [33mcommit 3118c631d304290101b9cc9fc0ffc1f7071f1df6[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Sun Apr 2 20:23:08 2023 -0500
+[31m|[m 
+[31m|[m     completed the classes for db, missing relation
+[31m|[m 
+* [33mcommit 633478f676098fdf6f6eff43fb562a7324124a83[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Sat Apr 1 22:51:22 2023 -0500
+[31m|[m 
+[31m|[m     added a little more stuff
+[31m|[m 
+* [33mcommit 7200e4609cdc2d21abf491a64a80754a1b67ecb5[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Sat Apr 1 17:52:56 2023 -0500
+[31m|[m 
+[31m|[m     added log in and sing up pages
+[31m|[m 
+* [33mcommit b10b6e1ba9f60497638bc77090e3f85073eed12f[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Thu Mar 30 19:53:35 2023 -0500
+[31m|[m 
+[31m|[m     Fixed the double url issue
+[31m|[m 
+* [33mcommit 66fcea795617f02c239afeb5e29882346e12b2a3[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Thu Mar 30 17:23:41 2023 -0500
+[31m|[m 
+[31m|[m     change the header to a new file and some other stuff
+[31m|[m 
+* [33mcommit b3fa65f05886eb6a167f7fa4717507660baf3a28[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Wed Mar 29 22:02:23 2023 -0500
+[31m|[m 
+[31m|[m     completed the form and updated style
+[31m|[m 
+* [33mcommit 52f40162d639138b18176d3af2f9251a67b88dd0[m
+[31m|[m Author: NicoSalva <98570371+NMS47@users.noreply.github.com>
+[31m|[m Date:   Wed Mar 29 19:55:15 2023 -0500
+[31m|[m 
+[31m|[m     Add files via upload
+[31m|[m     
+[31m|[m     first commit
+[31m|[m 
+* [33mcommit 5f391b33c3052dc64f4c383bf41ea335eaf23c8b[m
+[31m|[m Author: NMS47 <nicolas.salvadores93@gmail.com>
+[31m|[m Date:   Wed Mar 29 19:52:36 2023 -0500
+[31m|[m 
+[31m|[m     first commit
+[31m|[m 
+* [33mcommit fb123ec8a6c18238fb1311849923b5eec89839f3[m
+  Author: NMS47 <nicolas.salvadores93@gmail.com>
+  Date:   Wed Mar 29 19:39:05 2023 -0500
+  
+      initial commit fully funtional
