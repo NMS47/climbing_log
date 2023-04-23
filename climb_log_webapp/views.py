@@ -5,7 +5,7 @@ from django.http import Http404, HttpResponseRedirect
 from .forms import SignUpForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 
 
@@ -110,6 +110,12 @@ class EntryList(ListView):
     model = Climb_entry
     context_object_name = 'entries'
 
+class EntryUpdate(UpdateView):
+    template_name = 'climb_log_webapp_ES/entry_update.html'
+    model = Climb_entry
+    fields = "__all__"
+    context_object_name = 'entry'
+    success_url = reverse_lazy('entry-list')
 
 # class SignUp(CreateView):
 #     model = Users
