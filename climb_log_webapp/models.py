@@ -1,31 +1,12 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, EmailValidator, MinLengthValidator
-
-
-GENDERS = [
-    ('female','Mujer'),
-    ('male', 'Hombre'),
-    ('other', 'Otro')
-]
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Users(models.Model):
-    id = models.AutoField(primary_key=True, unique=True)
-    username = models.CharField(max_length=20, unique=True)
-    email = models.EmailField(max_length=30, unique=True, validators=[EmailValidator])
-    age = models.PositiveSmallIntegerField(validators=[MinValueValidator(3) ,MaxValueValidator(100)])
-    gender = models.CharField(max_length=10, choices=GENDERS)
-    user_pw = models.CharField(max_length=100, validators=[MinLengthValidator(6)])
-    creation_date = models.DateTimeField(auto_now=True)
-
-    def __str__(self): 
-        return f"{self.username}, {self.email}"
-
 
 class Climb_entry(models.Model):
-    entry_num = models.AutoField(primary_key=True, unique=True)
-    username = models.ForeignKey(Users, on_delete=models.CASCADE, default="")
-    date = models.DateField()
+    username = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    date_of_climb = models.DateField()
     place_name = models.CharField(max_length=40)
     place_coord = models.CharField(max_length=30)
     enviroment = models.CharField(max_length=20)
@@ -37,4 +18,10 @@ class Climb_entry(models.Model):
     ascent_type = models.CharField(max_length=20)
     num_attempts = models.PositiveSmallIntegerField()
     notes = models.TextField(max_length=400)
-    entry_time = models.DateTimeField(auto_now=True)
+    date_of_entry = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.username}, {self.grade}, {self.date_of_climb}"
+    
+    class Meta:
+        ordering = ["date_of_entry"]

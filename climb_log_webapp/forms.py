@@ -1,10 +1,10 @@
 from django import forms
-from .models import Users
+from .models import User
 
 class SignUpForm(forms.ModelForm):
 
     class Meta:
-        model = Users
+        model = User
         exclude = ['id','creation_date']
         labels = {
             "username": "Elige tu nombre de usuario:",

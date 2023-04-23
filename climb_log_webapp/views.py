@@ -1,19 +1,23 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime
-from .models import Users, Climb_entry
+from .models import User, Climb_entry
 from django.http import Http404, HttpResponseRedirect
 from .forms import SignUpForm
+from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 
 grades_list = [[['V'],['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15']],
               [['FR'],['5', '5+', '6a', '6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+', '7b', '7b+', '7c', '8a', '8a+', '8b', '8b+', '8c','8c+']],
                [['Color'],['verde', 'azul', 'amarillo', 'naranja', 'rojo', 'negro']]] 
 
+class HomeView(TemplateView):
+    template_name = 'climb_log_webapp_ES/home.html'
 
-def home(request):
-    return render(request, 'climb_log_webapp_ES/home.html')
+# def home(request):
+#     return render(request, 'climb_log_webapp_ES/home.html')
 
 def new_entry(request):
     numbers = [i for i in range(1,9)]
@@ -21,8 +25,8 @@ def new_entry(request):
     if request.method =='POST':
         #    try:
             add_new_entry= Climb_entry(
-            username = Users.objects.get(username='nms47'),
-            date = request.POST.get('date'),
+            # username = User.objects.get(username='nms47'),
+            date_of_climb = request.POST.get('date'),
             place_name = request.POST['place'],
             place_coord = 'xxxx',
             enviroment = request.POST['enviroment'],
@@ -83,7 +87,7 @@ def user_page(request):
     pass
 
 def users(request):
-    users = Users.objects.all()
+    users = User.objects.all()
     return render(request, 'climb_log_webapp_ES/users.html', {'users':users})
 
 class SuccessfulNewEntry(ListView):
@@ -97,9 +101,14 @@ class SuccessfulNewEntry(ListView):
         return data
     
 class EntryDetail(DetailView):
-    template_name= 'climb_log_webapp_ES/entry_details.html'
+    template_name= 'climb_log_webapp_ES/entry_detail.html'
     model = Climb_entry
     context_object_name = 'entry'
+
+class EntryList(ListView):
+    template_name= 'climb_log_webapp_ES/entry_list.html'
+    model = Climb_entry
+    context_object_name = 'entries'
 
 
 # class SignUp(CreateView):
