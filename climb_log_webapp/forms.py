@@ -1,21 +1,26 @@
 from django import forms
-from .models import User
+from .models import Climb_entry
 
-class SignUpForm(forms.ModelForm):
-
+        
+class NewEntryForm(forms.ModelForm):
     class Meta:
-        model = User
-        exclude = ['id','creation_date']
+        model = Climb_entry
+        exclude = ['username', 'place_coor', 'date_of_entry']
         labels = {
-            "username": "Elige tu nombre de usuario:",
-            "email": "Email:",
-            "age": "Tu edad:",
-            "gender": "Tu género:",
-            "user_pw": "Elije una contraseña:" 
+            'date_of_climb': 'Fecha del pegue:',
+            'place_name' : 'Lugar:',
+            'enviroment' : 'Entorno:',
+            'climb_style' : 'Estilo:',
+            'multipitches' : 'Largos:',
+            'num_pitches' : 'Nro Largos:',
+            'grade' : 'Grado:',
+            'climber_position' : 'Posicion:',
+            'ascent_type' : 'Tipo de encadene:',
+            'num_attempts' : 'Intentos:',
+            'notes' : 'Notas:',
         }
         widgets = {
             'user_pw': forms.PasswordInput()
         }
-        error_messages = 'Las contraseñas no coinciden, intenta de nuevo.'
-        
+        error_messages = 'Por favor asegurate de completar todos los campos'
         

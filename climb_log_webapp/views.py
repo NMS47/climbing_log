@@ -51,7 +51,7 @@ def new_entry(request):
     numbers = [i for i in range(1,9)]
 
     if request.method =='POST':
-        #    try:
+        try:
             add_new_entry= Climb_entry(
             username_id = request.user.id,
             date_of_climb = request.POST.get('date'),
@@ -70,11 +70,11 @@ def new_entry(request):
             print(request.POST['grade'])
             add_new_entry.save()
             return HttpResponseRedirect("/successful_new_entry")
-        # #    except:
-        #     return render(request, 'climb_log_webapp_ES/new_entry.html', {'grades_list': grades_list,
-        #                         'date_today':(datetime.today().strftime('%Y-%m-%d')),
-        #                         'attempts': numbers,
-        #                         'error':True})
+        except:
+            return render(request, 'climb_log_webapp_ES/new_entry.html', {'grades_list': grades_list,
+                                'date_today':(datetime.today().strftime('%Y-%m-%d')),
+                                'attempts': numbers,
+                                'error':True})
                
     return render(request, 'climb_log_webapp_ES/new_entry.html', {'grades_list': grades_list,
                                                                   'date_today':(datetime.today().strftime('%Y-%m-%d')),
@@ -82,27 +82,6 @@ def new_entry(request):
                                                                   'error':False}
                                                                   )
 
-# def sign_up(request):
-#     if request.method == 'POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             if form.cleaned_data['user_pw'] == request.POST['verify_pw']:
-#                 new_username = Users(
-#                     username = form.cleaned_data['username'],
-#                     age = form.cleaned_data['age'],
-#                     gender = form.cleaned_data['gender'],
-#                     email = form.cleaned_data['email'],
-#                     user_pw =form.cleaned_data['user_pw'],
-#                     )
-#                 new_username.save()
-#                 return HttpResponseRedirect("/successful_sign_up")
-#             else:
-#                 verify_pw_error = True
-#     else:
-#         verify_pw_error = False
-#         form = SignUpForm()
-
-#     return render(request, 'climb_log_webapp_ES/sign_up.html', {'form':form, 'verify_pw_error':verify_pw_error})
 
 class SuccessfulSignUp(TemplateView):
     template_name = 'climb_log_webapp_ES/successful_sign_up.html'
