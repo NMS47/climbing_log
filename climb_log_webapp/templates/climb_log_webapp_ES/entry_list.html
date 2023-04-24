@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="{% static 'climb_log_webapp/entry_list.css' %}">
 {%endblock%}
 {%block content%}
+<h1>Hola {{request.user}} </h1>
+<h3>Estos son tus pegues registrados:</h3>
 <div>
     <table>
         <tr>
@@ -37,8 +39,8 @@
             <td>{{entry.num_attempts}}</td>
             <td>{{entry.notes|default_if_none:"--"|truncatechars:10}}</td>
             <td>{{entry.date_of_entry}}</td>
-            <td><a href="{% url 'entry-update' entry.id %}">✏️</a></td>
-            <td><a href="{% url 'entry-delete' entry.id %}">❌</a></td>
+            <td><a href="{% url 'entry-update' entry.id %}">✏️</a>
+            <a href="{% url 'entry-delete' entry.id %}">❌</a></td>
         </tr>
         {%endfor%}
     </table>

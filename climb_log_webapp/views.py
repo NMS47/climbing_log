@@ -1,15 +1,17 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
 from datetime import datetime
 from .models import User, Climb_entry
 from django.http import Http404, HttpResponseRedirect
 from .forms import SignUpForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.urls import reverse_lazy
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 grades_list = [[['V'],['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15']],
               [['FR'],['5', '5+', '6a', '6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+', '7b', '7b+', '7c', '8a', '8a+', '8b', '8b+', '8c','8c+']],
@@ -21,6 +23,25 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('entry-list')
+    
+class SignUpView(FormView):
+    form_class = UserCreationForm
+    template_name = 'registration/sign_up.html'
+    
+    def get_success_url(self):
+        return reverse_lazy('successful-sign-up')
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(SignUpView, self).form_valid(form)
+    
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('entry-list')
+        
+        return super(SignUpView, self).get(*args, **kwargs)
 
 class HomeView(TemplateView):
     template_name = 'climb_log_webapp_ES/home.html'
@@ -61,33 +82,33 @@ def new_entry(request):
                                                                   'error':False}
                                                                   )
 
-# def login(request):
-#     return render(request, 'climb_log_webapp_ES/login.html')
+# def sign_up(request):
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             if form.cleaned_data['user_pw'] == request.POST['verify_pw']:
+#                 new_username = Users(
+#                     username = form.cleaned_data['username'],
+#                     age = form.cleaned_data['age'],
+#                     gender = form.cleaned_data['gender'],
+#                     email = form.cleaned_data['email'],
+#                     user_pw =form.cleaned_data['user_pw'],
+#                     )
+#                 new_username.save()
+#                 return HttpResponseRedirect("/successful_sign_up")
+#             else:
+#                 verify_pw_error = True
+#     else:
+#         verify_pw_error = False
+#         form = SignUpForm()
 
-def sign_up(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            if form.cleaned_data['user_pw'] == request.POST['verify_pw']:
-                new_username = Users(
-                    username = form.cleaned_data['username'],
-                    age = form.cleaned_data['age'],
-                    gender = form.cleaned_data['gender'],
-                    email = form.cleaned_data['email'],
-                    user_pw =form.cleaned_data['user_pw'],
-                    )
-                new_username.save()
-                return HttpResponseRedirect("/successful_sign_up")
-            else:
-                verify_pw_error = True
-    else:
-        verify_pw_error = False
-        form = SignUpForm()
+#     return render(request, 'climb_log_webapp_ES/sign_up.html', {'form':form, 'verify_pw_error':verify_pw_error})
 
-    return render(request, 'climb_log_webapp_ES/sign_up.html', {'form':form, 'verify_pw_error':verify_pw_error})
+class SuccessfulSignUp(TemplateView):
+    template_name = 'climb_log_webapp_ES/successful_sign_up.html'
 
-def successful_sign_up(request):
-    return render(request, 'climb_log_webapp_ES/successful_sign_up.html')
+# def successful_sign_up(request):
+#     return render(request, 'climb_log_webapp_ES/successful_sign_up.html')
 
 
 class SuccessfulNewEntry(LoginRequiredMixin, ListView):
@@ -128,8 +149,4 @@ class EntryDelete(LoginRequiredMixin, DeleteView):
     context_object_name = 'entry'
     success_url = reverse_lazy('entry-list')
 
-# class SignUp(CreateView):
-#     model = Users
-#     form_class = SignUpForm
-#     template_name = 'climb_log_webapp_ES/sign_up.html'
-#     success_url = 'climb_log_webapp_ES/successful_sign_up.html'
+
