@@ -8,16 +8,22 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+from django.contrib.auth.views import LoginView
 
 grades_list = [[['V'],['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15']],
               [['FR'],['5', '5+', '6a', '6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+', '7b', '7b+', '7c', '8a', '8a+', '8b', '8b+', '8c','8c+']],
                [['Color'],['verde', 'azul', 'amarillo', 'naranja', 'rojo', 'negro']]] 
 
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        return reverse_lazy('entry-list')
+
 class HomeView(TemplateView):
     template_name = 'climb_log_webapp_ES/home.html'
 
-# def home(request):
-#     return render(request, 'climb_log_webapp_ES/home.html')
 
 def new_entry(request):
     numbers = [i for i in range(1,9)]
@@ -54,8 +60,8 @@ def new_entry(request):
                                                                   'error':False}
                                                                   )
 
-def login(request):
-    return render(request, 'climb_log_webapp_ES/login.html')
+# def login(request):
+#     return render(request, 'climb_log_webapp_ES/login.html')
 
 def sign_up(request):
     if request.method == 'POST':

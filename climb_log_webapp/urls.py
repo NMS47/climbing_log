@@ -1,10 +1,12 @@
 from . import views
 from django.urls import path
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
+    path('login', views.CustomLoginView.as_view(), name='login'),
+    path('logout', LogoutView.as_view(next_page='homepage'), name='logout'),
 	path('', views.HomeView.as_view(), name='homepage'),
     path('add_new_entry', views.new_entry, name='new-entry-form'),
-    path('login', views.login, name='login'),
     path('sign_up/', views.sign_up, name='sign-up'),
     path('users',views.users, name='users'),
     path('successful_sign_up', views.successful_sign_up, name='successful_sign_up'),

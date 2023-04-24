@@ -11,9 +11,6 @@
   {%if form.errors%}
   <p>Something is wrong</p>
   {{form.errors.as_text }}
-    {% comment %} {%for error in form.errors%}
-      {{error.__all__}}
-    {%endfor%} {% endcomment %}
   {%endif%}
 <div class="container">
 <form class="form-signin" method="post">
