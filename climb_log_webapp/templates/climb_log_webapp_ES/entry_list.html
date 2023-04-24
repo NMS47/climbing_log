@@ -16,7 +16,7 @@
             <th>Multilargo</th>
             <th>Largos</th>
             <th>Grado</th>
-            <th>Pocision</th>
+            <th>Posicion</th>
             <th>Encadenamiento</th>
             <th>Intentos</th>
             <th>Notes</th>
@@ -38,6 +38,7 @@
             <td>{{entry.notes|default_if_none:"--"|truncatechars:10}}</td>
             <td>{{entry.date_of_entry}}</td>
             <td><a href="{% url 'entry-update' entry.id %}">✏️</a></td>
+            <td><a href="{% url 'entry-delete' entry.id %}">❌</a></td>
         </tr>
         {%endfor%}
     </table>

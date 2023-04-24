@@ -11,5 +11,6 @@ urlpatterns = [
     path('successful_new_entry', views.SuccessfulNewEntry.as_view(), name='successful-new-entry'),
     path('entry_detail/<int:pk>', views.EntryDetail.as_view(), name='entry-detail'),
     path('entry_list', views.EntryList.as_view(), name='entry-list'),
-    path('entry_update/<int:pk>', views.EntryUpdate.as_view(), name='entry-update')
+    path('entry_update/<int:pk>', views.EntryUpdate.as_view(), name='entry-update'),
+    path('entry_delete/<int:pk>', views.EntryDelete.as_view(), name='entry-delete'),
 ]
