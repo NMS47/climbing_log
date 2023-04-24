@@ -1,0 +1,16 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{%load static%}
+{% block title %}Eliminar Pegue {%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+{%block content%}
+<div>
+    <form method="POST">
+        {% csrf_token %}
+        <h2>Estas seguro que queres eliminar el pegue?</h2>
+        <br>
+        <input class="btn btn-danger" type="submit" value="Eliminar">
+    </form>
+</div>
+{%endblock%}

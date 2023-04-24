@@ -1,0 +1,15 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{%load static%}
+{% block title %}Editar Pegue {%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+{%block content%}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="btn btn-primary" type="submit" value="Guardar">
+    </form>
+</div>
+{%endblock%}
