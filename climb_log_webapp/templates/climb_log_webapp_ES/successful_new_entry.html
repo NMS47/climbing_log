@@ -13,11 +13,6 @@
    <p> O puedes agregar otro pegue <a href="{% url 'new-entry-form' %}">Aqui</a> </p>
 </div>
 <div>
-    {%for entry in entries%}
-    <h2><a href="{% url 'entry_details' pk=1 %}">{{entry.username.email}}</a></h2>
-    <p>{{entry.enviroment}}</p>
-    <p>{{entry.grade}}</p>
-    <p>{{entry.date}}</p>
-    {%endfor%}
+
 </div>
 {%endblock%}

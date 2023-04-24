@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 grades_list = [[['V'],['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15']],
               [['FR'],['5', '5+', '6a', '6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+', '7b', '7b+', '7c', '8a', '8a+', '8b', '8b+', '8c','8c+']],
@@ -31,7 +32,7 @@ def new_entry(request):
     if request.method =='POST':
         #    try:
             add_new_entry= Climb_entry(
-            # username = User.objects.get(username='nms47'),
+            username_id = request.user.id,
             date_of_climb = request.POST.get('date'),
             place_name = request.POST['place'],
             place_coord = 'xxxx',
@@ -89,42 +90,39 @@ def successful_sign_up(request):
     return render(request, 'climb_log_webapp_ES/successful_sign_up.html')
 
 
-def user_page(request):
-    user = next(user for users in user_id if users_name['user_name']== user_name)
-    pass
-
-def users(request):
-    users = User.objects.all()
-    return render(request, 'climb_log_webapp_ES/users.html', {'users':users})
-
-class SuccessfulNewEntry(ListView):
+class SuccessfulNewEntry(LoginRequiredMixin, ListView):
     template_name = 'climb_log_webapp_ES/successful_new_entry.html'
     model = Climb_entry
     context_object_name = 'entries'
 
     def get_queryset(self):
         user_entries = super().get_queryset()
-        data = user_entries.filter(username_id='3')
+        data = user_entries.filter(username=self.request.user)
         return data
     
-class EntryDetail(DetailView):
-    template_name= 'climb_log_webapp_ES/entry_detail.html'
-    model = Climb_entry
-    context_object_name = 'entry'
-
-class EntryList(ListView):
+class EntryList(LoginRequiredMixin, ListView):
     template_name= 'climb_log_webapp_ES/entry_list.html'
     model = Climb_entry
     context_object_name = 'entries'
 
-class EntryUpdate(UpdateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["entries"] = context['entries'].filter(username_id=self.request.user.id)
+        return context
+    
+class EntryDetail(LoginRequiredMixin, DetailView):
+    template_name= 'climb_log_webapp_ES/entry_detail.html'
+    model = Climb_entry
+    context_object_name = 'entry'
+
+class EntryUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'climb_log_webapp_ES/entry_update.html'
     model = Climb_entry
     fields = "__all__"
     context_object_name = 'entry'
     success_url = reverse_lazy('entry-list')
 
-class EntryDelete(DeleteView):
+class EntryDelete(LoginRequiredMixin, DeleteView):
     template_name = 'climb_log_webapp_ES/entry_confirm_delete.html'
     model = Climb_entry
     context_object_name = 'entry'
