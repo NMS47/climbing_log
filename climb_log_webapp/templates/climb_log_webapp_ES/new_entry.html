@@ -14,7 +14,8 @@
     <form  action="" method="POST">
         {% csrf_token %}
         <div class="form-group">
-            {%if error%}
+            {%if form.errors%}
+            {{form.errors.as_text}}
             <div class="row">
                 <p class="error">Por favor, comprueba que todas las categorias tengan un valor.</p>
             </div>

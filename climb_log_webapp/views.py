@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from datetime import datetime
 from .models import User, Climb_entry
 from django.http import Http404, HttpResponseRedirect
-from .forms import SignUpForm
+from .forms import NewEntryForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
@@ -46,6 +46,11 @@ class SignUpView(FormView):
 class HomeView(TemplateView):
     template_name = 'climb_log_webapp_ES/home.html'
 
+class NewEntryView(FormView):
+    template_name = 'climb_log_webapp_ES/new_entry.html'
+    form_class = NewEntryForm
+    success_url =reverse_lazy('successful-new-entry')
+
 
 def new_entry(request):
     numbers = [i for i in range(1,9)]
@@ -85,9 +90,6 @@ def new_entry(request):
 
 class SuccessfulSignUp(TemplateView):
     template_name = 'climb_log_webapp_ES/successful_sign_up.html'
-
-# def successful_sign_up(request):
-#     return render(request, 'climb_log_webapp_ES/successful_sign_up.html')
 
 
 class SuccessfulNewEntry(LoginRequiredMixin, ListView):
