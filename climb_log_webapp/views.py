@@ -100,6 +100,7 @@ class EntryDetail(LoginRequiredMixin, DetailView):
 class EntryUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'climb_log_webapp_ES/entry_update.html'
     model = Climb_entry
+    # Created a form class to exclude the username field
     form_class = UpdateEntryForm
     context_object_name = 'entry'
     success_url = reverse_lazy('entry-list')
