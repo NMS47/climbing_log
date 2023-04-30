@@ -8,7 +8,7 @@ class Climb_entry(models.Model):
     username = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
     date_of_climb = models.DateField()
     place_name = models.CharField(max_length=40)
-    place_coord = models.CharField(max_length=30)
+    place_coord = models.CharField(max_length=30, null=True, blank=True)
     enviroment = models.CharField(max_length=20)
     climb_style = models.CharField(max_length=15)
     multipitches = models.BooleanField()

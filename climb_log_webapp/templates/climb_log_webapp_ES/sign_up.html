@@ -16,72 +16,20 @@
     <div class="container sign-up-form">
         <form action="sign_up" method="POST">
             {%csrf_token%}
-            {% comment %} <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="username">Nombre de usuario</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Elige tu nombre de usuario">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                
-                    <div class="col">
-                            <label for="age">Edad</label>
-                            <input class="form-control age-input" type="number" id="age" name="age">
-                    </div>
-                    <div class="col gender">
-                        <label for="gender">Genero:</label>                        
-                            <div class="form-check">
-                                <label for="woman">Mujer</label>
-                                <input class="form-check-input" type="radio" id="woman" name="gender" value="woman">
-                            </div>
-                            <div class="form-check">
-                                <label for="man">Hombre</label>
-                                <input class="form-check-input" type="radio" id="man" name="gender" value="man">                           
-                            </div>
-                            <div class="form-check">
-                                <label for="other">Otro</label>
-                                <input class="form-check-input" type="radio" id="other" name="gender" value="other">                            
-                            </div>
-                    </div>
-                                
-            </div>
-            <div class="row">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Tu email">
-                    </div>
-            </div>
-
-            <div class="row">
-                    <div class="form-group">
-                        <label for="password1">Elige una contrasena</label>
-                        <input type="password" class="form-control" id="password1" placeholder="Minimo 6 caracteres">
-                    </div>
-            </div>
-
-            <div class="row">
-                    <div class="form-group">
-                        <label for="password2">Escribe de nuevo la contrasena</label>
-                        <input type="password" class="form-control" id="password2" name="pw" placeholder="Repite la contrasena">
-                    </div>
-            </div>
-
-            <div class="row">
-
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button> {% endcomment %}
             {%for field in form%}
+            {{field.label}}
+            {%endfor%}
+
+            {% comment %} {%for field in form%}
             <div class="row">
                 <div class="col">
                     {{field.label}}
                     {{field}}
+                    {%if field.errors%}
                     {%for error in field.errors%}
                     <p>{{error}}</p>
                     {%endfor%}
+                    {%endif%}
                 </div>
             </div>
             {%endfor%}
@@ -94,7 +42,7 @@
                     {%endif%}
                 </div>
             </div>                
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Registrarse</button> {% endcomment %}
           </form>
     </div>
 </main>

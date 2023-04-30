@@ -20,12 +20,19 @@
                 <p class="error">Por favor, comprueba que todas las categorias tengan un valor.</p>
             </div>
             {%endif%}
+            {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p> {{ error }} </p>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
             <div class="row">
                 <div class="col-2">
                     <label for="date">Fecha del pegue:</label>
                 </div>
                 <div class="col-auto">
-                    <input class="themed" type="date" name="date" default="{{date_today}}" value="{{date_today}}">
+                    <input class="themed" type="date" name="date_of_climb" id="date_of_climb" max="{{date_today}}" default="{{date_today}}" value="{{date_today}}">
                 </div>
                 
             </div>
@@ -38,7 +45,7 @@
                     <label for="place">Lugar: </label>
                 </div>
                 <div class="col-auto">
-                    <input class="themed" type="text" class="form-control" placeholder="Sector de escalada/Palestra" aria-label="Sector de escalada/Palestra" aria-describedby="basic-addon1" name="place" id="place">
+                    <input class="themed" type="text" class="form-control" placeholder="Sector de escalada/Palestra" name="place_name" id="place_name">
                 </div>
             </div>
         </div>
@@ -66,13 +73,13 @@
                     <label>Estilo: </label>
                 </div>
                 <div class="col-auto">
-                    <input type="radio" class="btn-check" name="climb-style"  id="boulder" value="boulder" autocomplete="off">
+                    <input type="radio" class="btn-check" name="climb_style"  id="boulder" value="boulder" autocomplete="off">
                     <label class="btn btn-outline-success" for="boulder">Boulder </label>
                     
-                    <input type="radio" class="btn-check" name="climb-style" id="sport" value="sport" autocomplete="off">
+                    <input type="radio" class="btn-check" name="climb_style" id="sport" value="sport" autocomplete="off">
                     <label class="btn btn-outline-success" for="sport">Deportiva</label>
                     
-                    <input type="radio" class="btn-check" name="climb-style" id="trad" value="trad" autocomplete="off">
+                    <input type="radio" class="btn-check" name="climb_style" id="trad" value="trad" autocomplete="off">
                     <label class="btn btn-outline-success" for="trad">Clasica</label>
                 </div>    
             </div>
@@ -85,14 +92,14 @@
                     <label>Largos: </label>
                 </div>
                 <div class="col-auto">
-                    <input type="radio" class="btn-check" name="pitches" value="False" id="single-pitch" autocomplete="off"checked>
+                    <input type="radio" class="btn-check" name="multipitches" value="False" id="singlepitch" autocomplete="off"checked>
                     <label class="btn btn-outline-success" for="single-pitch">Monolargo</label>
-                    <input type="radio" class="btn-check" name="pitches" value="True" id="multi-pitch" autocomplete="off">
+                    <input type="radio" class="btn-check" name="multipitches" value="True" id="multipitch" autocomplete="off">
                     <label class="btn btn-outline-success" for="multi-pitch" >Multilargo</label>
                 </div>    
                 <div class="col-md-4">
                     <label for="num-pitches">Nro largos:</label>
-                    <select class="form-control short-num" name="num-pitches" id="num-pitches">
+                    <select class="form-control short-num" name="num_pitches" id="num_pitches">
                         {%for num in attempts%}
                         <option value="{{num}}">{{num}}</option>
                         {%endfor%}
@@ -129,10 +136,10 @@
                     Posicion en la escalada:
                 </div>
                 <div class="col-auto">
-                    <input type="radio" class="btn-check" name="climber-position" id="lead" value="lead" autocomplete="off">
+                    <input type="radio" class="btn-check" name="climber_position" id="lead" value="lead" autocomplete="off">
                     <label class="btn btn-outline-success" for="lead">De primero</label>
         
-                    <input type="radio" class="btn-check" name="climber-position" id="top-rope" value="top-rope" autocomplete="off">
+                    <input type="radio" class="btn-check" name="climber_position" id="top-rope" value="top-rope" autocomplete="off">
                     <label class="btn btn-outline-success" for="top-rope">Top Rope</label>
                 </div>
             </div>
@@ -145,19 +152,19 @@
                     <label>Tipo de ascenso:</label>
                 </div>
                 <div class="col-auto">
-                    <input type="radio" class="btn-check" name="ascent-type" id="onsight" value="on-sight" autocomplete="off">
+                    <input type="radio" class="btn-check" name="ascent_type" id="onsight" value="on-sight" autocomplete="off">
                     <label class="btn btn-outline-success" for="onsight">A vista</label>
         
-                    <input type="radio" class="btn-check" name="ascent-type" id="red-point" value="red-point" autocomplete="off">
+                    <input type="radio" class="btn-check" name="ascent_type" id="red-point" value="red-point" autocomplete="off">
                     <label class="btn btn-outline-success" for="red-point">Red Point</label>
         
-                    <input type="radio" class="btn-check" name="ascent-type" id="flash" value="flash" autocomplete="off">
+                    <input type="radio" class="btn-check" name="ascent_type" id="flash" value="flash" autocomplete="off">
                     <label class="btn btn-outline-success" for="flash">Flash</label>
         
-                    <input type="radio" class="btn-check" name="ascent-type" id="fall-take" value="fall-take" autocomplete="off">
+                    <input type="radio" class="btn-check" name="ascent_type" id="fall-take" value="fall-take" autocomplete="off">
                     <label class="btn btn-outline-success" for="fall-take">Con caida o tension</label>
         
-                    <input type="radio" class="btn-check" name="ascent-type" id="incomplete" value="incomplete" autocomplete="off">
+                    <input type="radio" class="btn-check" name="ascent_type" id="incomplete" value="incomplete" autocomplete="off">
                     <label class="btn btn-outline-success" for="incomplete">No completada</label>  
                 </div>
             </div>
@@ -170,7 +177,7 @@
                     <label for="num-attempts">Intentos:</label>
                 </div>
                 <div class="col-auto">
-                    <select class="form-control short-num" id="num-attempts" name="num-attempts" required>
+                    <select class="form-control short-num" id="num_attempts" name="num_attempts" required>
                         <option disabled selected value="">-</option>
                         {%for num in attempts%}
                         <option value="{{num}}">{{num}}</option>
@@ -186,13 +193,16 @@
                 <div class="col-2">                    
                     <label for="notes">Notas:</label>
                 </div>
-                <div class="col-auto">
+                <div class="col-10 col-md-8 col-sm-6">
                     <textarea class="form-control themed" id="notes" name="notes" rows="3" default="no notes" placeholder="Nombre de la via, Es plaquera o de desplome? Calidad de la roca, etc."></textarea>
                 </div>
             </div>
         </div>
         <br>
         <input class="btn btn-primary" type="submit" value="Agregar pegue">
+        {%for num in numbers%}
+        <p>{{num}}</p>
+        {%endfor%}
     </form>
 </div>
 {%endblock%}
