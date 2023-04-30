@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
+import requests
 from .models import User, Climb_entry
 from django.http import Http404, HttpResponseRedirect
 from .forms import NewEntryForm, UpdateEntryForm
@@ -35,6 +36,13 @@ class SignUpView(FormView):
         user = form.save()
         if user is not None:
             login(self.request, user)
+            response = requests.post('https://pixe.la/v1/users', json={
+                "token":"the_climbing_log", 
+                "username":f"{self.request.user}ClimbingLog", 
+                "agreeTermsOfService":"yes", 
+                "notMinor":"yes",
+                 })
+            print(response.text)   
         return super(SignUpView, self).form_valid(form)
     
     def get(self, *args, **kwargs):
@@ -42,6 +50,16 @@ class SignUpView(FormView):
             return redirect('entry-list')
         
         return super(SignUpView, self).get(*args, **kwargs)
+    
+    def create_pixela(self, *args, **kwargs):
+        response = requests.post('https://pixe.la/v1/users', data={
+            "token":"the_climbing_log", 
+            "username":f"{self.request.user}.climbing_log", 
+            "agreeTermsOfService":"yes", 
+            "notMinor":"yes"
+        })
+        print(response.text)
+        return response
 
 class HomeView(TemplateView):
     template_name = 'climb_log_webapp_ES/home.html'
