@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 from .models import User, Climb_entry
 from django.http import Http404, HttpResponseRedirect
-from .forms import NewEntryForm, UpdateEntryForm
+from .forms import NewEntryForm, UpdateEntryForm, UserCreateForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
@@ -18,15 +18,19 @@ grades_list = [[['V'],['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9
               [['FR'],['5', '5+', '6a', '6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+', '7b', '7b+', '7c', '8a', '8a+', '8b', '8b+', '8c','8c+']],
                [['Color'],['verde', 'azul', 'amarillo', 'naranja', 'rojo', 'negro']]] 
 
+PIXELA_TOKEN = "the_climbing_log"
+PIXELA_URL = 'https://pixe.la'
+
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
     redirect_authenticated_user = True
 
     def get_success_url(self):
+        self.request.session['pixela_username'] = f"{self.request.user}climbinglog".lower()
         return reverse_lazy('entry-list')
     
 class SignUpView(FormView):
-    form_class = UserCreationForm
+    form_class = UserCreateForm
     template_name = 'registration/sign_up.html'
     
     def get_success_url(self):
@@ -36,30 +40,22 @@ class SignUpView(FormView):
         user = form.save()
         if user is not None:
             login(self.request, user)
-            response = requests.post('https://pixe.la/v1/users', json={
-                "token":"the_climbing_log", 
-                "username":f"{self.request.user}ClimbingLog", 
+            self.request.session['pixela_username'] = f"{self.request.user}climbinglog".lower()
+            response = requests.post(f'{PIXELA_URL}/v1/users', json={
+                "token":PIXELA_TOKEN, 
+                "username":self.request.session['pixela_username'], 
                 "agreeTermsOfService":"yes", 
                 "notMinor":"yes",
                  })
-            print(response.text)   
-        return super(SignUpView, self).form_valid(form)
+            print(response.text)
+
+            return super(SignUpView, self).form_valid(form)
     
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
             return redirect('entry-list')
         
         return super(SignUpView, self).get(*args, **kwargs)
-    
-    def create_pixela(self, *args, **kwargs):
-        response = requests.post('https://pixe.la/v1/users', data={
-            "token":"the_climbing_log", 
-            "username":f"{self.request.user}.climbing_log", 
-            "agreeTermsOfService":"yes", 
-            "notMinor":"yes"
-        })
-        print(response.text)
-        return response
 
 class HomeView(TemplateView):
     template_name = 'climb_log_webapp_ES/home.html'
@@ -79,15 +75,54 @@ class NewEntryView(LoginRequiredMixin, FormView):
         return context
 
 # This is to add a username to the climb_entry, otherwise it is not saved to db
+
     def form_valid(self, form):
         form.instance.username = self.request.user
         form.save()
+# Second part is to save data in pixela
+        pixela_user = self.request.session['pixela_username']
+        graph_id = f'climblog{str(self.request.user.id)}'
+        date = (form.instance.date_of_climb).strftime('%Y%m%d')
+        #This is a made-up coeficient so that a multipitch is worth more than an attempt in the
+        #intensity of climb
+        total_quatity = round((form.instance.num_pitches*2 + form.instance.num_attempts)/3)
+        #This while loop is here because pixela reject 25% of requests for non-supporter
+        while True:
+            response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}',
+                                        json={
+                                            "date":f"{date}",
+                                            "quantity": f"{total_quatity}",
+                                            # "optionalData":f"{form.instance.num_attempts}",
+                                        },
+                                        headers={'X-USER-TOKEN': PIXELA_TOKEN})
+            print(response.text)
+            response_data = response.json()
+            if response_data['isSuccess']:
+                break
+
         return super().form_valid(form)
 
 
 
 class SuccessfulSignUp(TemplateView):
     template_name = 'climb_log_webapp_ES/successful_sign_up.html'
+
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            pixela_user = self.request.session['pixela_username']
+            
+            response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs', 
+                json={
+                    "id":f"climblog{str(self.request.user.id)}",
+                    "name":pixela_user,
+                    "unit":"climbs",
+                    "type":"int",
+                    "color":"shibafu",
+                    "timezone":"America/Argentina/Buenos_Aires"
+                },
+                headers={'X-USER-TOKEN': PIXELA_TOKEN},)
+            print(response.text)
+        return super().get(*args, **kwargs)    
 
 
 class SuccessfulNewEntry(LoginRequiredMixin, ListView):
