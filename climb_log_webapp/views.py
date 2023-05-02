@@ -142,7 +142,11 @@ class EntryList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["entries"] = context['entries'].filter(username_id=self.request.user.id)
+        pixela_user = self.request.session['pixela_username']
+        graph_id = f'climblog{str(self.request.user.id)}'
+        context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
+        print(context['pixela'])
+        context['entries'] = context['entries'].filter(username_id=self.request.user.id)
         return context
     
 class EntryDetail(LoginRequiredMixin, DetailView):
@@ -164,40 +168,6 @@ class EntryDelete(LoginRequiredMixin, DeleteView):
     context_object_name = 'entry'
     success_url = reverse_lazy('entry-list')
 
+    def delete(self, request, *args, **kwargs):
 
-
-
-# def new_entry(request):
-#     numbers = [i for i in range(1,9)]
-
-#     if request.method =='POST':
-#         try:
-#             add_new_entry= Climb_entry(
-#             username_id = request.user.id,
-#             date_of_climb = request.POST.get('date'),
-#             place_name = request.POST['place'],
-#             place_coord = 'xxxx',
-#             enviroment = request.POST['enviroment'],
-#             climb_style = request.POST['climb-style'],
-#             multipitches = request.POST['pitches'],
-#             num_pitches = request.POST['num-pitches'],
-#             grade = request.POST['grade'],
-#             climber_position = request.POST['climber-position'],
-#             ascent_type = request.POST['ascent-type'],
-#             num_attempts = request.POST['num-attempts'],
-#             notes = request.POST['notes']
-#             )
-#             print(request.POST['grade'])
-#             add_new_entry.save()
-#             return HttpResponseRedirect("/successful_new_entry")
-#         except:
-#             return render(request, 'climb_log_webapp_ES/new_entry.html', {'grades_list': grades_list,
-#                                 'date_today':(datetime.today().strftime('%Y-%m-%d')),
-#                                 'attempts': numbers,
-#                                 'error':True})
-               
-#     return render(request, 'climb_log_webapp_ES/new_entry.html', {'grades_list': grades_list,
-#                                                                   'date_today':(datetime.today().strftime('%Y-%m-%d')),
-#                                                                   'attempts': numbers,
-#                                                                   'error':False}
-#                                                                   )
+        return super().delete(request, *args, **kwargs)

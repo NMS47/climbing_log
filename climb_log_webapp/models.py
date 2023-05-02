@@ -24,4 +24,4 @@ class Climb_entry(models.Model):
         return f"{self.username}, {self.grade}, {self.date_of_climb}"
     
     class Meta:
-        ordering = ["date_of_entry"]
+        ordering = ["date_of_climb"]

@@ -7,6 +7,12 @@
 {%endblock%}
 {%block content%}
 <h1>Hola {{request.user}} </h1>
+<div>
+    <h3>Este es tu historial de escaladas:</h3>
+    <p>A medida que vayas cargando tus pegues vas a poder verlos reflejados en este grafico-calendario</p>
+    <img class="pixela-graph" src="{{pixela}}?appearance=dark" alt="Pixela Graph">
+    <img class="pixela-graph" src="{{pixela}}?mode=line&appearance=dark" alt="Pixela Graph">
+</div>
 <h3>Estos son tus pegues registrados:</h3>
 <div>
     <table>
