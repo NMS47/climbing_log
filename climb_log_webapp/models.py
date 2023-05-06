@@ -17,7 +17,7 @@ class Climb_entry(models.Model):
     climber_position = models.CharField(max_length=15)
     ascent_type = models.CharField(max_length=20)
     num_attempts = models.PositiveSmallIntegerField()
-    notes = models.TextField(max_length=400)
+    notes = models.TextField(max_length=400, default='No hay notas', blank=True)
     date_of_entry = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
