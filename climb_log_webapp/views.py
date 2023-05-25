@@ -1,5 +1,11 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
+#For plotly charts
+import pandas as pd
+from plotly.offline import plot
+import plotly.express as px
+import plotly.graph_objs as go
+
 import requests
 from .models import User, Climb_entry
 from django.http import Http404, HttpResponseRedirect
@@ -136,6 +142,38 @@ class SuccessfulNewEntry(LoginRequiredMixin, ListView):
         user_entries = super().get_queryset()
         data = user_entries.filter(username=self.request.user)
         return data
+    
+class Profile(LoginRequiredMixin, ListView):
+    template_name= 'climb_log_webapp_ES/profile.html'
+    model = Climb_entry
+    context_object_name = 'entries'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pixela_user = self.request.session['pixela_username']
+        graph_id = f'climblog{str(self.request.user.id)}'
+        context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
+        context['entries'] = context['entries'].filter(username_id=self.request.user.id)
+
+        columns = ['enviroment', 'climb_style', 'grade', 'climber_position', 'ascent_type']
+     
+        print('++++++++')
+
+        df = pd.DataFrame(context['entries'].values('enviroment'))
+
+        print(df.value_counts())
+        print('------------')
+        enviroment_count = df.value_counts()
+
+        fig = go.Figure()
+        bar = go.Bar(x=enviroment_count.values, y=enviroment_count.index.get_level_values(0), orientation='h')
+        fig.update_layout(showlegend=False, paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', xaxis_title='Pegues', yaxis_title='Enviroment', xaxis=dict(color='white'), yaxis=dict(color='white') )
+        fig.add_trace(bar)
+        fig.update_traces(marker_color=('orange', 'green', 'red', 'blue'))
+        enviroment_plot = plot(fig, output_type='div', include_plotlyjs=False, show_link=False, link_text="")
+        context['enviroment_plot'] = enviroment_plot
+        return context
+
     
 class EntryList(LoginRequiredMixin, ListView):
     template_name= 'climb_log_webapp_ES/entry_list.html'

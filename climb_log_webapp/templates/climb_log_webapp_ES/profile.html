@@ -1,0 +1,24 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{%load static%}
+{% block title %}Pegues de usuario {%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/entry_list.css' %}">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{%endblock%}
+{%block content%}
+<h1>Hola {{request.user}} </h1>
+<div>
+    <h3>Este es tu historial de escaladas:</h3>
+    <p>A medida que vayas cargando tus pegues vas a poder verlos reflejados en este grafico-calendario</p>
+    <img class="pixela-graph" src="{{pixela}}?appearance=dark" alt="Pixela Graph">
+    <img class="pixela-graph" src="{{pixela}}?mode=line&appearance=dark" alt="Pixela Graph">
+</div>
+<h3>Estos son tus pegues registrados:</h3>
+<div style="width: 75%; height:auto; margin:auto">
+    {%autoescape off%}
+        {{enviroment_plot}}
+    {% endautoescape %}
+</div>
+
+{%endblock%}

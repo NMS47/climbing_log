@@ -8,7 +8,9 @@ urlpatterns = [
     path('sign_up/', views.SignUpView.as_view(), name='sign-up'),
 
 	path('', views.HomeView.as_view(), name='homepage'),
+    path('profile/', views.Profile.as_view(), name='user-profile'),
     path('entry_list/', views.EntryList.as_view(), name='entry-list'),
+
 
     path('entry_detail/<int:pk>', views.EntryDetail.as_view(), name='entry-detail'),
     path('add_new_entry/', views.NewEntryView.as_view(), name='new-entry-form'),
