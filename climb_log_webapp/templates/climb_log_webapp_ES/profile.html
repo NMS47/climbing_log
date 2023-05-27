@@ -15,10 +15,15 @@
     <img class="pixela-graph" src="{{pixela}}?mode=line&appearance=dark" alt="Pixela Graph">
 </div>
 <h3>Estos son tus pegues registrados:</h3>
-<div style="width: 75%; height:auto; margin:auto">
-    {%autoescape off%}
-        {{enviroment_plot}}
-    {% endautoescape %}
+<div class="row">
+{%for chart in columns_plots%}
+    <div class="col-lg-3" >
+        <div class="chart"  >
+            {%autoescape off%}
+                {{chart}}
+            {% endautoescape %}
+        </div>
+    </div>
+{%endfor%}
 </div>
-
 {%endblock%}

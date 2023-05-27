@@ -154,24 +154,55 @@ class Profile(LoginRequiredMixin, ListView):
         graph_id = f'climblog{str(self.request.user.id)}'
         context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
         context['entries'] = context['entries'].filter(username_id=self.request.user.id)
+        # col_names = context['entries'].values()[0].keys()
+        # col_names.remove('id', 'username_id', 'place_coord', 'notes', )
 
-        columns = ['enviroment', 'climb_style', 'grade', 'climber_position', 'ascent_type']
-     
-        print('++++++++')
+        simple_charts = []
+        col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
 
-        df = pd.DataFrame(context['entries'].values('enviroment'))
+        df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
+        clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()
+        # print(clean_df)
+        # print('++++++++')
+        # # print(df_grades)
+        fig = px.bar(clean_df, x='enviroment', 
+                     y='num_attempts', 
+                     color='ascent_type',
+                     color_continuous_scale=px.colors.sequential.Viridis
+                     )
+        fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', 
+                          plot_bgcolor = 'rgba(0, 0, 0, 0)', 
+                          xaxis=dict(color='white'), yaxis=dict(color='white'), 
+                          height=300, width=250, 
+                          margin=dict(l=20, r=0, t=26, b=6),
+                          legend=dict(font=dict(
+                                        family="Arial",
+                                        size=10,
+                                        color="white")),
+                          
+                          )
+        # fig.add_trace(bar)
+        
+        effectiveness_plot = plot(fig, output_type='div',)
+        context['effectiveness_plot'] = effectiveness_plot
+        simple_charts.append(context['effectiveness_plot'])
 
-        print(df.value_counts())
-        print('------------')
-        enviroment_count = df.value_counts()
+        
+        for column_name in col_names:
+            df = pd.DataFrame(context['entries'].values(column_name))
+            value_count = df.value_counts()
 
-        fig = go.Figure()
-        bar = go.Bar(x=enviroment_count.values, y=enviroment_count.index.get_level_values(0), orientation='h')
-        fig.update_layout(showlegend=False, paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', xaxis_title='Pegues', yaxis_title='Enviroment', xaxis=dict(color='white'), yaxis=dict(color='white') )
-        fig.add_trace(bar)
-        fig.update_traces(marker_color=('orange', 'green', 'red', 'blue'))
-        enviroment_plot = plot(fig, output_type='div', include_plotlyjs=False, show_link=False, link_text="")
-        context['enviroment_plot'] = enviroment_plot
+            fig = go.Figure()
+            bar = go.Bar(x=value_count.index.get_level_values(0), y=value_count.values, )
+            fig.update_layout(showlegend=False, paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', title=column_name.capitalize(),  xaxis=dict(color='white'), yaxis=dict(color='white'), height=200, width=200, margin=dict(l=6, r=0, t=26, b=6), )
+            fig.add_trace(bar)
+            fig.update_traces(marker_color=px.colors.qualitative.Prism)
+            column_plot = plot(fig, output_type='div', include_plotlyjs=False, show_link=False, link_text="")
+            
+            simple_charts.append(column_plot)
+            context['columns_plots'] = simple_charts
+
+
         return context
 
     

@@ -22,3 +22,11 @@ table {
   img {
     width: 50%
   }
+
+  .chart {
+  }
+/* The only way i found to center the charts */
+ div div div div{
+  justify-content: center;
+  display: flex !important;
+ }
