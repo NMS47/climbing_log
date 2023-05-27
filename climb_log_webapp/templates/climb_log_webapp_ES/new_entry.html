@@ -193,15 +193,23 @@
                     <label for="notes">Notas:</label>
                 </div>
                 <div class="col-10 col-md-8 col-sm-6">
-                    <textarea class="form-control themed" id="notes" name="notes" rows="3" default_if_none="no notes"  placeholder="Nombre de la via, Es plaquera o de desplome? Calidad de la roca, etc."></textarea>
+                    <textarea class="form-control themed" id="notes" name="notes" rows="3"  placeholder="Nombre de la via, Es plaquera o de desplome? Calidad de la roca, etc."></textarea>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-3">
+                    <label for="multiple_entries">Vias/bloques del mismo grado:</label>
+                </div>
+                <div class="col-auto">
+                    <input type="number" class="form-control medium-num" id="multiple_entries" name="multiple_entries" placeholder=0 required>
                 </div>
             </div>
         </div>
         <br>
         <input class="btn btn-primary" type="submit" value="Agregar pegue">
-        {%for num in numbers%}
-        <p>{{num}}</p>
-        {%endfor%}
     </form>
 </div>
 <script src="{% static 'climb_log_webapp/new_entry.js' %}"></script>

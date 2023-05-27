@@ -8,7 +8,7 @@ import plotly.graph_objs as go
 
 import requests
 from .models import User, Climb_entry
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from .forms import NewEntryForm, UpdateEntryForm, UserCreateForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
@@ -83,32 +83,48 @@ class NewEntryView(LoginRequiredMixin, FormView):
         return context
 
 # This is to add a username to the climb_entry, otherwise it is not saved to db
-
     def form_valid(self, form):
+        number_of_entries = int(self.request.POST.get('multiple_entries',''))
         form.instance.username = self.request.user
-        form.save()
-# Second part is to save data in pixela
-        pixela_user = self.request.session['pixela_username']
-        graph_id = f'climblog{str(self.request.user.id)}'
-        date = (form.instance.date_of_climb).strftime('%Y%m%d')
-        #This is a made-up coeficient so that a multipitch is worth more than an attempt in the
-        #intensity of climb
-        total_quatity = round((form.instance.num_pitches*2 + form.instance.num_attempts)/3)
-        #This while loop is here because pixela reject 25% of requests for non-supporter
-        while True:
-            response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}',
-                                        json={
-                                            "date":f"{date}",
-                                            "quantity": f"{total_quatity}",
-                                            # "optionalData":f"{form.instance.num_attempts}",
-                                        },
-                                        headers={'X-USER-TOKEN': PIXELA_TOKEN})
-            print(response.text)
-            response_data = response.json()
-            if response_data['isSuccess']:
-                break
+        instance = form.save(commit=False)
+        for n in range(number_of_entries):
+            instance.pk = None
+            instance.save()
 
+    # Second part is to save data in pixela
+            pixela_user = self.request.session['pixela_username']
+            graph_id = f'climblog{str(self.request.user.id)}'
+            date = (form.instance.date_of_climb).strftime('%Y%m%d')
+            #This is a made-up coeficient so that a multipitch is worth more than an attempt in the
+            #intensity of climb
+            total_quatity = round((form.instance.num_pitches*2 + form.instance.num_attempts)/3)
+            #This while loop is here because pixela reject 25% of requests for non-supporter
+            while True:
+                response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}',
+                                            json={
+                                                "date":f"{date}",
+                                                "quantity": f"{total_quatity}",
+                                                # "optionalData":f"{form.instance.num_attempts}",
+                                            },
+                                            headers={'X-USER-TOKEN': PIXELA_TOKEN})
+                print(response.text)
+                response_data = response.json()
+                if response_data['isSuccess']:
+                    break
+            print('entry saved')
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        return self.render_to_response(self.get_context_data(form=form))
+
+    
+    # def post(self, request, *args, **kwargs):
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
 
 
 
@@ -216,7 +232,7 @@ class EntryList(LoginRequiredMixin, ListView):
         pixela_user = self.request.session['pixela_username']
         graph_id = f'climblog{str(self.request.user.id)}'
         context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
-        context['entries'] = context['entries'].filter(username_id=self.request.user.id)
+        context['entries'] = context['entries'].filter(username_id=self.request.user.id).order_by('-id')
         return context
     
 class EntryDetail(LoginRequiredMixin, DetailView):

@@ -19,7 +19,7 @@ textarea{
     margin-left: 0.3rem;
 }
 
-.themed, .short-num, .grade{
+.themed,.medium-num, .short-num, .grade{
     background-color: #232020;
     color: #F4F4F4;
     border: #014104;
@@ -41,8 +41,12 @@ textarea{
     max-width: 3rem;
     text-align: center;
 }
+.medium-num{
+    max-width: 4rem;
+    text-align: center;
+}
 
-.short-num:hover, .short-num:active, .short-num:target, .short-num:disabled, .grade:active, .grade:hover, .grade:checked, .grade:focus {
+.medium-num:hover, .short-num:hover, .short-num:active, .short-num:target, .short-num:disabled, .grade:active, .grade:hover, .grade:checked, .grade:focus {
     background-color: #363333;
     color: #F4F4F4;
 }
