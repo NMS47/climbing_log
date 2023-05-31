@@ -170,21 +170,16 @@ class Profile(LoginRequiredMixin, ListView):
         graph_id = f'climblog{str(self.request.user.id)}'
         context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
         context['entries'] = context['entries'].filter(username_id=self.request.user.id)
-        # col_names = context['entries'].values()[0].keys()
-        # col_names.remove('id', 'username_id', 'place_coord', 'notes', )
 
         simple_charts = []
-        col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
-
-        df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
-        clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()
-        # print(clean_df)
-        # print('++++++++')
-        # # print(df_grades)
+        
+        # Bar chart stacked of enviroment
+        df_attempts = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
+        clean_df = df_attempts.groupby(by=['enviroment','ascent_type'], as_index=False).sum()
         fig = px.bar(clean_df, x='enviroment', 
                      y='num_attempts', 
                      color='ascent_type',
-                     color_continuous_scale=px.colors.sequential.Viridis
+                     color_discrete_sequence=px.colors.sequential.RdBu
                      )
         fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', 
                           plot_bgcolor = 'rgba(0, 0, 0, 0)', 
@@ -195,15 +190,23 @@ class Profile(LoginRequiredMixin, ListView):
                                         family="Arial",
                                         size=10,
                                         color="white")),
-                          
                           )
-        # fig.add_trace(bar)
-        
         effectiveness_plot = plot(fig, output_type='div',)
         context['effectiveness_plot'] = effectiveness_plot
         simple_charts.append(context['effectiveness_plot'])
 
-        
+        # Pie Chart of climbing style
+        data= context['entries'].values('climb_style', 'num_attempts')
+        df_style = pd.DataFrame(data)
+        print(df_style)
+        fig = px.pie(df_style, values='num_attempts', names='climb_style', title='Tipo de Escalada', color_discrete_sequence=px.colors.sequential.Agsunset)
+        fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)',  xaxis=dict(color='white'), yaxis=dict(color='white'), height=400, width=400, margin=dict(l=6, r=0, t=26, b=6), )
+        style_plot = plot(fig, output_type='div',)
+        context['style_plot'] = style_plot
+        simple_charts.append(context['style_plot'])
+
+        # Bar charts of varios data
+        col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
         for column_name in col_names:
             df = pd.DataFrame(context['entries'].values(column_name))
             value_count = df.value_counts()
