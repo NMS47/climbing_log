@@ -3,6 +3,11 @@
     padding-left: 30%;
 }
 
+.first{
+    color: #03a70b;
+    
+}
+
 .btn-outline-success {
     margin: 0.2rem auto;
     color: #F4F4F4 !important;
@@ -10,11 +15,20 @@
 
 body {
     background-color: #232020;
-    margin: 4rem auto ;
+    margin: 4rem 1rem ;
     color: #F4F4F4;
 }
 
 hr {
     background-color: #014104;
     border: none
+}
+
+h1 {
+    font-family: 'Cabin Sketch';
+    /* font-family: 'Love Ya Like A Sister', cursive; */
+    /* font-family: 'Rock 3D', cursive; */
+    /* font-family: 'Dokdo', cursive; */
+    color: rgb(243, 142, 9);
+    font-size: 5rem;
 }
