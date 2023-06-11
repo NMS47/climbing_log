@@ -10,11 +10,10 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    {%block css_files%} {%endblock%}
+    {%block css_files%}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    {% comment %} <link rel="stylesheet" href="{% static 'styles.css' %}">
-    {% block css_files %}
-    {% endblock %} {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}"> {% endcomment %}
+    {% endblock %}
     
 </head>
 {% comment %} {% include 'blog/includes/header.html' %} {% endcomment %}
