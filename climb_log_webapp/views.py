@@ -171,6 +171,9 @@ class Profile(LoginRequiredMixin, ListView):
         context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
         context['entries'] = context['entries'].filter(username_id=self.request.user.id)
 
+        # df_download = pd.DataFrame(context['entries'].values())
+        # df_download.to_csv('pegues.csv')
+
         simple_charts = []
         col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
         # df_download = pd.DataFrame(context['entries'])
@@ -203,7 +206,18 @@ class Profile(LoginRequiredMixin, ListView):
         context['effectiveness_plot'] = effectiveness_plot
         simple_charts.append(context['effectiveness_plot'])
 
-        
+        # Pie Chart of climbing style
+        data= context['entries'].values('climb_style', 'num_attempts')
+        df_style = pd.DataFrame(data)
+
+        fig = px.pie(df_style, values='num_attempts', names='climb_style', title='Tipo de Escalada', color_discrete_sequence=px.colors.sequential.Agsunset)
+        fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)',  xaxis=dict(color='white'), yaxis=dict(color='white'), height=400, width=400, margin=dict(l=6, r=0, t=26, b=6), )
+        style_plot = plot(fig, output_type='div',)
+        context['style_plot'] = style_plot
+        simple_charts.append(context['style_plot'])
+
+        # Bar charts of varios data
+        col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
         for column_name in col_names:
             df = pd.DataFrame(context['entries'].values(column_name))
             value_count = df.value_counts()
