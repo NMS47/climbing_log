@@ -1,0 +1,21 @@
+.subtitle{
+ background-color: #2b2a2a;   
+}
+
+.icon {
+border-radius: 50%;
+vertical-align: middle;
+transform: translateZ(0);
+box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+backface-visibility: hidden;
+-moz-osx-font-smoothing: grayscale;
+transition-duration: 0.3s;
+transition-property: transform;
+}
+
+.icon:hover,
+.icon:focus,
+.icon:active {
+    transform: scale(1.1);
+}
+

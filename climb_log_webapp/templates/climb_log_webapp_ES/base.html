@@ -10,10 +10,12 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
     {%block css_files%}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    {% comment %} <link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}"> {% endcomment %}
     {% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Dokdo&family=Love+Ya+Like+A+Sister&family=Rock+3D&family=Rubik:wght@300;400&display=swap" rel="stylesheet">
     
 </head>
 {% comment %} {% include 'blog/includes/header.html' %} {% endcomment %}

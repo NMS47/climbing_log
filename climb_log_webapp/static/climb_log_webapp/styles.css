@@ -15,8 +15,9 @@
 
 body {
     background-color: #232020;
-    margin: 4rem 1rem ;
+    margin: 3rem 1rem ;
     color: #F4F4F4;
+    font-family: 'Rubik', sans-serif;
 }
 
 hr {
