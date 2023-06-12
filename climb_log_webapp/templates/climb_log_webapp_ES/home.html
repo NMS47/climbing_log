@@ -7,26 +7,28 @@
 {%block content%}
 {% comment %} <div class="container"> {% endcomment %}
    <div class="row mt-0 ">
-      <div class="col-lg-6 pt-3">
+      <div class="col-5 p-3">
          <h1>BIENVENIDO A CLIMBING LOG!</h1>
       </div>
       <br><br>
-      <div class="col-lg-6 justify-content-center subtitle p-3 mx-auto" >
+      <div class="col-6 subtitle p-3">
+         <div class="cover">
          <h2><em>Tu bitacora de escalada para llevar tu progreso en la roca</em></h2> 
             <div class="justify-content-center p-3" >
-               <a href="{% url 'new-entry-form' %}"><img class="icon" src="{% static 'climb_log_webapp/images/mas.png' %}" alt="mas" width="50" height="50"></a> Agrega una nueva entrada
+               <a href="{% url 'new-entry-form' %}"><img class="icon" src="{% static 'climb_log_webapp/images/mas.png' %}" alt="mas" width="50" height="50"></a><strong> Agrega una nueva entrada</strong>
             </div>
             <div class="justify-content-center p-3">
-               <a href="{% url 'entry-list' %}"><img class="icon" src="{% static 'climb_log_webapp/images/historia.png' %}" alt="mas" width="50" height="50"></a> Ver la Lista de Pegues
+               <a href="{% url 'entry-list' %}"><img class="icon" src="{% static 'climb_log_webapp/images/historia.png' %}" alt="mas" width="50" height="50"></a><strong> Ver la Lista de Pegues</strong>
             </div>
             <div class="justify-content-center p-3">
-               <a href="{% url 'user-profile' %}"><img class="icon" src="{% static 'climb_log_webapp/images/estadisticas.png' %}" alt="mas" width="50" height="50"></a> Ver Mis Estadisticas  
+               <a href="{% url 'user-profile' %}"><img class="icon" src="{% static 'climb_log_webapp/images/estadisticas.png' %}" alt="mas" width="50" height="50"></a><strong> Ver Mis Estadisticas </strong> 
             </div>
+         </div>
       </div>
    </div>
-   <div class="row justify-content-center">
+   <div class="row justify-content-center mt-1 intro">
       <h2>Que es Climbing Log?</h2>
-   
+      
    </div>
 {% comment %} </div> {% endcomment %}
 {%endblock%}
