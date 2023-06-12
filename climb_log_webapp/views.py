@@ -29,15 +29,15 @@ grades_list = [[['Color'],['verde', 'azul', 'amarillo', 'naranja', 'rojo', 'negr
               [['FR'],['5', '5+', '6a', '6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+', '7b', '7b+', '7c', '8a', '8a+', '8b', '8b+', '8c','8c+']]
                ] 
 
-PIXELA_TOKEN = "the_climbing_log"
-PIXELA_URL = 'https://pixe.la'
+# PIXELA_TOKEN = "the_climbing_log"
+# PIXELA_URL = 'https://pixe.la'
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        self.request.session['pixela_username'] = f"{self.request.user}climbinglog".lower()
+        # self.request.session['pixela_username'] = f"{self.request.user}climbinglog".lower()
         return reverse_lazy('entry-list')
     
 class SignUpView(FormView):
@@ -51,14 +51,14 @@ class SignUpView(FormView):
         user = form.save()
         if user is not None:
             login(self.request, user)
-            self.request.session['pixela_username'] = f"{self.request.user}climbinglog".lower()
-            response = requests.post(f'{PIXELA_URL}/v1/users', json={
-                "token":PIXELA_TOKEN, 
-                "username":self.request.session['pixela_username'], 
-                "agreeTermsOfService":"yes", 
-                "notMinor":"yes",
-                 })
-            print(response.text)
+            # self.request.session['pixela_username'] = f"{self.request.user}climbinglog".lower()
+            # response = requests.post(f'{PIXELA_URL}/v1/users', json={
+            #     "token":PIXELA_TOKEN, 
+            #     "username":self.request.session['pixela_username'], 
+            #     "agreeTermsOfService":"yes", 
+            #     "notMinor":"yes",
+            #      })
+            # print(response.text)
 
             return super(SignUpView, self).form_valid(form)
     
@@ -95,26 +95,26 @@ class NewEntryView(LoginRequiredMixin, FormView):
             instance.save()
 
     # Second part is to save data in pixela
-            pixela_user = self.request.session['pixela_username']
-            graph_id = f'climblog{str(self.request.user.id)}'
-            date = (form.instance.date_of_climb).strftime('%Y%m%d')
-            #This is a made-up coeficient so that a multipitch is worth more than an attempt in the
-            #intensity of climb
-            total_quatity = round((form.instance.num_pitches*2 + form.instance.num_attempts)/3)
-            #This while loop is here because pixela reject 25% of requests for non-supporter
-            while True:
-                response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}',
-                                            json={
-                                                "date":f"{date}",
-                                                "quantity": f"{total_quatity}",
-                                                # "optionalData":f"{form.instance.num_attempts}",
-                                            },
-                                            headers={'X-USER-TOKEN': PIXELA_TOKEN})
-                print(response.text)
-                response_data = response.json()
-                if response_data['isSuccess']:
-                    break
-            print('entry saved')
+            # pixela_user = self.request.session['pixela_username']
+            # graph_id = f'climblog{str(self.request.user.id)}'
+            # date = (form.instance.date_of_climb).strftime('%Y%m%d')
+            # #This is a made-up coeficient so that a multipitch is worth more than an attempt in the
+            # #intensity of climb
+            # total_quatity = round((form.instance.num_pitches*2 + form.instance.num_attempts)/3)
+            # #This while loop is here because pixela reject 25% of requests for non-supporter
+            # while True:
+            #     response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}',
+            #                                 json={
+            #                                     "date":f"{date}",
+            #                                     "quantity": f"{total_quatity}",
+            #                                     # "optionalData":f"{form.instance.num_attempts}",
+            #                                 },
+            #                                 headers={'X-USER-TOKEN': PIXELA_TOKEN})
+            #     print(response.text)
+            #     response_data = response.json()
+            #     if response_data['isSuccess']:
+            #         break
+            # print('entry saved')
         return super().form_valid(form)
     
     def form_invalid(self, form):
@@ -126,22 +126,22 @@ class NewEntryView(LoginRequiredMixin, FormView):
 class SuccessfulSignUp(TemplateView):
     template_name = 'climb_log_webapp_ES/successful_sign_up.html'
 
-    def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            pixela_user = self.request.session['pixela_username']
+    # def get(self, *args, **kwargs):
+    #     if self.request.user.is_authenticated:
+    #         pixela_user = self.request.session['pixela_username']
             
-            response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs', 
-                json={
-                    "id":f"climblog{str(self.request.user.id)}",
-                    "name":pixela_user,
-                    "unit":"climbs",
-                    "type":"int",
-                    "color":"shibafu",
-                    "timezone":"America/Argentina/Buenos_Aires"
-                },
-                headers={'X-USER-TOKEN': PIXELA_TOKEN},)
-            print(response.text)
-        return super().get(*args, **kwargs)    
+    #         response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs', 
+    #             json={
+    #                 "id":f"climblog{str(self.request.user.id)}",
+    #                 "name":pixela_user,
+    #                 "unit":"climbs",
+    #                 "type":"int",
+    #                 "color":"shibafu",
+    #                 "timezone":"America/Argentina/Buenos_Aires"
+    #             },
+    #             headers={'X-USER-TOKEN': PIXELA_TOKEN},)
+    #         print(response.text)
+    #     return super().get(*args, **kwargs)    
 
 
 class SuccessfulNewEntry(LoginRequiredMixin, ListView):
@@ -161,10 +161,13 @@ class Profile(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pixela_user = self.request.session['pixela_username']
-        graph_id = f'climblog{str(self.request.user.id)}'
-        context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
+        # pixela_user = self.request.session['pixela_username']
+        # graph_id = f'climblog{str(self.request.user.id)}'
+        # context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
         context['entries'] = context['entries'].filter(username_id=self.request.user.id)
+
+        # df_download = pd.DataFrame(context['entries'].values())
+        # df_download.to_csv('pegues.csv')
 
         simple_charts = []
         col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
@@ -235,7 +238,18 @@ class Profile(LoginRequiredMixin, ListView):
         context['effectiveness_plot'] = effectiveness_plot
         simple_charts.append(context['effectiveness_plot'])
 
-        
+        # Pie Chart of climbing style
+        data= context['entries'].values('climb_style', 'num_attempts')
+        df_style = pd.DataFrame(data)
+
+        fig = px.pie(df_style, values='num_attempts', names='climb_style', title='Tipo de Escalada', color_discrete_sequence=px.colors.sequential.Agsunset)
+        fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)',  xaxis=dict(color='white'), yaxis=dict(color='white'), height=400, width=400, margin=dict(l=6, r=0, t=26, b=6), )
+        style_plot = plot(fig, output_type='div',)
+        context['style_plot'] = style_plot
+        simple_charts.append(context['style_plot'])
+
+        # Bar charts of varios data
+        col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
         for column_name in col_names:
             df = pd.DataFrame(context['entries'].values(column_name))
             value_count = df.value_counts()
@@ -261,9 +275,9 @@ class EntryList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pixela_user = self.request.session['pixela_username']
-        graph_id = f'climblog{str(self.request.user.id)}'
-        context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
+        # pixela_user = self.request.session['pixela_username']
+        # graph_id = f'climblog{str(self.request.user.id)}'
+        # context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
         context['entries'] = context['entries'].filter(username_id=self.request.user.id).order_by('-id')
         return context
     

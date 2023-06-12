@@ -2,25 +2,31 @@
 {%load static%}
 {% block title %}The Climbing Log {%endblock%}
 {%block css_files%}
-<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Dokdo&family=Love+Ya+Like+A+Sister&family=Rock+3D&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/home.css' %}">
 {%endblock%}
 {%block content%}
-<div class="row">
-   <div class="col-lg-5">
-      <h1>BIENVENIDO A CLIMBING LOG!</h1>
-   </div>
-   <br><br>
-   <div class="col-lg-5">
-      <h2>Tu bitacora de escalada para llevar tu progreso en la roca</h2> 
+{% comment %} <div class="container"> {% endcomment %}
+   <div class="row mt-0 ">
+      <div class="col-lg-6 pt-3">
+         <h1>BIENVENIDO A CLIMBING LOG!</h1>
+      </div>
       <br><br>
-      <p> Agrega una nueva entrada <a href="{% url 'new-entry-form' %}">Aqui</a> </p>
-      <br>
-      <p> Ver la lista de pegues <a href="{% url 'entry-list' %}">Aqui</a> </p>
+      <div class="col-lg-6 justify-content-center subtitle p-3 mx-auto" >
+         <h2><em>Tu bitacora de escalada para llevar tu progreso en la roca</em></h2> 
+            <div class="justify-content-center p-3" >
+               <a href="{% url 'new-entry-form' %}"><img class="icon" src="{% static 'climb_log_webapp/images/mas.png' %}" alt="mas" width="50" height="50"></a> Agrega una nueva entrada
+            </div>
+            <div class="justify-content-center p-3">
+               <a href="{% url 'entry-list' %}"><img class="icon" src="{% static 'climb_log_webapp/images/historia.png' %}" alt="mas" width="50" height="50"></a> Ver la Lista de Pegues
+            </div>
+            <div class="justify-content-center p-3">
+               <a href="{% url 'user-profile' %}"><img class="icon" src="{% static 'climb_log_webapp/images/estadisticas.png' %}" alt="mas" width="50" height="50"></a> Ver Mis Estadisticas  
+            </div>
+      </div>
    </div>
-</div>
+   <div class="row justify-content-center">
+      <h2>Que es Climbing Log?</h2>
+   
+   </div>
+{% comment %} </div> {% endcomment %}
 {%endblock%}
