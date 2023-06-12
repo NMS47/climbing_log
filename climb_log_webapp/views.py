@@ -5,6 +5,9 @@ import pandas as pd
 from plotly.offline import plot
 import plotly.express as px
 import plotly.graph_objs as go
+import numpy as np
+from datetime import datetime, timedelta
+from plotly_calplot import calplot
 
 import requests
 from .models import User, Climb_entry
@@ -118,14 +121,6 @@ class NewEntryView(LoginRequiredMixin, FormView):
         """If the form is invalid, render the invalid form."""
         return self.render_to_response(self.get_context_data(form=form))
 
-    
-    # def post(self, request, *args, **kwargs):
-    #     form = self.get_form()
-    #     if form.is_valid():
-    #         return self.form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-
 
 
 class SuccessfulSignUp(TemplateView):
@@ -173,14 +168,51 @@ class Profile(LoginRequiredMixin, ListView):
 
         simple_charts = []
         col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
+        today = datetime.now()
+        formated_today= today.strftime("%Y-%m-%d")
+        one_ago = today - timedelta(days=365)
+        formated_ago = one_ago.strftime("%Y-%m-%d")
         # df_download = pd.DataFrame(context['entries'])
         # df_download.to_csv('home/nms/Downloads/')
 
+        #Heatmap calendar
+        df_calendar = pd.DataFrame(context['entries'].values('date_of_climb','num_pitches', 'num_attempts'))
+        df_calendar["intensity"] = (((df_calendar['num_pitches']**2) + df_calendar['num_attempts'])/2).astype('int64')
+        df_intensity = df_calendar.groupby('date_of_climb', as_index=False).sum()
+        df_intensity['date_of_climb']= pd.to_datetime(df_intensity['date_of_climb'], format='%Y-%m-%d', errors='raise')
+        df_intensity['date_of_climb'] = df_intensity['date_of_climb'].dt.strftime('%Y-%m-%d')
+
+        starting_day_of_current_year = datetime.now().date().replace(month=1, day=1)
+        idx = pd.date_range(starting_day_of_current_year, formated_today)
+        #this is the code for exactly one year ago
+        # idx = pd.date_range(formated_ago, formated_today)
+
+        df_intensity.index = df_intensity['date_of_climb']
+        df_intensity.index = pd.DatetimeIndex(df_intensity.index)
+        df_intensity = df_intensity.reindex(idx, fill_value=0)
+        df_intensity['date_of_climb'] = df_intensity.index
+
+        fig_cal = calplot(
+            df_intensity,
+            x="date_of_climb",
+            y="intensity",
+            dark_theme=True,
+            colorscale="Oranges",
+            years_title=True,
+            gap=0.1,
+            month_lines_width=2, 
+            month_lines_color="#3f3d3d",
+            name = 'pegues',
+            showscale=True,
+            space_between_plots= 0.1,
+            start_month=2,
+            end_month=6)
+        cal_plot = plot(fig_cal, output_type='div')
+        context['calendar_plot'] = cal_plot
+
         df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
         clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()
-        # print(clean_df)
-        # print('++++++++')
-        # # print(df_grades)
+
         fig = px.bar(clean_df, x='enviroment', 
                      y='num_attempts', 
                      color='ascent_type',
