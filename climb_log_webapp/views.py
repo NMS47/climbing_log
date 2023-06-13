@@ -202,14 +202,15 @@ class Profile(LoginRequiredMixin, ListView):
             dark_theme=True,
             colorscale="Oranges",
             years_title=True,
-            gap=0.1,
-            month_lines_width=2, 
-            month_lines_color="#3f3d3d",
+            gap=2,
+            month_lines_width=4, 
+            month_lines_color="#666464",
             name = 'pegues',
             showscale=True,
             space_between_plots= 0.1,
             start_month=2,
             end_month=6)
+        fig_cal.update_layout(plot_bgcolor = 'rgba(0, 0, 0, 0)', paper_bgcolor = 'rgba(0, 0, 0, 0)')
         cal_plot = plot(fig_cal, output_type='div')
         context['calendar_plot'] = cal_plot
 

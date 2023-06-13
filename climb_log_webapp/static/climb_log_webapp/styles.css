@@ -15,7 +15,7 @@
 
 body {
     background-color: #232020;
-    margin: 3rem 1rem ;
+    margin: 3rem 1rem 0rem 1rem;
     color: #F4F4F4;
     font-family: 'Rubik', sans-serif;
 }
@@ -32,4 +32,40 @@ h1 {
     /* font-family: 'Dokdo', cursive; */
     color: rgb(243, 142, 9);
     font-size: 5rem;
+}
+
+footer {
+    display: inline;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    
+}
+footer div {
+    padding-top: 1rem;
+}
+
+#ig{
+    transition: transform 2s;
+    transition-timing-function: ease-in;
+}
+#ig:hover{
+    transform: rotateX(360deg);
+    animation: instagram 2s alternate 0s infinite ease-in;
+}
+
+#twt{
+    transition: transform 2s;
+    transition-timing-function: ease-in;
+}
+
+#twt:hover{
+    transform: rotateY(360deg);
+    animation: twitter 2s alternate 0s infinite ease-in;
+}
+
+/* Only a span that comes after a span*/
+span + span {
+    margin-left: 1rem;
+    color: #666464
 }

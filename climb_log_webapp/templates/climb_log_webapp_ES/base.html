@@ -14,15 +14,18 @@
     {%block css_files%}
     {% endblock %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Dokdo&family=Love+Ya+Like+A+Sister&family=Rock+3D&family=Rubik:wght@300;400&display=swap" rel="stylesheet">
     
 </head>
-{% comment %} {% include 'blog/includes/header.html' %} {% endcomment %}
 <header> 
 {% include 'includes/header.html'%}
 </header>
 <body>
 {%block content %}{%endblock%}
 </body>
+<footer>
+{%include 'includes/footer.html'%}
+</footer>
 </html>
