@@ -200,7 +200,15 @@ class Profile(LoginRequiredMixin, ListView):
             x="date_of_climb",
             y="intensity",
             dark_theme=True,
-            colorscale="Oranges",
+            colorscale=[
+    (0.00, "#4d4c4c"),   # Grey
+    (0.20, "#f7a559"),  # Light Orange
+    (0.40, "#f39742"),  # semi - Orange
+    (0.40, "#eead35"),  # Orange
+    (0.60, "#ff8c00"),  # Darker orange
+    (0.80, "#ff7300"),  # Even Darker orange
+    (1.00, "#ff4500")   # Dark orange
+],
             years_title=True,
             gap=2,
             month_lines_width=4, 
@@ -210,7 +218,6 @@ class Profile(LoginRequiredMixin, ListView):
             space_between_plots= 0.1,
             start_month=2,
             end_month=6)
-        fig_cal.update_layout(plot_bgcolor = 'rgba(0, 0, 0, 0)', paper_bgcolor = 'rgba(0, 0, 0, 0)')
         cal_plot = plot(fig_cal, output_type='div')
         context['calendar_plot'] = cal_plot
 
@@ -270,16 +277,18 @@ class Profile(LoginRequiredMixin, ListView):
 
     
 class EntryList(LoginRequiredMixin, ListView):
+    paginate_by = 10
     template_name= 'climb_log_webapp_ES/entry_list.html'
     model = Climb_entry
     context_object_name = 'entries'
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # pixela_user = self.request.session['pixela_username']
         # graph_id = f'climblog{str(self.request.user.id)}'
         # context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
-        context['entries'] = context['entries'].filter(username_id=self.request.user.id).order_by('-id')
+        context['entries'] = context['entries'].filter(username_id=self.request.user.id).order_by('-date_of_climb')
         return context
     
 class EntryDetail(LoginRequiredMixin, DetailView):
