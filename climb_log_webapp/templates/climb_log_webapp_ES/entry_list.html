@@ -7,12 +7,10 @@
 {%endblock%}
 {%block content%}
 <h1>Hola {{request.user}} </h1>
-<div>
+{% comment %} <div>
     <h3>Este es tu historial de escaladas:</h3>
     <p>A medida que vayas cargando tus pegues vas a poder verlos reflejados en este grafico-calendario</p>
-    {% comment %} <img class="pixela-graph" src="{{pixela}}?appearance=dark" alt="Pixela Graph">
-    <img class="pixela-graph" src="{{pixela}}?mode=line&appearance=dark" alt="Pixela Graph"> {% endcomment %}
-</div>
+</div> {% endcomment %}
 <h3>Estos son tus pegues registrados:</h3>
 <div>
     <table>
@@ -31,7 +29,7 @@
             <th>Fecha agregado</th>
             <th>Editar</th>
         </tr>
-    {%for entry in entries%}
+    {%for entry in page_obj%}
         <tr>
             <td>{{entry.date_of_climb}}</td>
             <td>{{entry.place_name}}</td>
@@ -51,20 +49,24 @@
         {%endfor%}
     </table>
     <!-- Render pagination links -->
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current-page">{{ page_obj.number }}</span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
 </div>
 </div>
 

@@ -19,14 +19,28 @@ table {
     text-decoration: none;
   }
 
-  img {
-    width: 50%
-  }
+.pagination {
+    text-align: center;
+}
 
-  .chart {
-  }
-/* The only way i found to center the charts */
- div div div div{
-  justify-content: center;
-  display: flex !important;
- }
+.pagination a {
+    display: inline-block;
+}
+
+.current-page {
+    display: inline-block;
+}
+
+@media (max-width: 767px) {
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .pagination a,
+    .current-page {
+        margin-bottom: 5px;
+    }
+}

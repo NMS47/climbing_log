@@ -277,19 +277,14 @@ class Profile(LoginRequiredMixin, ListView):
 
     
 class EntryList(LoginRequiredMixin, ListView):
-    paginate_by = 10
     template_name= 'climb_log_webapp_ES/entry_list.html'
     model = Climb_entry
+    paginate_by = 15
     context_object_name = 'entries'
     
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # pixela_user = self.request.session['pixela_username']
-        # graph_id = f'climblog{str(self.request.user.id)}'
-        # context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
-        context['entries'] = context['entries'].filter(username_id=self.request.user.id).order_by('-date_of_climb')
-        return context
+    #This is the way of filtering the db when using paginator
+    def get_queryset(self):
+        return Climb_entry.objects.filter(username_id=self.request.user.id).order_by('-date_of_climb')
     
 class EntryDetail(LoginRequiredMixin, DetailView):
     template_name= 'climb_log_webapp_ES/entry_detail.html'
