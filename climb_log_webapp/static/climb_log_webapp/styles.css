@@ -67,5 +67,5 @@ footer div {
 /* Only a span that comes after a span*/
 span + span {
     margin-left: 1rem;
-    color: #666464
+
 }
