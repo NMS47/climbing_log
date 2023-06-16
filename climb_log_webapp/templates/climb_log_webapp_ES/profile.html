@@ -3,7 +3,6 @@
 {% block title %}Pegues de usuario {%endblock%}
 {%block css_files%}
 <link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
-{% comment %} <link rel="stylesheet" href="{% static 'climb_log_webapp/entry_list.css' %}"> {% endcomment %}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 {%endblock%}
 {%block content%}
@@ -18,8 +17,6 @@
             {%endautoescape%}
         </div>
     </div>
-    {% comment %} <img class="pixela-graph" src="{{pixela}}?appearance=dark" alt="Pixela Graph">
-    <img class="pixela-graph" src="{{pixela}}?mode=line&appearance=dark" alt="Pixela Graph"> {% endcomment %}
 </div>
     <h3>Estos son tus pegues registrados:</h3>
 <div class="row">
