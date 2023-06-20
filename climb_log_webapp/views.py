@@ -51,15 +51,6 @@ class SignUpView(FormView):
         user = form.save()
         if user is not None:
             login(self.request, user)
-            # self.request.session['pixela_username'] = f"{self.request.user}climbinglog".lower()
-            # response = requests.post(f'{PIXELA_URL}/v1/users', json={
-            #     "token":PIXELA_TOKEN, 
-            #     "username":self.request.session['pixela_username'], 
-            #     "agreeTermsOfService":"yes", 
-            #     "notMinor":"yes",
-            #      })
-            # print(response.text)
-
             return super(SignUpView, self).form_valid(form)
     
     def get(self, *args, **kwargs):
@@ -80,6 +71,10 @@ class NewEntryView(LoginRequiredMixin, FormView):
 # This is to pass variables to the template
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.request.method == "POST":
+            context["place_name"] = self.request.POST.get("place_name") 
+            # print(context["place_name"])
+            # print(self.request.POST.get("place_name"))
         context["date_today"] = datetime.today().strftime('%Y-%m-%d')
         context["attempts"] = [i for i in range(1,9)]
         context["grades_list"] = grades_list
@@ -94,6 +89,9 @@ class NewEntryView(LoginRequiredMixin, FormView):
             instance.pk = None
             instance.save()
 
+    def form_invalid(self, form):
+        print(form)
+        return super().form_invalid(form)
     # Second part is to save data in pixela
             # pixela_user = self.request.session['pixela_username']
             # graph_id = f'climblog{str(self.request.user.id)}'
@@ -117,9 +115,6 @@ class NewEntryView(LoginRequiredMixin, FormView):
             # print('entry saved')
         return super().form_valid(form)
     
-    def form_invalid(self, form):
-        """If the form is invalid, render the invalid form."""
-        return self.render_to_response(self.get_context_data(form=form))
 
 
 

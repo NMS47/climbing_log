@@ -19,9 +19,11 @@ nav{
 
 body {
     background-color: #232020;
-    margin: 3rem 1rem 0rem 1rem;
     color: #F4F4F4;
     font-family: 'Rubik', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 hr {
@@ -43,11 +45,12 @@ footer {
     justify-content: center;
     justify-items: center;
     text-align: center;
+    margin-top: auto;
     
 }
-footer div {
+/* footer div {
     padding-top: 1rem;
-}
+} */
 
 #ig{
     transition: transform 2s;

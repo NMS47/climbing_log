@@ -3,14 +3,25 @@
 {% block title %}Pegue guardado! {%endblock%}
 {%block css_files%}
 <link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/success_entry.css' %}">
 {%endblock%}
 {%block content%}
-<div>
-   <h1>Tu pegue a sido guardado en Climbing Log!!</h1>
+<div  class="cover">
+   <h1>Tu pegue ha sido guardado en Climbing Log!!</h1>
    <br><br>
-   <h2>Ya puedes ir a tu perfil a ver todos tu pegues haciendo click <a href="{% url 'entry-list' %}">Perfil</a></h2> 
-   <br><br>
-   <p> O puedes agregar otro pegue <a href="{% url 'new-entry-form' %}">Aqui</a> </p>
+   <div class="col-lg-6  subtitle p-3">
+      <div>
+         <div class="justify-content-center p-3" >
+            <a href="{% url 'new-entry-form' %}"><img class="icon" src="{% static 'climb_log_webapp/images/mas.png' %}" alt="add" width="50" height="50"></a><strong> Agrega una nueva entrada</strong>
+         </div>
+         <div class="justify-content-center p-3">
+            <a href="{% url 'entry-list' %}"><img class="icon" src="{% static 'climb_log_webapp/images/historia.png' %}" alt="list" width="50" height="50"></a><strong> Ver la Lista de Pegues</strong>
+         </div>
+         <div class="justify-content-center p-3">
+            <a href="{% url 'user-profile' %}"><img class="icon" src="{% static 'climb_log_webapp/images/estadisticas.png' %}" alt="stats" width="50" height="50"></a><strong> Ver Mis Estadisticas </strong> 
+         </div>
+      </div>
+   </div>
 </div>
 <div>
 
