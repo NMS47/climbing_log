@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from datetime import datetime
 #For plotly charts
 import pandas as pd
@@ -8,20 +8,22 @@ import plotly.graph_objs as go
 import numpy as np
 from datetime import datetime, timedelta
 from plotly_calplot import calplot
+from dash import Dash, dcc, html, Input, Output
 
-import requests
-from .models import User, Climb_entry
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django_plotly_dash import DjangoDash
+
+from .models import Climb_entry
 from .forms import NewEntryForm, UpdateEntryForm, UserCreateForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import UpdateView, DeleteView, FormView
 from django.urls import reverse_lazy
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+# from . import plotly_app
 
 
 grades_list = [[['Color'],['verde', 'azul', 'amarillo', 'naranja', 'rojo', 'negro']],
@@ -90,7 +92,7 @@ class NewEntryView(LoginRequiredMixin, FormView):
             instance.save()
 
     def form_invalid(self, form):
-        print(form)
+        # print(form)
         return super().form_invalid(form)
     # Second part is to save data in pixela
             # pixela_user = self.request.session['pixela_username']
@@ -152,6 +154,7 @@ class SuccessfulNewEntry(LoginRequiredMixin, ListView):
 class Profile(LoginRequiredMixin, ListView):
     template_name= 'climb_log_webapp_ES/profile.html'
     model = Climb_entry
+
     context_object_name = 'entries'
 
     def get_context_data(self, **kwargs):
@@ -216,57 +219,100 @@ class Profile(LoginRequiredMixin, ListView):
         cal_plot = plot(fig_cal, output_type='div')
         context['calendar_plot'] = cal_plot
 
-        df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
-        clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()
+        # df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
+        # clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()
 
-        fig = px.bar(clean_df, x='enviroment', 
-                     y='num_attempts', 
-                     color='ascent_type',
-                     color_continuous_scale=px.colors.sequential.Viridis
-                     )
-        fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', 
-                          plot_bgcolor = 'rgba(0, 0, 0, 0)', 
-                          xaxis=dict(color='white'), yaxis=dict(color='white'), 
-                          height=300, width=250, 
-                          margin=dict(l=20, r=0, t=26, b=6),
-                          legend=dict(font=dict(
-                                        family="Arial",
-                                        size=10,
-                                        color="white")),
+        # fig = px.bar(clean_df, x='enviroment', 
+        #              y='num_attempts', 
+        #              color='ascent_type',
+        #              color_continuous_scale=px.colors.sequential.Viridis
+        #              )
+        # fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', 
+        #                   plot_bgcolor = 'rgba(0, 0, 0, 0)', 
+        #                   xaxis=dict(color='white'), yaxis=dict(color='white'), 
+        #                   height=300, width=250, 
+        #                   margin=dict(l=20, r=0, t=26, b=6),
+        #                   legend=dict(font=dict(
+        #                                 family="Arial",
+        #                                 size=10,
+        #                                 color="white")),
                           
-                          )
-        # fig.add_trace(bar)
+        #                   )
+        # # fig.add_trace(bar)
         
-        effectiveness_plot = plot(fig, output_type='div',)
-        context['effectiveness_plot'] = effectiveness_plot
-        simple_charts.append(context['effectiveness_plot'])
+        # effectiveness_plot = plot(fig, output_type='div',)
+        # context['effectiveness_plot'] = effectiveness_plot
+        # simple_charts.append(context['effectiveness_plot'])
 
-        # Pie Chart of climbing style
-        data= context['entries'].values('climb_style', 'num_attempts')
-        df_style = pd.DataFrame(data)
+        # # Pie Chart of climbing style
+        # data= context['entries'].values('climb_style', 'num_attempts')
+        # df_style = pd.DataFrame(data)
 
-        fig = px.pie(df_style, values='num_attempts', names='climb_style', title='Tipo de Escalada', color_discrete_sequence=px.colors.sequential.Agsunset)
-        fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)',  xaxis=dict(color='white'), yaxis=dict(color='white'), height=400, width=400, margin=dict(l=6, r=0, t=26, b=6), )
-        style_plot = plot(fig, output_type='div',)
-        context['style_plot'] = style_plot
-        simple_charts.append(context['style_plot'])
+        # fig = px.pie(df_style, values='num_attempts', names='climb_style', title='Tipo de Escalada', color_discrete_sequence=px.colors.sequential.Agsunset)
+        # fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)',  xaxis=dict(color='white'), yaxis=dict(color='white'), height=400, width=400, margin=dict(l=6, r=0, t=26, b=6), )
+        # style_plot = plot(fig, output_type='div',)
+        # context['style_plot'] = style_plot
+        # simple_charts.append(context['style_plot'])
 
-        # Bar charts of varios data
-        col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
-        for column_name in col_names:
-            df = pd.DataFrame(context['entries'].values(column_name))
-            value_count = df.value_counts()
+        # # Bar charts of varios data
+        # col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
+        # for column_name in col_names:
+        #     df = pd.DataFrame(context['entries'].values(column_name))
+        #     value_count = df.value_counts()
 
-            fig = go.Figure()
-            bar = go.Bar(x=value_count.index.get_level_values(0), y=value_count.values, )
-            fig.update_layout(showlegend=False, paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', title=column_name.capitalize(),  xaxis=dict(color='white'), yaxis=dict(color='white'), height=200, width=200, margin=dict(l=6, r=0, t=26, b=6), )
-            fig.add_trace(bar)
-            fig.update_traces(marker_color=px.colors.qualitative.Prism)
-            column_plot = plot(fig, output_type='div', include_plotlyjs=False, show_link=False, link_text="")
+        #     fig = go.Figure()
+        #     bar = go.Bar(x=value_count.index.get_level_values(0), y=value_count.values, )
+        #     fig.update_layout(showlegend=False, paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', title=column_name.capitalize(),  xaxis=dict(color='white'), yaxis=dict(color='white'), height=200, width=200, margin=dict(l=6, r=0, t=26, b=6), )
+        #     fig.add_trace(bar)
+        #     fig.update_traces(marker_color=px.colors.qualitative.Prism)
+        #     column_plot = plot(fig, output_type='div', include_plotlyjs=False, show_link=False, link_text="")
             
-            simple_charts.append(column_plot)
-            context['columns_plots'] = simple_charts
+        #     simple_charts.append(column_plot)
+        #     context['columns_plots'] = simple_charts
 
+        #Dash plotly:
+
+    
+
+        app = DjangoDash('climb_stats')   # replaces dash.Dash
+        df = pd.DataFrame(context['entries'].values('date_of_climb', 'climb_style', 'grade'))
+        n_df = df.groupby('date_of_climb').value_counts().reset_index().rename(columns={0:'num_climbs'})
+        print(n_df)
+
+        app.layout = html.Div([
+            html.H2("Estadisticas de escalada:", style={'text-align':'center'}),
+            dcc.Dropdown(
+                id='select_style',
+                options=[{'label': 'Boulder', 'value': 'boulder'},
+                            {'label': 'Deportiva', 'value': 'sport'},
+                            {'label': 'Trad', 'value': 'trad'}],
+                value='boulder',
+                style={'width':'40%'},
+            ),
+            html.Div(id='output-container', children=[]),
+            html.Br(),
+            dcc.Graph(id='climbing_stats', figure={}),
+        ],
+        style={'height':'500px'},
+        )
+
+        @app.callback(
+            #interntar devolviendo solo el ouput de figure porque solo vatos a devolver una cosa
+            [Output(component_id='output-container', component_property='children'),
+            Output(component_id='climbing_stats', component_property='figure')],
+            [Input(component_id='select_style', component_property='value')]
+        )
+        def update__line_chart(style_selected):
+            print(style_selected)
+            container = 'Esto hay que borrarlo'
+
+            dff = n_df['date_of_climb', 'climb_style', 'num_climbs']
+            dff = dff [dff('climb_style') == style_selected ]
+            print(dff)
+            fig = px.line(dff, 
+                    x="date_of_climb", y="num_climbs", color="climb_style")
+            return container, fig
+        
 
         return context
 

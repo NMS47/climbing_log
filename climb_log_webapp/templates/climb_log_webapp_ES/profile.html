@@ -1,5 +1,6 @@
 {% extends 'climb_log_webapp_ES/base.html' %}
 {%load static%}
+{%load plotly_dash%}
 {% block title %}Pegues de usuario {%endblock%}
 {%block css_files%}
 <link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
@@ -18,7 +19,7 @@
         </div>
     </div>
 </div>
-    <h3>Estos son tus pegues registrados:</h3>
+    {% comment %} <h3>Estos son tus pegues registrados:</h3>
 <div class="row">
 {%for chart in columns_plots%}
     <div class="col-lg-3" >
@@ -28,6 +29,9 @@
             {% endautoescape %}
         </div>
     </div>
-{%endfor%}
+{%endfor%} {% endcomment %}
 </div>
+
+{% comment %} {%plotly_app_bootstrap name="climb_stats" aspect="16by9"%} {% endcomment %}
+{%plotly_app name="climb_stats" ratio=1%}
 {%endblock%}
