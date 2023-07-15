@@ -3,42 +3,69 @@
 {%load plotly_dash%}
 {% block title %}Pegues de usuario {%endblock%}
 {%block css_files%}
-<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/profile.css' %}">
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 {%endblock%}
 {%block content%}
 
-<div class="container row justify-content-evenly">
+<div class="container row justify-content-evenly mt-1 mx-auto">
     <div class="col-lg-6 " >
         <div class="profile-pic d-flex justify-content-center">
-            <img class="icon" src="{% static 'climb_log_webapp/images/profile-icon.png' %}" width="250" alt="Png Save Profile" style="border-radius: 50%" />
+            <img class="icon" src="{% static 'climb_log_webapp/images/profile-icon.png' %}" width="250" alt="Png Save Profile" style="border-radius: 50%; background-color: #979797" />
         </div>
+        <br>
         <div class="calendar_plot">
             {%autoescape off%}
             {{calendar_plot}}
             {%endautoescape%}
         </div>
     </div>
-    <div class="col-lg-5" >
+    <div class="col-lg-6 right-panel" >
         <h1>{{request.user}}</h1>
         <div class="row">
-            <div class="col-lg-2">
-                <h3>Estilos</h3>
+            <div class="col-lg-3">
+                <h5>Estilos</h5>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 {%autoescape off%}
                 {{style_chart}}
                 {%endautoescape%}
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-2">
-                <h3>Records</h3>
+        <hr>
+        <div class="row mt-4">
+            <div class="col-lg-3">
+                <h5>Records</h5>
+            </div>
+            <div class="col-lg-4 record-sport">
+                <h6>Deportiva:</h6>
+                <div>
+                   <h6><mark>6c+{{sport_record}}</mark></h6>
+                </div>
+                <div>
+                    <p>22-03-2023 {{sport_record_date}}</p>
+                </div>
+            </div>
+            <div class="col-lg-4 record-boulder">
+                <h6>Boulder:</h6>
+                <div>
+                    <h6><mark>V5{{boulder_record}}</mark></h6>
+                </div>
+                <div>
+                    <p>22-03-2023 {{boulder_record_date}}</p>
+                </div>
             </div>
         </div>
+        <hr>
         <div class="row">
-            <div class="col-lg-2">
-                <h3>Lugar</h3>
+            <div class="col-lg-3">
+                <h5>Lugar favorito</h5>
+            </div>
+            <div class="col-lg-4 record-sport">
+                <h6>Ramos Mejia{{favorite_place_sport}}</h6>
+            </div>
+            <div class="col-lg-4 record-boulder">
+                <h6>Bucarelli{{favorite_place_boulder}}</h6>
             </div>
         </div>
     </div>

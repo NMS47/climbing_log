@@ -1,0 +1,19 @@
+.right-panel{
+    background-color: rgb(54, 54, 54);
+}
+
+hr{
+    background-color: whitesmoke;   
+}
+
+.record-sport, .record-boulder{
+    text-align: center;
+}
+
+.record-sport mark{ 
+    background-color: #9467BC;
+}
+
+.record-boulder mark{ 
+    background-color: #2CA02C;
+}
