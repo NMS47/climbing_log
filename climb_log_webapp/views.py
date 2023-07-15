@@ -90,55 +90,15 @@ class NewEntryView(LoginRequiredMixin, FormView):
         for n in range(number_of_entries):
             instance.pk = None
             instance.save()
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         # print(form)
         return super().form_invalid(form)
-    # Second part is to save data in pixela
-            # pixela_user = self.request.session['pixela_username']
-            # graph_id = f'climblog{str(self.request.user.id)}'
-            # date = (form.instance.date_of_climb).strftime('%Y%m%d')
-            # #This is a made-up coeficient so that a multipitch is worth more than an attempt in the
-            # #intensity of climb
-            # total_quatity = round((form.instance.num_pitches*2 + form.instance.num_attempts)/3)
-            # #This while loop is here because pixela reject 25% of requests for non-supporter
-            # while True:
-            #     response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}',
-            #                                 json={
-            #                                     "date":f"{date}",
-            #                                     "quantity": f"{total_quatity}",
-            #                                     # "optionalData":f"{form.instance.num_attempts}",
-            #                                 },
-            #                                 headers={'X-USER-TOKEN': PIXELA_TOKEN})
-            #     print(response.text)
-            #     response_data = response.json()
-            #     if response_data['isSuccess']:
-            #         break
-            # print('entry saved')
-        return super().form_valid(form)
     
 
-
-
 class SuccessfulSignUp(TemplateView):
-    template_name = 'climb_log_webapp_ES/successful_sign_up.html'
-
-    # def get(self, *args, **kwargs):
-    #     if self.request.user.is_authenticated:
-    #         pixela_user = self.request.session['pixela_username']
-            
-    #         response = requests.post(f'{PIXELA_URL}/v1/users/{pixela_user}/graphs', 
-    #             json={
-    #                 "id":f"climblog{str(self.request.user.id)}",
-    #                 "name":pixela_user,
-    #                 "unit":"climbs",
-    #                 "type":"int",
-    #                 "color":"shibafu",
-    #                 "timezone":"America/Argentina/Buenos_Aires"
-    #             },
-    #             headers={'X-USER-TOKEN': PIXELA_TOKEN},)
-    #         print(response.text)
-    #     return super().get(*args, **kwargs)    
+    template_name = 'climb_log_webapp_ES/successful_sign_up.html' 
 
 
 class SuccessfulNewEntry(LoginRequiredMixin, ListView):
@@ -214,8 +174,10 @@ class Profile(LoginRequiredMixin, ListView):
             name = 'pegues',
             showscale=True,
             space_between_plots= 0.1,
-            start_month=2,
-            end_month=6)
+            #Need to automize this:
+            start_month=3,
+            end_month=7)
+        #---------------------------
         cal_plot = plot(fig_cal, output_type='div')
         context['calendar_plot'] = cal_plot
 
@@ -272,47 +234,6 @@ class Profile(LoginRequiredMixin, ListView):
 
         #Dash plotly:
 
-    
-
-        app = DjangoDash('climb_stats')   # replaces dash.Dash
-        df = pd.DataFrame(context['entries'].values('date_of_climb', 'climb_style', 'grade'))
-        n_df = df.groupby('date_of_climb').value_counts().reset_index().rename(columns={0:'num_climbs'})
-        print(n_df)
-
-        app.layout = html.Div([
-            html.H2("Estadisticas de escalada:", style={'text-align':'center'}),
-            dcc.Dropdown(
-                id='select_style',
-                options=[{'label': 'Boulder', 'value': 'boulder'},
-                            {'label': 'Deportiva', 'value': 'sport'},
-                            {'label': 'Trad', 'value': 'trad'}],
-                value='boulder',
-                style={'width':'40%'},
-            ),
-            html.Div(id='output-container', children=[]),
-            html.Br(),
-            dcc.Graph(id='climbing_stats', figure={}),
-        ],
-        style={'height':'500px'},
-        )
-
-        @app.callback(
-            #interntar devolviendo solo el ouput de figure porque solo vatos a devolver una cosa
-            [Output(component_id='output-container', component_property='children'),
-            Output(component_id='climbing_stats', component_property='figure')],
-            [Input(component_id='select_style', component_property='value')]
-        )
-        def update__line_chart(style_selected):
-            print(style_selected)
-            container = 'Esto hay que borrarlo'
-
-            dff = n_df['date_of_climb', 'climb_style', 'num_climbs']
-            dff = dff [dff('climb_style') == style_selected ]
-            print(dff)
-            fig = px.line(dff, 
-                    x="date_of_climb", y="num_climbs", color="climb_style")
-            return container, fig
-        
 
         return context
 
