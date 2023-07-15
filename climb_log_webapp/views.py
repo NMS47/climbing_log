@@ -136,7 +136,7 @@ class Profile(LoginRequiredMixin, ListView):
         # df_download = pd.DataFrame(context['entries'])
         # df_download.to_csv('home/nms/Downloads/')
 
-        #Heatmap calendar
+        #-----------------------Heatmap calendar--------------------------------------
         df_calendar = pd.DataFrame(context['entries'].values('date_of_climb','num_pitches', 'num_attempts'))
         df_calendar["intensity"] = (((df_calendar['num_pitches']**2) + df_calendar['num_attempts'])/2).astype('int64')
         df_intensity = df_calendar.groupby('date_of_climb', as_index=False).sum()
@@ -177,9 +177,23 @@ class Profile(LoginRequiredMixin, ListView):
             #Need to automize this:
             start_month=3,
             end_month=7)
-        #---------------------------
+        
         cal_plot = plot(fig_cal, output_type='div')
         context['calendar_plot'] = cal_plot
+        #--------------------------------------------------------------------
+
+        #--------------Styles chart----------------------------------
+        styles_df = pd.DataFrame(context['entries'].values('climb_style', 'num_attempts'))
+        g_df = styles_df.groupby(by=['climb_style'], as_index=False).sum()
+        g_df.insert(0, 'Estilo', 'Estilo')
+        print(g_df)
+        
+        fig = px.bar(g_df, x="num_attempts", y='Estilo', color="climb_style", orientation='h', text_auto=True,  color_discrete_sequence=["#2CA02C", "#9467BC", "#1F77B4",], hover_name='climb_style', hover_data={'Estilo':False, 'climb_style':False, 'num_attempts':False})
+        fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', xaxis=dict(color='white'), yaxis=dict(color='white'), height=100, width=400, margin=dict(l=6, r=0, t=26, b=6), barmode='stack', yaxis_title=None, xaxis_title=None, legend_font_color='#F4F4F4', legend_font_size=8, legend_borderwidth=0, legend_title=None)
+        fig.update_yaxes(showticklabels=True, visible=False)
+        fig.update_traces(width=0.5, )
+        styles_chart = plot(fig, output_type='div')
+        context['style_chart'] = styles_chart
 
         # df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
         # clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()

@@ -7,15 +7,39 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 {%endblock%}
 {%block content%}
-<h1>Hola {{request.user}} </h1>
-<div class="container">
-    <h3>Este es tu historial de escaladas:</h3>
-    <p>A medida que vayas cargando tus pegues vas a poder verlos reflejados en este grafico-calendario</p>
-    <div class="row" >
-        <div class="col-lg-6">
+
+<div class="container row justify-content-evenly">
+    <div class="col-lg-6 " >
+        <div class="profile-pic d-flex justify-content-center">
+            <img class="icon" src="{% static 'climb_log_webapp/images/profile-icon.png' %}" width="250" alt="Png Save Profile" style="border-radius: 50%" />
+        </div>
+        <div class="calendar_plot">
             {%autoescape off%}
             {{calendar_plot}}
             {%endautoescape%}
+        </div>
+    </div>
+    <div class="col-lg-5" >
+        <h1>{{request.user}}</h1>
+        <div class="row">
+            <div class="col-lg-2">
+                <h3>Estilos</h3>
+            </div>
+            <div class="col-lg-2">
+                {%autoescape off%}
+                {{style_chart}}
+                {%endautoescape%}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <h3>Records</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <h3>Lugar</h3>
+            </div>
         </div>
     </div>
 </div>
