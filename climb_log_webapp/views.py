@@ -199,12 +199,10 @@ class Profile(LoginRequiredMixin, ListView):
         #--
         records = []
         for style in styles:
-            style_record = df_records[df_records['climb_style'] == style]
-            if not style_record.empty:
-                record_id = style_record['grade_equivalent'].idxmax()
-                r_grade = style_record.loc[record_id]['grade']
-                r_date = style_record.loc[record_id]['date_of_climb']
-                records.append((r_grade, r_date))
+            style_record = df_records[df_records['climb_style'] == style]['grade_equivalent'].idxmax()
+            r_grade = df_records.loc[style_record]['grade']
+            r_date = df_records.loc[style_record]['date_of_climb']
+            records.append((r_grade, r_date))
         context['records'] = records
         #--------------------------------------------------------------
         #Fav place-----------------------------------------------------
@@ -217,6 +215,19 @@ class Profile(LoginRequiredMixin, ListView):
             fav_list.append(style_fav)
         context['favorite_places'] = fav_list
         #-------------------------------------------------------------
+        #Progression line---------------------------------------------
+        # By creating a month column we can get an accurate monthly max climb grade, should check if there is a better way
+        df_records['month'] = pd.DatetimeIndex(df_records['date_of_climb']).month
+        df_prog = df_records.groupby(['month','climb_style'], as_index=False).max()
+        
+        fig = px.line(df_prog, x='date_of_climb', y="grade_equivalent", color='climb_style', markers=True, color_discrete_sequence=["#2CA02C", "#9467BC", "#1F77B4",], hover_name='grade', hover_data={'climb_style':False, 'grade_equivalent':False}, line_shape='spline')
+        fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', 
+                          xaxis=dict(color='white', tickangle=-45, griddash='dot', gridwidth=0.3, fixedrange=False, linecolor='#363636', linewidth=1.5, showgrid=False, spikecolor='#232020', spikedash='solid', spikethickness=1, tickfont_family='Rubik', tickformat='%b',), 
+
+                          yaxis=dict(color='white', gridcolor='#757575', griddash='dot', gridwidth=0.3, fixedrange=False, labelalias={1: '5', 2: '5+', 3: '6a', 4: '6a+', 5: '6b', 6: '6b+', 7: '6c', 8: '6c+', 9: '7a', 10: '7a+',
+                         11: '7b', 12: '7b+', 13: '7c', 14: '8a', 15: '8a+', 16: '8b', 17: '8b+', 18: '8c', 19: '8c+'}, linecolor='#F4F4F4', linewidth=1.5, tickfont_family='Rubik'), height=225, width=500, margin=dict(l=6, r=0, t=26, b=6), yaxis_title=None, xaxis_title=None, legend_font_color='#F4F4F4', legend_font_size=8, legend_borderwidth=0, legend_title=None)
+        prog_plot = plot(fig, output_type='div')
+        context['prog_plot'] = prog_plot
  
         # df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
         # clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()

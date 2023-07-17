@@ -14,13 +14,13 @@
             <img class="icon" src="{% static 'climb_log_webapp/images/profile-icon.png' %}" width="250" alt="Png Save Profile" style="border-radius: 50%; background-color: #979797" />
         </div>
         <br>
-        <div class="calendar_plot">
+        <div class="card calendar">
             {%autoescape off%}
             {{calendar_plot}}
             {%endautoescape%}
         </div>
     </div>
-    <div class="col-lg-6 right-panel" >
+    <div class="card col-lg-6" >
         <h1>{{request.user}}</h1>
         <div class="row">
             <div class="col-lg-3">
@@ -70,6 +70,19 @@
         </div>
     </div>
 </div>
+
+<div class="container row justify-content-evenly mx-auto">
+    <div class="col-lg-6 " >
+    </div>
+    <div class="card col-lg-6 " >
+        <br>
+        <h5>Progresion</h5>
+        {%autoescape off%}
+        {{prog_plot}}
+        {%endautoescape%}
+    </div>
+</div>
+    
     {% comment %} <h3>Estos son tus pegues registrados:</h3>
 <div class="row">
 {%for chart in columns_plots%}
