@@ -87,10 +87,9 @@ class NewEntryView(LoginRequiredMixin, FormView):
         context["grades_list"] = grades_list
         return context
 
-# This is to add a username to the climb_entry, otherwise it is not saved to db
+# This is to add a username, grade_equivalent to the climb_entry, otherwise it is not saved to db
     def form_valid(self, form):
         form.instance.grade_equivalent = grades_dict.get(form.instance.grade)
-        print(form.instance.grade_equivalent) 
         number_of_entries = int(self.request.POST.get('multiple_entries',''))
         form.instance.username = self.request.user
         instance = form.save(commit=False)
@@ -100,7 +99,6 @@ class NewEntryView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # print(form)
         return super().form_invalid(form)
     
 
@@ -138,7 +136,7 @@ class Profile(LoginRequiredMixin, ListView):
         # df_download.to_csv('home/nms/Downloads/')
 
         #-----------------------Heatmap calendar--------------------------------------
-        df_calendar = pd.DataFrame(context['entries'].values('date_of_climb','num_pitches', 'num_attempts'))
+        df_calendar = pd.DataFrame(context['entries'].values('date_of_climb', 'num_pitches', 'num_attempts'))
         df_calendar["intensity"] = (((df_calendar['num_pitches']**2) + df_calendar['num_attempts'])/2).astype('int64')
         df_intensity = df_calendar.groupby('date_of_climb', as_index=False).sum()
         df_intensity['date_of_climb']= pd.to_datetime(df_intensity['date_of_climb'], format='%Y-%m-%d', errors='raise')
@@ -174,7 +172,7 @@ class Profile(LoginRequiredMixin, ListView):
             name = 'pegues',
             showscale=True,
             space_between_plots= 0.1,
-            #Need to automize this:
+            #Automize this!!!!!!!!!!!!!!!!!!!!!!!:
             start_month=3,
             end_month=7)
         
@@ -195,22 +193,31 @@ class Profile(LoginRequiredMixin, ListView):
         context['style_chart'] = styles_chart
         #--------------------------------------------------------------
         #-------------Records------------------------------------------
-        df_records = pd.DataFrame(context['entries'].values('date_of_climb','climb_style','grade','grade_equivalent'))
+        df_records = pd.DataFrame(context['entries'].values('date_of_climb', 'climb_style', 'grade', 'grade_equivalent'))
         # This can be done grouping values by climb style, autodetecting trad if there is any.
         styles= ['sport','boulder']
-        #-------
+        #--
         records = []
         for style in styles:
             style_record = df_records[df_records['climb_style'] == style]
-            record_id = style_record['grade_equivalent'].idxmax()
-            r_grade = style_record.loc[record_id]['grade']
-            r_date = style_record.loc[record_id]['date_of_climb']
-            records.append((r_grade, r_date))
+            if not style_record.empty:
+                record_id = style_record['grade_equivalent'].idxmax()
+                r_grade = style_record.loc[record_id]['grade']
+                r_date = style_record.loc[record_id]['date_of_climb']
+                records.append((r_grade, r_date))
         context['records'] = records
-
-
         #--------------------------------------------------------------
-
+        #Fav place-----------------------------------------------------
+        fav_list = []
+        df_place = pd.DataFrame(context['entries'].values('climb_style', 'place_name'))
+        df_fav = df_place.groupby(['climb_style','place_name'], as_index=False).value_counts()
+        for style in styles:   
+            id = df_fav[df_fav['climb_style']==style]['count'].idxmax()
+            style_fav = df_fav.loc[id].place_name
+            fav_list.append(style_fav)
+        context['favorite_places'] = fav_list
+        #-------------------------------------------------------------
+ 
         # df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
         # clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()
 
