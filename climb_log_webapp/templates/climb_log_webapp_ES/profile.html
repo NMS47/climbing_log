@@ -40,19 +40,19 @@
             <div class="col-lg-4 record-sport">
                 <h6>Deportiva:</h6>
                 <div>
-                   <h6><mark>6c+{{sport_record}}</mark></h6>
+                   <h6><mark>{{records.0.0}}</mark></h6>
                 </div>
                 <div>
-                    <p>22-03-2023 {{sport_record_date}}</p>
+                    <p>{{records.0.1}}</p>
                 </div>
             </div>
             <div class="col-lg-4 record-boulder">
                 <h6>Boulder:</h6>
                 <div>
-                    <h6><mark>V5{{boulder_record}}</mark></h6>
+                    <h6><mark>{{records.1.0|title}}</mark></h6>
                 </div>
                 <div>
-                    <p>22-03-2023 {{boulder_record_date}}</p>
+                    <p>{{records.1.1}}</p>
                 </div>
             </div>
         </div>

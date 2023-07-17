@@ -23,23 +23,31 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-# from . import plotly_app
+
 
 
 grades_list = [[['Color'],['verde', 'azul', 'amarillo', 'naranja', 'rojo', 'negro']],
                [['V'],['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15']],
               [['FR'],['5', '5+', '6a', '6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+', '7b', '7b+', '7c', '8a', '8a+', '8b', '8b+', '8c','8c+']]
                ] 
-
-# PIXELA_TOKEN = "the_climbing_log"
-# PIXELA_URL = 'https://pixe.la'
+# This is to asign a value to the grades
+# grades_dict = {}
+# for grade_list in grades_list:
+#     category = grade_list[0][0]  # Get the category name
+#     grades = grade_list[1]  # Get the list of grades
+#     grades_dict[category] = {grade: i + 1 for i, grade in enumerate(grades)}
+#-----------------------------------------
+# grades_dict = [[['Color'],[{'verde': 1, 'azul': 2, 'amarillo': 3, 'naranja': 4, 'rojo': 5, 'negro': 6}]],
+#                [['V'],[{'V0': 1, 'V1': 2, 'V2': 3, 'V3': 4, 'V4': 5, 'V5': 6, 'V6': 7, 'V7': 8, 'V8': 9, 'V9': 10, 'V10': 11, 'V11': 12, 'V12': 13, 'V13': 14, 'V14': 15, 'V15': 16}]],
+#               [['FR'],[{'5': 1, '5+': 2, '6a': 3, '6a+': 4, '6b': 5, '6b+': 6, '6c': 7, '6c+': 8, '7a': 9, '7a+': 10, '7b': 11, '7b+': 12, '7c': 13, '8a': 14, '8a+': 15, '8b': 16, '8b+': 17, '8c': 18, '8c+': 19}]]
+#                ] 
+grades_dict={'verde': 1, 'azul': 2, 'amarillo': 3, 'naranja': 4, 'rojo': 5, 'negro': 6, 'V0': 1, 'V1': 2, 'V2': 3, 'V3': 4, 'V4': 5, 'V5': 6, 'V6': 7, 'V7': 8, 'V8': 9, 'V9': 10, 'V10': 11, 'V11': 12, 'V12': 13, 'V13': 14, 'V14': 15, 'V15': 16, '5': 1, '5+': 2, '6a': 3, '6a+': 4, '6b': 5, '6b+': 6, '6c': 7, '6c+': 8, '7a': 9, '7a+': 10, '7b': 11, '7b+': 12, '7c': 13, '8a': 14, '8a+': 15, '8b': 16, '8b+': 17, '8c': 18, '8c+': 19 }
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        # self.request.session['pixela_username'] = f"{self.request.user}climbinglog".lower()
         return reverse_lazy('entry-list')
     
 class SignUpView(FormView):
@@ -70,13 +78,10 @@ class NewEntryView(LoginRequiredMixin, FormView):
     success_url =reverse_lazy('successful-new-entry')
     model = Climb_entry
 
-# This is to pass variables to the template
+# This is to pass variables to the template 
+# CHECK IF EXTRA  CONTEXT IS THE SAME AS THIS
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.method == "POST":
-            context["place_name"] = self.request.POST.get("place_name") 
-            # print(context["place_name"])
-            # print(self.request.POST.get("place_name"))
         context["date_today"] = datetime.today().strftime('%Y-%m-%d')
         context["attempts"] = [i for i in range(1,9)]
         context["grades_list"] = grades_list
@@ -84,6 +89,8 @@ class NewEntryView(LoginRequiredMixin, FormView):
 
 # This is to add a username to the climb_entry, otherwise it is not saved to db
     def form_valid(self, form):
+        form.instance.grade_equivalent = grades_dict.get(form.instance.grade)
+        print(form.instance.grade_equivalent) 
         number_of_entries = int(self.request.POST.get('multiple_entries',''))
         form.instance.username = self.request.user
         instance = form.save(commit=False)
@@ -119,16 +126,10 @@ class Profile(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # pixela_user = self.request.session['pixela_username']
-        # graph_id = f'climblog{str(self.request.user.id)}'
-        # context['pixela'] = f'{PIXELA_URL}/v1/users/{pixela_user}/graphs/{graph_id}'
         context['entries'] = context['entries'].filter(username_id=self.request.user.id)
 
-        # df_download = pd.DataFrame(context['entries'].values())
-        # df_download.to_csv('pegues.csv')
-
-        simple_charts = []
-        col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
+        # simple_charts = []
+        # col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
         today = datetime.now()
         formated_today= today.strftime("%Y-%m-%d")
         one_ago = today - timedelta(days=365)
@@ -147,7 +148,6 @@ class Profile(LoginRequiredMixin, ListView):
         idx = pd.date_range(starting_day_of_current_year, formated_today)
         #this is the code for exactly one year ago
         # idx = pd.date_range(formated_ago, formated_today)
-
         df_intensity.index = df_intensity['date_of_climb']
         df_intensity.index = pd.DatetimeIndex(df_intensity.index)
         df_intensity = df_intensity.reindex(idx, fill_value=0)
@@ -186,7 +186,6 @@ class Profile(LoginRequiredMixin, ListView):
         styles_df = pd.DataFrame(context['entries'].values('climb_style', 'num_attempts'))
         g_df = styles_df.groupby(by=['climb_style'], as_index=False).sum()
         g_df.insert(0, 'Estilo', 'Estilo')
-        print(g_df)
         
         fig = px.bar(g_df, x="num_attempts", y='Estilo', color="climb_style", orientation='h', text_auto=True,  color_discrete_sequence=["#2CA02C", "#9467BC", "#1F77B4",], hover_name='climb_style', hover_data={'Estilo':False, 'climb_style':False, 'num_attempts':False})
         fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', xaxis=dict(color='white'), yaxis=dict(color='white'), height=100, width=400, margin=dict(l=6, r=0, t=26, b=6), barmode='stack', yaxis_title=None, xaxis_title=None, legend_font_color='#F4F4F4', legend_font_size=8, legend_borderwidth=0, legend_title=None)
@@ -194,6 +193,23 @@ class Profile(LoginRequiredMixin, ListView):
         fig.update_traces(width=0.5, )
         styles_chart = plot(fig, output_type='div')
         context['style_chart'] = styles_chart
+        #--------------------------------------------------------------
+        #-------------Records------------------------------------------
+        df_records = pd.DataFrame(context['entries'].values('date_of_climb','climb_style','grade','grade_equivalent'))
+        # This can be done grouping values by climb style, autodetecting trad if there is any.
+        styles= ['sport','boulder']
+        #-------
+        records = []
+        for style in styles:
+            style_record = df_records[df_records['climb_style'] == style]
+            record_id = style_record['grade_equivalent'].idxmax()
+            r_grade = style_record.loc[record_id]['grade']
+            r_date = style_record.loc[record_id]['date_of_climb']
+            records.append((r_grade, r_date))
+        context['records'] = records
+
+
+        #--------------------------------------------------------------
 
         # df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
         # clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()

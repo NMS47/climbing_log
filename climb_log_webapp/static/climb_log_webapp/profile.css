@@ -1,5 +1,14 @@
+.calendar_plot{
+    border-radius: 25px;
+}
+
 .right-panel{
     background-color: rgb(54, 54, 54);
+    border-radius: 25px;
+}
+
+h1{
+    color: #F4F4F4;
 }
 
 hr{
