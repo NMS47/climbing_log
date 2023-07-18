@@ -220,7 +220,7 @@ class Profile(LoginRequiredMixin, ListView):
         df_records['month'] = pd.DatetimeIndex(df_records['date_of_climb']).month
         df_prog = df_records.groupby(['month','climb_style'], as_index=False).max()
         
-        fig = px.line(df_prog, x='date_of_climb', y="grade_equivalent", color='climb_style', markers=True, color_discrete_sequence=["#2CA02C", "#9467BC", "#1F77B4",], hover_name='grade', hover_data={'climb_style':False, 'grade_equivalent':False}, line_shape='spline')
+        fig = px.line(df_prog, x='date_of_climb', y="grade_equivalent", color='climb_style', markers=True, color_discrete_sequence=["#2CA02C", "#9467BC", "#1F77B4",], hover_name='date_of_climb', hover_data={'climb_style':False, 'grade_equivalent':False, 'date_of_climb':False}, line_shape='spline')
         fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', 
                           xaxis=dict(color='white', tickangle=-45, griddash='dot', gridwidth=0.3, fixedrange=False, linecolor='#363636', linewidth=1.5, showgrid=False, spikecolor='#232020', spikedash='solid', spikethickness=1, tickfont_family='Rubik', tickformat='%b',), 
 
