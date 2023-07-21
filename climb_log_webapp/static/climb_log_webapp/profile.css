@@ -26,3 +26,8 @@ hr{
 .record-boulder mark{ 
     background-color: #2CA02C;
 }
+
+.bottom{
+    min-height: fit-content;
+    padding: 2rem 1rem;
+}

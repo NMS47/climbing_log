@@ -1,18 +1,20 @@
+from typing import Any
+from django import http
+from django.http import HttpRequest, HttpResponse
+from django.http.response import HttpResponse
 from django.shortcuts import redirect
 from datetime import datetime
 #For plotly charts
 import pandas as pd
 from plotly.offline import plot
 import plotly.express as px
-import plotly.graph_objs as go
-import numpy as np
+
 from datetime import datetime, timedelta
 from plotly_calplot import calplot
-from dash import Dash, dcc, html, Input, Output
+import folium
+from django.templatetags.static import static
 
-from django_plotly_dash import DjangoDash
-
-from .models import Climb_entry
+from .models import ClimbEntry,  ClimbPlaces
 from .forms import NewEntryForm, UpdateEntryForm, UserCreateForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
@@ -22,6 +24,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 
@@ -76,7 +79,7 @@ class NewEntryView(LoginRequiredMixin, FormView):
     template_name = 'climb_log_webapp_ES/new_entry.html'
     form_class = NewEntryForm
     success_url =reverse_lazy('successful-new-entry')
-    model = Climb_entry
+    model = ClimbEntry
 
 # This is to pass variables to the template 
 # CHECK IF EXTRA  CONTEXT IS THE SAME AS THIS
@@ -85,12 +88,21 @@ class NewEntryView(LoginRequiredMixin, FormView):
         context["date_today"] = datetime.today().strftime('%Y-%m-%d')
         context["attempts"] = [i for i in range(1,9)]
         context["grades_list"] = grades_list
+        # Get all climbing places and values
+        queryset = ClimbPlaces.objects.values_list('id','place_name')
+        places_list = [[n[0],n[1]] for n in queryset.all()]
+        
+
+        # queryset = ClimbPlaces.objects.values_list('place_name')
+        # places_list = [n[0] for n in queryset.all()]
+        context['places_list'] = places_list
         return context
 
-# This is to add a username, grade_equivalent to the climb_entry, otherwise it is not saved to db
+# This is to add a username, grade_equivalent to the climbEntry, otherwise it is not saved to db
     def form_valid(self, form):
         form.instance.grade_equivalent = grades_dict.get(form.instance.grade)
         number_of_entries = int(self.request.POST.get('multiple_entries',''))
+        print(self.request.POST.get('place_name','')) 
         form.instance.username = self.request.user
         instance = form.save(commit=False)
         for n in range(number_of_entries):
@@ -108,7 +120,7 @@ class SuccessfulSignUp(TemplateView):
 
 class SuccessfulNewEntry(LoginRequiredMixin, ListView):
     template_name = 'climb_log_webapp_ES/successful_new_entry.html'
-    model = Climb_entry
+    model = ClimbEntry
     context_object_name = 'entries'
 
     def get_queryset(self):
@@ -118,16 +130,19 @@ class SuccessfulNewEntry(LoginRequiredMixin, ListView):
     
 class Profile(LoginRequiredMixin, ListView):
     template_name= 'climb_log_webapp_ES/profile.html'
-    model = Climb_entry
+    model = ClimbEntry
+    allow_empty=False
 
     context_object_name = 'entries'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['entries'] = context['entries'].filter(username_id=self.request.user.id)
+        if not context['entries'].filter(username_id=self.request.user.id):
+            print(context['entries'])
+            return context
 
-        # simple_charts = []
-        # col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
         today = datetime.now()
         formated_today= today.strftime("%Y-%m-%d")
         one_ago = today - timedelta(days=365)
@@ -137,6 +152,7 @@ class Profile(LoginRequiredMixin, ListView):
 
         #-----------------------Heatmap calendar--------------------------------------
         df_calendar = pd.DataFrame(context['entries'].values('date_of_climb', 'num_pitches', 'num_attempts'))
+        print(df_calendar)
         df_calendar["intensity"] = (((df_calendar['num_pitches']**2) + df_calendar['num_attempts'])/2).astype('int64')
         df_intensity = df_calendar.groupby('date_of_climb', as_index=False).sum()
         df_intensity['date_of_climb']= pd.to_datetime(df_intensity['date_of_climb'], format='%Y-%m-%d', errors='raise')
@@ -207,11 +223,13 @@ class Profile(LoginRequiredMixin, ListView):
         #--------------------------------------------------------------
         #Fav place-----------------------------------------------------
         fav_list = []
-        df_place = pd.DataFrame(context['entries'].values('climb_style', 'place_name'))
-        df_fav = df_place.groupby(['climb_style','place_name'], as_index=False).value_counts()
+        df_place = pd.DataFrame(context['entries'].values('climb_style', 'place_name__place_name'))
+        print(context['entries'].values_list('climb_style', 'place_name__place_name'))
+        print(df_place)
+        df_fav = df_place.groupby(['climb_style','place_name__place_name'], as_index=False).value_counts()
         for style in styles:   
             id = df_fav[df_fav['climb_style']==style]['count'].idxmax()
-            style_fav = df_fav.loc[id].place_name
+            style_fav = df_fav.loc[id].place_name__place_name
             fav_list.append(style_fav)
         context['favorite_places'] = fav_list
         #-------------------------------------------------------------
@@ -228,31 +246,47 @@ class Profile(LoginRequiredMixin, ListView):
                          11: '7b', 12: '7b+', 13: '7c', 14: '8a', 15: '8a+', 16: '8b', 17: '8b+', 18: '8c', 19: '8c+'}, linecolor='#F4F4F4', linewidth=1.5, tickfont_family='Rubik'), height=225, width=500, margin=dict(l=6, r=0, t=26, b=6), yaxis_title=None, xaxis_title=None, legend_font_color='#F4F4F4', legend_font_size=8, legend_borderwidth=0, legend_title=None)
         prog_plot = plot(fig, output_type='div')
         context['prog_plot'] = prog_plot
- 
-        # df_grades = pd.DataFrame(context['entries'].values('enviroment', 'ascent_type', 'num_attempts'))
-        # clean_df = df_grades.groupby(by=['enviroment','ascent_type'], as_index=False).sum()
 
-        # fig = px.bar(clean_df, x='enviroment', 
-        #              y='num_attempts', 
-        #              color='ascent_type',
-        #              color_continuous_scale=px.colors.sequential.Viridis
-        #              )
-        # fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', 
-        #                   plot_bgcolor = 'rgba(0, 0, 0, 0)', 
-        #                   xaxis=dict(color='white'), yaxis=dict(color='white'), 
-        #                   height=300, width=250, 
-        #                   margin=dict(l=20, r=0, t=26, b=6),
-        #                   legend=dict(font=dict(
-        #                                 family="Arial",
-        #                                 size=10,
-        #                                 color="white")),
-                          
-        #                   )
-        # # fig.add_trace(bar)
-        
-        # effectiveness_plot = plot(fig, output_type='div',)
-        # context['effectiveness_plot'] = effectiveness_plot
-        # simple_charts.append(context['effectiveness_plot'])
+        #Climbs maps----------------------------------------
+        # places = Climb_places_from_csv.import_data(data = open('static/lugares_escalada.csv'))
+        # print(places[0].name)
+        # file =open('static/lugares_escalada.csv')
+        # places_data = pd.read_csv(file)
+        # ramos = places_data[places_data['name'] =='El Muro de Ramos']['coords'].values[0].split(',')
+        # buca = places_data[places_data['name'] =='CABA Bucarelli']['coords'].values[0].split(',')
+        print(df_records)
+        # https://python-visualization.github.io/folium/modules.html all the params
+        figure = folium.Figure()
+        m = folium.Map(
+            location=[-38.0000, -63.0000],
+            zoom_start=4,
+            tiles='Stamen Terrain',
+        )
+        m.default_css=[('leaflet_css', 'https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css'), ('awesome_markers_font_css', 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css'), ('awesome_markers_css', 'https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css'), ('awesome_rotate_css', 'https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css')]
+        #fit_bounds
+        m.add_to(figure)
+
+        # folium.Marker(
+        #     location=[float(ramos[0]), float(ramos[1])],
+        #     popup='Mt. Hood Meadows',
+        #     icon=folium.Icon(icon='cloud')
+        # ).add_to(m)
+
+        # folium.Marker(
+        #     location=[float(buca[0]), float(buca[1])],
+        #     popup='Timberline Lodge',
+        #     icon=folium.Icon(color='green')
+        # ).add_to(m)
+
+        folium.Marker(
+            location=[45.3300, -121.6823],
+            popup='Some Other Location',
+            icon=folium.Icon(color='red', icon='info-sign')
+        ).add_to(m)
+        figure.render()
+        context["map"] = figure
+
+       
 
         # # Pie Chart of climbing style
         # data= context['entries'].values('climb_style', 'num_attempts')
@@ -264,23 +298,7 @@ class Profile(LoginRequiredMixin, ListView):
         # context['style_plot'] = style_plot
         # simple_charts.append(context['style_plot'])
 
-        # # Bar charts of varios data
-        # col_names = ['enviroment','climb_style', 'grade', 'climber_position', 'ascent_type']
-        # for column_name in col_names:
-        #     df = pd.DataFrame(context['entries'].values(column_name))
-        #     value_count = df.value_counts()
 
-        #     fig = go.Figure()
-        #     bar = go.Bar(x=value_count.index.get_level_values(0), y=value_count.values, )
-        #     fig.update_layout(showlegend=False, paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', title=column_name.capitalize(),  xaxis=dict(color='white'), yaxis=dict(color='white'), height=200, width=200, margin=dict(l=6, r=0, t=26, b=6), )
-        #     fig.add_trace(bar)
-        #     fig.update_traces(marker_color=px.colors.qualitative.Prism)
-        #     column_plot = plot(fig, output_type='div', include_plotlyjs=False, show_link=False, link_text="")
-            
-        #     simple_charts.append(column_plot)
-        #     context['columns_plots'] = simple_charts
-
-        #Dash plotly:
 
 
         return context
@@ -288,22 +306,22 @@ class Profile(LoginRequiredMixin, ListView):
     
 class EntryList(LoginRequiredMixin, ListView):
     template_name= 'climb_log_webapp_ES/entry_list.html'
-    model = Climb_entry
+    model = ClimbEntry
     paginate_by = 15
     context_object_name = 'entries'
     
     #This is the way of filtering the db when using paginator
     def get_queryset(self):
-        return Climb_entry.objects.filter(username_id=self.request.user.id).order_by('-date_of_climb')
+        return ClimbEntry.objects.filter(username_id=self.request.user.id).order_by('-date_of_climb')
     
 class EntryDetail(LoginRequiredMixin, DetailView):
     template_name= 'climb_log_webapp_ES/entry_detail.html'
-    model = Climb_entry
+    model = ClimbEntry
     context_object_name = 'entry'
 
 class EntryUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'climb_log_webapp_ES/entry_update.html'
-    model = Climb_entry
+    model = ClimbEntry
     # Created a form class to exclude the username field
     form_class = UpdateEntryForm
     context_object_name = 'entry'
@@ -311,7 +329,7 @@ class EntryUpdate(LoginRequiredMixin, UpdateView):
 
 class EntryDelete(LoginRequiredMixin, DeleteView):
     template_name = 'climb_log_webapp_ES/entry_confirm_delete.html'
-    model = Climb_entry
+    model = ClimbEntry
     context_object_name = 'entry'
     success_url = reverse_lazy('entry-list')
 
