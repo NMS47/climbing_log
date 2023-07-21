@@ -1,22 +1,15 @@
+.main{
+    padding-top: 2rem;
+    background-color: #222222;
+    border-radius: 25px;
+    padding-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+
 hr {
     background-color: #026807;
     border: none;
     height: 3px !important; 
-}
-
-.new_entry {
-    max-width: 45rem;
-    margin: auto;
-}
-
-textarea{
-    width: 100%;
-}
-
-
-#place, #grade {
-    display: inline-flex;
-    margin-left: 0.3rem;
 }
 
 .themed,.medium-num, .short-num, .grade{
@@ -24,17 +17,6 @@ textarea{
     color: #F4F4F4;
     border: #014104;
     border-style: solid;
-}
-/* .grade:nth-child(1) {
-    color: #363333;
-} */
-
-#place{
-    width: 15rem;
-}
-#grade {
-    max-width: 6rem;
-    
 }
 
 .short-num{
