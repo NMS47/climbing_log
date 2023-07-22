@@ -220,7 +220,7 @@ class Profile(LoginRequiredMixin, ListView):
         #Fav place-----------------------------------------------------
         fav_list = []
         df_place = pd.DataFrame(context['entries'].values('climb_style', 'place_name__place_name'))
-        print(context['entries'].values_list('climb_style', 'place_name__place_name'))
+        
         print(df_place)
         df_fav = df_place.groupby(['climb_style','place_name__place_name'], as_index=False).value_counts()
         for style in styles:   
@@ -250,17 +250,28 @@ class Profile(LoginRequiredMixin, ListView):
         # places_data = pd.read_csv(file)
         # ramos = places_data[places_data['name'] =='El Muro de Ramos']['coords'].values[0].split(',')
         # buca = places_data[places_data['name'] =='CABA Bucarelli']['coords'].values[0].split(',')
-        print(df_records)
         # https://python-visualization.github.io/folium/modules.html all the params
+        df_map = pd.DataFrame(context['entries'].values('place_name__place_name', 'place_name__place_coords'))
+        df_map.drop_duplicates(inplace=True)
+
+
         figure = folium.Figure()
         m = folium.Map(
             location=[-38.0000, -63.0000],
             zoom_start=4,
-            tiles='Stamen Terrain',
         )
         m.default_css=[('leaflet_css', 'https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css'), ('awesome_markers_font_css', 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css'), ('awesome_markers_css', 'https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css'), ('awesome_rotate_css', 'https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css')]
         #fit_bounds
         m.add_to(figure)
+        for index, row in df_map.iterrows():
+            print(row[0], row[1])
+            print(float(row[1].split(',')[0]))
+            
+            folium.Marker(
+            location=[float(row[1].split(',')[0]), float(row[1].split(',')[1])],
+            popup=row[0],
+            icon=folium.Icon(icon='cloud')
+        ).add_to(m)
 
         # folium.Marker(
         #     location=[float(ramos[0]), float(ramos[1])],
