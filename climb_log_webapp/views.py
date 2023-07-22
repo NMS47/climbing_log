@@ -100,17 +100,14 @@ class NewEntryView(LoginRequiredMixin, FormView):
 # This is to add a username, grade_equivalent to the climbEntry, otherwise it is not saved to db
     def form_valid(self, form):
         form.instance.grade_equivalent = grades_dict.get(form.instance.grade)
-        number_of_entries = int(self.request.POST.get('multiple_entries',''))
-        print(self.request.POST.get('place_name')) 
+        form.instance.ascent_type = 'not-specified'
+        number_of_entries = int(self.request.POST.get('multiple_entries','')) 
         form.instance.username = self.request.user
         instance = form.save(commit=False)
         for n in range(number_of_entries):
             instance.pk = None
             instance.save()
         return super().form_valid(form)
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
     
 
 class SuccessfulSignUp(TemplateView):

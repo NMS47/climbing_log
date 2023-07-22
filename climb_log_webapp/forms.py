@@ -12,8 +12,7 @@ class UserCreateForm(UserCreationForm):
 class NewEntryForm(forms.ModelForm):
     class Meta:
         model = ClimbEntry
-        # fields = "__all__"
-        exclude = ('ascent_type', 'num_attempts')
+        fields = "__all__"
 
 
 class UpdateEntryForm(forms.ModelForm):

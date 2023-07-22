@@ -17,8 +17,8 @@ class ClimbEntry(models.Model):
     grade = models.CharField(max_length=20)
     grade_equivalent =  models.PositiveSmallIntegerField(null=True, blank=True, validators=[MaxValueValidator(15)] )
     climber_position = models.CharField(max_length=15, default='lead', null=True, blank=True,)
-    ascent_type = models.CharField(max_length=20)
-    num_attempts = models.PositiveSmallIntegerField()
+    ascent_type = models.CharField(max_length=20, default='flash', null=True, blank=True,)
+    num_attempts = models.PositiveSmallIntegerField(default=1, null=True, blank=True,)
     notes = models.TextField(max_length=400, default='No hay notas', blank=True)
     date_of_entry = models.DateTimeField(auto_now_add=True)
 
