@@ -7,10 +7,6 @@
 {%endblock%}
 {%block content%}
 <h1>Hola {{request.user}} </h1>
-{% comment %} <div>
-    <h3>Este es tu historial de escaladas:</h3>
-    <p>A medida que vayas cargando tus pegues vas a poder verlos reflejados en este grafico-calendario</p>
-</div> {% endcomment %}
 <h3>Estos son tus pegues registrados:</h3>
 <div>
     <table>
@@ -33,7 +29,7 @@
         <tr>
             <td>{{entry.date_of_climb}}</td>
             <td>{{entry.place_name}}</td>
-            <td>{{entry.enviroment}}</td>
+            <td>{{entry.place_name.enviroment}}</td>
             <td>{{entry.climb_style}}</td>
             <td>{{entry.multipitches}}</td>
             <td>{{entry.num_pitches}}</td>

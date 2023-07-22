@@ -1,7 +1,8 @@
 {% extends 'climb_log_webapp_ES/base.html' %}
 {%load static%}
-{%load plotly_dash%}
+
 {% block title %}Pegues de usuario {%endblock%}
+{%block minimum_priority_css%}{{map.header.render|safe}}{%endblock%}
 {%block css_files%}
 <link rel="stylesheet" href="{% static 'climb_log_webapp/profile.css' %}">
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -72,10 +73,12 @@
 </div>
 
 <div class="container row justify-content-evenly mx-auto">
-    <div class="card col-lg-6" >
-        .
+    <div class="card bottom col-lg-6" >
+        
+        {{map.html.render|safe}}
+
     </div>
-    <div class="card col-lg-6 " >
+    <div class="card bottom col-lg-6" >
         <br>
         <h5>Progresion</h5>
         {%autoescape off%}
@@ -83,20 +86,8 @@
         {%endautoescape%}
     </div>
 </div>
-    
-    {% comment %} <h3>Estos son tus pegues registrados:</h3>
-<div class="row">
-{%for chart in columns_plots%}
-    <div class="col-lg-3" >
-        <div class="chart"  >
-            {%autoescape off%}
-                {{chart}}
-            {% endautoescape %}
-        </div>
-    </div>
-{%endfor%} {% endcomment %}
-</div>
 
-{% comment %} {%plotly_app_bootstrap name="climb_stats" aspect="16by9"%} {% endcomment %}
-{% comment %} {%plotly_app name="climb_stats" ratio=1%} {% endcomment %}
+{%endblock%}
+{%block bottom_scripts%}
+<script>{{map.script.render|safe}}</script>
 {%endblock%}

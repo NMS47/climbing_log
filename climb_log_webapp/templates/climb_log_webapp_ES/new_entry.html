@@ -9,7 +9,7 @@
 <div>   
     <h1>Agrega pegues:</h1>
 </div> 
-<div class="new_entry">
+<div class="container-lg w-50 mx-auto main">
     <form  action="" method="POST">
         {% csrf_token %}
         <div class="form-group">
@@ -19,18 +19,11 @@
                 <p class="error">Por favor, comprueba que todas las categorias tengan un valor.</p>
             </div>
             {%endif%}
-            {% comment %} {% if form.errors %}
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <p> {{ error }} </p>
-                {% endfor %}
-            {% endfor %}
-        {% endif %} {% endcomment %}
-            <div class="row">
-                <div class="col-2">
+            <div class="row ">
+                <div class="col-lg-3">
                     <label for="date">Fecha del pegue:</label>
                 </div>
-                <div class="col-auto">
+                <div class="col-lg-6">
                     <input class="themed" type="date" name="date_of_climb" id="date_of_climb" max="{{date_today}}" default="{{date_today}}" value="{{date_today}}">
                 </div>
                 
@@ -40,63 +33,53 @@
 
         <div class="form-group">
             <div class="row">
-                <div class="col-2">
+                <div class="col-lg-3">
                     <label for="place">Lugar: </label>
                 </div>
-                <div class="col-auto">
-                    <input class="themed" type="text" class="form-control" placeholder="Sector de escalada/Palestra" name="place_name" id="place_name">
+                <div class="col-lg-6">
+                        <select class="form-select grade" name="place_name" id="grade" aria-label="grade" >
+                            <option value selected>---</option>
+                            {%for place in places_list%}
+                            <option value={{place.0}}>{{place.1}}</option>
+                            {%endfor%}
+                        </select>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="radio-selection form-group">
-            <div class="row">
-                <div class="col-2">
-                    <label>Entorno: </label>
-                </div>
-                <div class="col-auto">
-                    <input onClick="disableButtons(['#trad'])"  type="radio" class="btn-check" name="enviroment" id="palestra" value="artificial" autocomplete="off">
-                    <label class="btn btn-outline-success" for="palestra">Palestra</label>
 
-                    <input  onClick="enableButtons(['#trad'])" type="radio" class="btn-check" name="enviroment" value="nature" id="roca" autocomplete="off">
-                    <label class="btn btn-outline-success" for="roca">Roca</label>
-                </div>
-            </div>
-        </div>
-        
-        <hr>
 
         <div class="radio-selection form-group">
             <div class="row">
-                <div class="col-2">
+                <div class="col-lg-3">
                     <label>Estilo: </label>
                 </div>
-                <div class="col-auto">
-                    <input onClick="disableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope']) ; enableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check" name="climb_style"  id="boulder" value="boulder" autocomplete="off">
+                <div class="col-lg-6">
+                    <input onClick="disableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; enableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check" name="climb_style"  id="boulder" value="boulder" autocomplete="off">
                     <label class="btn btn-outline-success" for="boulder">Boulder </label>
                     
-                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope']) ; disableButtons(['#flash', '#V', '#Color'])" type="radio" class="btn-check" name="climb_style" id="sport" value="sport" autocomplete="off">
+                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; disableButtons(['#flash', '#V', '#Color'])" type="radio" class="btn-check" name="climb_style" id="sport" value="sport" autocomplete="off">
                     <label class="btn btn-outline-success" for="sport">Deportiva</label>
                     
-                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope']) ; disableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check" name="climb_style" id="trad" value="trad" autocomplete="off">
+                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; disableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check" name="climb_style" id="trad" value="trad" autocomplete="off">
                     <label class="btn btn-outline-success" for="trad">Clasica</label>
                 </div>    
             </div>
         </div>
+        {%if extended%}
         <hr>
-
-        <div class="radio-selection form-group">
+        <div class="radio-selection form-group" visi>
             <div class="row">
-                <div class="col-2">
+                <div class="col-lg-3">
                     <label>Largos: </label>
                 </div>
-                <div class="col-auto">
+                <div class="col-lg-3">
                     <input onClick="disableButtons(['#num_pitches'])" type="radio" class="btn-check" name="multipitches" value="False" id="singlepitch" autocomplete="off"checked>
                     <label class="btn btn-outline-success" for="singlepitch">Monolargo</label>
                     <input onClick="enableButtons(['#num_pitches'])" type="radio" class="btn-check" name="multipitches" value="True" id="multipitch" autocomplete="off">
                     <label class="btn btn-outline-success" for="multipitch" >Multilargo</label>
                 </div>    
-                <div class="col-md-4">
+                <div class="col-lg-3">
                     <label for="num-pitches">Nro largos:</label>
                     <select class="form-control short-num" name="num_pitches" id="num_pitches">
                         {%for num in attempts%}
@@ -106,14 +89,15 @@
                 </div>
             </div>
         </div>
+        {%endif%}
         <hr>
 
         <div class="select-grade form-group">
             <div class="row">
-                <div class="col-2">
+                <div class="col-lg-3">
                     <label for="grade">Grado:</label>
                 </div>
-                <div class="col-auto">
+                <div class="col-lg-3">
                     <select class="form-select grade" name="grade" id="grade" aria-label="grade" >
                         <option value selected>---</option>
                         {%for grade_list in grades_list%}
@@ -123,18 +107,18 @@
                         {%endfor%}
                         </optgroup>
                         {%endfor%}
-                    </select>
-                    
+                    </select> 
                 </div>
             </div>
+        </div>
         <hr>
 
         <div class="radio-selection form-group">
             <div class="row">
-                <div class="col-2">
+                <div class="col-lg-3">
                     Posicion en la escalada:
                 </div>
-                <div class="col-auto">
+                <div class="col-lg-6">
                     <input type="radio" class="btn-check" name="climber_position" id="lead" value="lead" autocomplete="off">
                     <label class="btn btn-outline-success" for="lead">De primero</label>
         
@@ -144,13 +128,13 @@
             </div>
         </div>
         <hr>
-
+        {%if extended%}
         <div class="radio-selection form-group">
             <div class="row">
-                <div class="col-2">
+                <div class="col-lg-3">
                     <label>Tipo de ascenso:</label>
                 </div>
-                <div class="col-auto">
+                <div class="col-lg-6">
                     <input type="radio" class="btn-check" name="ascent_type" id="onsight" value="on-sight" autocomplete="off">
                     <label class="btn btn-outline-success" for="onsight">A vista</label>
         
@@ -168,14 +152,15 @@
                 </div>
             </div>
         </div>
+        
         <hr>
 
         <div class="form-group">
             <div class="row">
-                <div class="col-2">
+                <div class="col-lg-3">
                     <label for="num-attempts">Intentos:</label>
                 </div>
-                <div class="col-auto">
+                <div class="col-lg-6">
                     <select class="form-control short-num" id="num_attempts" name="num_attempts" required>
                         {%for num in attempts%}
                         <option value="{{num}}">{{num}}</option>
@@ -185,13 +170,13 @@
             </div>
         </div>
         <hr>
-
+        {%endif%}
         <div class="form-group">
             <div class="row">
-                <div class="col-2">                    
+                <div class="col-lg-3">                    
                     <label for="notes">Notas:</label>
                 </div>
-                <div class="col-10 col-md-8 col-sm-6">
+                <div class="col-lg-8 ">
                     <textarea class="form-control themed" id="notes" name="notes" rows="3"  placeholder="Nombre de la via, Es plaquera o de desplome? Calidad de la roca, etc."></textarea>
                 </div>
             </div>
@@ -199,17 +184,20 @@
         <br>
         <div class="form-group">
             <div class="row">
-                <div class="col-3">
+                <div class="col-lg-3">
                     <label for="multiple_entries">Vias/bloques del mismo grado:</label>
                 </div>
-                <div class="col-auto">
-                    <input type="number" class="form-control medium-num" id="multiple_entries" name="multiple_entries" placeholder=1 required>
+                <div class="col-lg-6" >
+                    <input type="number" class="form-control medium-num" id="multiple_entries" name="multiple_entries" placeholder="---" required>
                 </div>
             </div>
         </div>
         <br>
-        <input class="btn btn-primary" type="submit" value="Agregar pegue">
+        <input class="btn btn-primary float-end mx-2" type="submit" value="Agregar pegue">
     </form>
 </div>
+
+{%endblock%}
+{%block bottom_scripts%}
 <script src="{% static 'climb_log_webapp/new_entry.js' %}"></script>
 {%endblock%}

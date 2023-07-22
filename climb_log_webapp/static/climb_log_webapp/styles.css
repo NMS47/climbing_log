@@ -33,9 +33,6 @@ hr {
 
 h1 {
     font-family: 'Cabin Sketch';
-    /* font-family: 'Love Ya Like A Sister', cursive; */
-    /* font-family: 'Rock 3D', cursive; */
-    /* font-family: 'Dokdo', cursive; */
     color: #f38e09;
     font-size: 5rem;
 }
@@ -46,11 +43,7 @@ footer {
     justify-items: center;
     text-align: center;
     margin-top: auto;
-    
 }
-/* footer div {
-    padding-top: 1rem;
-} */
 
 #ig{
     transition: transform 2s;
