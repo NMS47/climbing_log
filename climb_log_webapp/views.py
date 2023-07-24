@@ -148,7 +148,6 @@ class Profile(LoginRequiredMixin, ListView):
 
         #-----------------------Heatmap calendar--------------------------------------
         df_calendar = pd.DataFrame(context['entries'].values('date_of_climb', 'num_pitches', 'num_attempts'))
-        print(df_calendar)
         df_calendar["intensity"] = (((df_calendar['num_pitches']**2) + df_calendar['num_attempts'])/2).astype('int64')
         df_intensity = df_calendar.groupby('date_of_climb', as_index=False).sum()
         df_intensity['date_of_climb']= pd.to_datetime(df_intensity['date_of_climb'], format='%Y-%m-%d', errors='raise')
@@ -221,7 +220,6 @@ class Profile(LoginRequiredMixin, ListView):
         fav_list = []
         df_place = pd.DataFrame(context['entries'].values('climb_style', 'place_name__place_name'))
         
-        print(df_place)
         df_fav = df_place.groupby(['climb_style','place_name__place_name'], as_index=False).value_counts()
         for style in styles:   
             id = df_fav[df_fav['climb_style']==style]['count'].idxmax()
@@ -244,6 +242,8 @@ class Profile(LoginRequiredMixin, ListView):
         context['prog_plot'] = prog_plot
 
         #Climbs maps----------------------------------------
+        # This is for eventually making a csv file in excel that is easier to add climbing places
+
         # places = Climb_places_from_csv.import_data(data = open('static/lugares_escalada.csv'))
         # print(places[0].name)
         # file =open('static/lugares_escalada.csv')
@@ -251,62 +251,31 @@ class Profile(LoginRequiredMixin, ListView):
         # ramos = places_data[places_data['name'] =='El Muro de Ramos']['coords'].values[0].split(',')
         # buca = places_data[places_data['name'] =='CABA Bucarelli']['coords'].values[0].split(',')
         # https://python-visualization.github.io/folium/modules.html all the params
-        df_map = pd.DataFrame(context['entries'].values('place_name__place_name', 'place_name__place_coords'))
+        df_map = pd.DataFrame(context['entries'].values('place_name__place_name', 'place_name__place_coords', 'place_name__enviroment'))
         df_map.drop_duplicates(inplace=True)
+        print(df_map)
 
-
+        #For setting the map coordinates and initial zoom level
         figure = folium.Figure()
         m = folium.Map(
             location=[-38.0000, -63.0000],
             zoom_start=4,
+            max_zoom=12,
         )
         m.default_css=[('leaflet_css', 'https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css'), ('awesome_markers_font_css', 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css'), ('awesome_markers_css', 'https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css'), ('awesome_rotate_css', 'https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css')]
-        #fit_bounds
         m.add_to(figure)
+        #For making the pins in the map:
         for index, row in df_map.iterrows():
-            print(row[0], row[1])
-            print(float(row[1].split(',')[0]))
-            
+            pin_color = 'lightblue'
+            if row[2] == 'artificial':
+                pin_color = 'lightred'
             folium.Marker(
             location=[float(row[1].split(',')[0]), float(row[1].split(',')[1])],
             popup=row[0],
-            icon=folium.Icon(icon='cloud')
-        ).add_to(m)
-
-        # folium.Marker(
-        #     location=[float(ramos[0]), float(ramos[1])],
-        #     popup='Mt. Hood Meadows',
-        #     icon=folium.Icon(icon='cloud')
-        # ).add_to(m)
-
-        # folium.Marker(
-        #     location=[float(buca[0]), float(buca[1])],
-        #     popup='Timberline Lodge',
-        #     icon=folium.Icon(color='green')
-        # ).add_to(m)
-
-        folium.Marker(
-            location=[45.3300, -121.6823],
-            popup='Some Other Location',
-            icon=folium.Icon(color='red', icon='info-sign')
+            icon=folium.Icon(color=pin_color),
         ).add_to(m)
         figure.render()
         context["map"] = figure
-
-       
-
-        # # Pie Chart of climbing style
-        # data= context['entries'].values('climb_style', 'num_attempts')
-        # df_style = pd.DataFrame(data)
-
-        # fig = px.pie(df_style, values='num_attempts', names='climb_style', title='Tipo de Escalada', color_discrete_sequence=px.colors.sequential.Agsunset)
-        # fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)',  xaxis=dict(color='white'), yaxis=dict(color='white'), height=400, width=400, margin=dict(l=6, r=0, t=26, b=6), )
-        # style_plot = plot(fig, output_type='div',)
-        # context['style_plot'] = style_plot
-        # simple_charts.append(context['style_plot'])
-
-
-
 
         return context
 
