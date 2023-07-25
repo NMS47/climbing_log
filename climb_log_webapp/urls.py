@@ -11,11 +11,11 @@ urlpatterns = [
     path('profile/', views.Profile.as_view(), name='user-profile'),
     path('entry_list/', views.EntryList.as_view(), name='entry-list'),
 
-
     path('entry_detail/<int:pk>', views.EntryDetail.as_view(), name='entry-detail'),
     path('add_new_entry/', views.NewEntryView.as_view(), name='new-entry-form'),
     path('entry_update/<int:pk>', views.EntryUpdate.as_view(), name='entry-update'),
     path('entry_delete/<int:pk>', views.EntryDelete.as_view(), name='entry-delete'),
     path('successful_sign_up/', views.SuccessfulSignUp.as_view(), name='successful-sign-up'),
     path('successful_new_entry/', views.SuccessfulNewEntry.as_view(), name='successful-new-entry'),
+    path('contact/', views.ContactPage.as_view(), name='contact'),
 ]

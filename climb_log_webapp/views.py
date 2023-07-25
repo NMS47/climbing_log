@@ -1,9 +1,8 @@
-from typing import Any
-from django import http
-from django.http import HttpRequest, HttpResponse
-from django.http.response import HttpResponse
+from typing import Any, Dict
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from datetime import datetime
+import smtplib
 #For plotly charts
 import pandas as pd
 from plotly.offline import plot
@@ -12,10 +11,9 @@ import plotly.express as px
 from datetime import datetime, timedelta
 from plotly_calplot import calplot
 import folium
-from django.templatetags.static import static
 
 from .models import ClimbEntry,  ClimbPlaces
-from .forms import NewEntryForm, UpdateEntryForm, UserCreateForm
+from .forms import NewEntryForm, UpdateEntryForm, UserCreateForm, ContactForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, FormView
@@ -24,9 +22,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
-
 
 
 grades_list = [[['Color'],['verde', 'azul', 'amarillo', 'naranja', 'rojo', 'negro']],
@@ -312,3 +307,14 @@ class EntryDelete(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
 
         return super().delete(request, *args, **kwargs)
+    
+
+    
+class ContactPage(FormView):
+    template_name = 'climb_log_webapp_ES/contact.html' 
+    form_class = ContactForm
+    success_url = reverse_lazy('homepage')
+
+    def form_valid(self, form: Any):
+        form.send_email(form.cleaned_data['name'], form.cleaned_data['email'], form.cleaned_data['message'])
+        return super().form_valid(form)

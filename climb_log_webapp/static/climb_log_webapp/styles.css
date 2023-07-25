@@ -43,23 +43,29 @@ footer {
     justify-items: center;
     text-align: center;
     margin-top: auto;
+    
 }
 
 #ig{
     transition: transform 2s;
     transition-timing-function: ease-in;
+    background-color: #858181;
+    border-radius: 35%;
+    padding: 0.1rem;
 }
 #ig:hover{
     transform: rotateX(360deg);
     animation: instagram 2s alternate 0s infinite ease-in;
 }
 
-#twt{
+#contact{
     transition: transform 2s;
     transition-timing-function: ease-in;
+    background-color: #858181;
+    border-radius: 35%;
 }
 
-#twt:hover{
+#contact:hover{
     transform: rotateY(360deg);
     animation: twitter 2s alternate 0s infinite ease-in;
 }

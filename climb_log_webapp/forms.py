@@ -2,6 +2,7 @@ from django import forms
 from .models import ClimbEntry
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+import smtplib
 
 class UserCreateForm(UserCreationForm):
     class Meta:
@@ -20,3 +21,21 @@ class UpdateEntryForm(forms.ModelForm):
         model = ClimbEntry
         exclude = ('username',)
         
+class ContactForm(forms.Form):
+    name = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+    message = forms.CharField(widget=forms.Textarea)
+
+
+
+    def send_email(self, name: str, email: str, message: str):
+        email1 = "mantecasalvadores@yahoo.com"
+        pw1 = 'eoufscvxmavcrcfm'
+        email2 = 'nicolas.salvadores93@gmail.com'
+        with smtplib.SMTP('smtp.mail.yahoo.com', 587) as connect_1:
+            connect_1.starttls()
+            connect_1.login(user=email1, password=pw1)
+            connect_1.sendmail(from_addr=email1,
+                                to_addrs=email2,
+                                msg=f"Subject:CLIMBING-LOG--CONTACTO DE {name}\n\n{message}\n\nEmail: {email}")
+            return print('Email sent succesfully')

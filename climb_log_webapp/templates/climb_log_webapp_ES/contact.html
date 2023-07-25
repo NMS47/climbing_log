@@ -1,0 +1,35 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{% load static %}
+{% block title %}Contacto{%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/login.css' %}">
+<link rel="stylesheet" href="{% static 'climb_log_webapp/styles.css' %}">
+{%endblock%}
+
+{%block content%}
+<div class="container-flex">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>Contacto</h1>
+            <p><strong>Climbing Log</strong> está en sus origenes y aún se encuentra en desarrollo.
+            Es posible que encuentres algún error o cosas que se pueden mejorar, si ese es el caso, por favor comenta abajo.
+            <strong>Toda sugerencia es bienvenida!</strong></p>
+            <p>Si tu lugar de escalada no se encuentra en el listado, por favor, escribeme el nombre del sector de escalada o gimnasio y lo agregaré lo antes posible.</p>
+            <p>Saludos!</p>
+        </div>
+        <div class="col-lg-6">
+            <form action="/contact/" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                {% endfor %}
+                <input type="submit" value="Submit">
+             </form>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
