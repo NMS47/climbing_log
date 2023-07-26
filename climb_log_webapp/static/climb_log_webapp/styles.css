@@ -8,7 +8,7 @@ nav{
 }
 
 .first{
-    color: #03a70b;
+    color: #03a70b !important;
     
 }
 
@@ -74,4 +74,11 @@ footer {
 span + span {
     margin-left: 1rem;
 
+}
+
+@media screen and (max-width:632px){
+    h1{
+        font-size: 3rem;
+        text-align: center;
+    }
 }

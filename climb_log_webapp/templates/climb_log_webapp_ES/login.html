@@ -8,36 +8,31 @@
 
 {%block content%}
 <main>
-<div class="container">
-<form class="form-signin" method="POST">
-  {%csrf_token%}
-    <div class="row">
-    <h1 class="h3 mb-3 font-weight-normal">Inicia sesion</h1>
-    </div>
-    <div class="row">
-        <div class="col">
-    <label for="inputEmail" class="sr-only">Email:</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-    </div>
-    </div>
-    <div class="row">
-        <div class="col">
-    <label for="inputPassword" class="sr-only">Contrasena</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-    </div>
-    </div>
-    <div class="row">
-    <div class="col">
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="remember-me"> Mantener sesion iniciada
-      </label>
-    </div>
-    </div>
-</div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesion</button>
-    <p class="mt-5 mb-3 text-muted">© 2023-2025</p>
-  </form>
-</div>
+  <div class="container">
+      <form class="form-signin" method="POST">
+          {% csrf_token %}
+          <div class="row">
+              <h1 class="h3 mb-3 font-weight-normal">Inicia sesión</h1>
+          </div>
+          <div class="row">
+              <div class="col">
+                  <label for="inputEmail" class="sr-only">Email:</label>
+                  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+              </div>
+          </div>
+          <div class="row">
+              <div class="col">
+                  <label for="inputPassword" class="sr-only">Contraseña</label>
+                  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+              </div>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+          <div>
+            <p> Todavía no tenés un usuario? Registrate acá.</p>
+          </div>
+          
+      </form>
+      <p class="mt-5 mb-3 text-muted">Todavía no tenés un usuario? Registrate acá.</p>
+  </div>
 </main>
 {%endblock%}

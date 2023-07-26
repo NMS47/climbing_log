@@ -16,7 +16,7 @@
 <form class="form-signin" method="post">
   {%csrf_token%}
     <div class="row form-group">
-      <h1 class="h3 mb-3 font-weight-normal">Iniciar sesion:</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Iniciar sesión:</h1>
     </div>
     <div class="row form-group">
         <div class="col">
@@ -30,8 +30,8 @@
           <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
       </div>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesion</button>
-    <p class="mt-5 mb-3 text-muted">© 2023-2025</p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+    <p class="mt-5 mb-3">Todavía no tenés un usuario? <a href="{%url 'sign-up'%}" class="link-success">Registrate!</a></p>
   </form>
 </div>
 </main>
