@@ -3,7 +3,7 @@ body{
 }
 
 form {
-    margin: 3rem auto;
+    margin: 1rem auto;
     border-radius: 16px;
     background-color: #3e3f3e;
     max-width: 30rem;
@@ -16,4 +16,8 @@ form {
 
 button{
     margin-left: -.7rem;
+}
+
+.form-field{
+    padding-bottom: 1rem;
 }

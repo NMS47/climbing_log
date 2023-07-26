@@ -25,8 +25,11 @@ class ContactForm(forms.Form):
     name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     message = forms.CharField(widget=forms.Textarea)
-
-
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control'
 
     def send_email(self, name: str, email: str, message: str):
         email1 = "mantecasalvadores@yahoo.com"
@@ -39,3 +42,4 @@ class ContactForm(forms.Form):
                                 to_addrs=email2,
                                 msg=f"Subject:CLIMBING-LOG--CONTACTO DE {name}\n\n{message}\n\nEmail: {email}")
             return print('Email sent succesfully')
+        
