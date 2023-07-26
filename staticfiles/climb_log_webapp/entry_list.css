@@ -1,0 +1,46 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 98%;
+    margin: auto;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 0.25rem;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #494747;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+.pagination {
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+}
+
+.current-page {
+    display: inline-block;
+}
+
+@media (max-width: 767px) {
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .pagination a,
+    .current-page {
+        margin-bottom: 5px;
+    }
+}

@@ -1,0 +1,39 @@
+.main{
+    padding-top: 2rem;
+    background-color: #222222;
+    border-radius: 25px;
+    padding-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+
+hr {
+    background-color: #026807;
+    border: none;
+    height: 3px !important; 
+}
+
+.themed,.medium-num, .short-num, .grade{
+    background-color: #232020;
+    color: #F4F4F4;
+    border: #014104;
+    border-style: solid;
+}
+
+.short-num{
+    max-width: 3rem;
+    text-align: center;
+}
+.medium-num{
+    max-width: 4rem;
+    text-align: center;
+}
+
+.medium-num:hover, .short-num:hover, .short-num:active, .short-num:target, .short-num:disabled, .grade:active, .grade:hover, .grade:checked, .grade:focus {
+    background-color: #363333;
+    color: #F4F4F4;
+}
+
+.error{
+    font-size: 1.5rem;
+    color: rgb(155, 7, 7)
+}

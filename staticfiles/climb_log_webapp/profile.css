@@ -1,0 +1,33 @@
+.card{
+    margin-bottom: 2rem;
+    background-color: #363636;
+    border-radius: 25px;
+}
+.calendar{
+    padding: 0.5rem;
+}
+
+h1{
+    color: #F4F4F4;
+}
+
+hr{
+    background-color: whitesmoke;   
+}
+
+.record-sport, .record-boulder{
+    text-align: center;
+}
+
+.record-sport mark{ 
+    background-color: #9467BC;
+}
+
+.record-boulder mark{ 
+    background-color: #2CA02C;
+}
+
+.bottom{
+    min-height: fit-content;
+    padding: 2rem 1rem;
+}

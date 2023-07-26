@@ -1,0 +1,23 @@
+body{
+    margin: 0;
+}
+
+form {
+    margin: 1rem auto;
+    border-radius: 16px;
+    background-color: #3e3f3e;
+    max-width: 30rem;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgb(40, 95, 49);}
+
+.col {
+    padding: .5rem 0;
+}
+
+button{
+    margin-left: -.7rem;
+}
+
+.form-field{
+    padding-bottom: 1rem;
+}

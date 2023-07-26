@@ -1,0 +1,77 @@
+nav{
+    padding-left: 1rem;
+}
+
+.navbar-nav {
+    text-align: right;
+    padding-left: 30%;
+}
+
+.first{
+    color: #03a70b;
+    
+}
+
+.btn-outline-success {
+    margin: 0.2rem auto;
+    color: #F4F4F4 !important;
+}
+
+body {
+    background-color: #232020;
+    color: #F4F4F4;
+    font-family: 'Rubik', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+hr {
+    background-color: #014104;
+    border: none
+}
+
+h1 {
+    font-family: 'Cabin Sketch';
+    color: #f38e09;
+    font-size: 5rem;
+}
+
+footer {
+    display: inline;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    margin-top: auto;
+    
+}
+
+#ig{
+    transition: transform 2s;
+    transition-timing-function: ease-in;
+    background-color: #858181;
+    border-radius: 35%;
+    padding: 0.1rem;
+}
+#ig:hover{
+    transform: rotateX(360deg);
+    animation: instagram 2s alternate 0s infinite ease-in;
+}
+
+#contact{
+    transition: transform 2s;
+    transition-timing-function: ease-in;
+    background-color: #858181;
+    border-radius: 35%;
+}
+
+#contact:hover{
+    transform: rotateY(360deg);
+    animation: twitter 2s alternate 0s infinite ease-in;
+}
+
+/* Only a span that comes after a span*/
+span + span {
+    margin-left: 1rem;
+
+}
