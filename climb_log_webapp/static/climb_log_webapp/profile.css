@@ -31,3 +31,10 @@ hr{
     min-height: 25rem;
     padding: 2rem 1rem;
 }
+
+@media screen and (max-width:992px){
+    .bottom{
+        min-height: fit-content;
+        padding: 2rem 1rem;
+    }
+}
