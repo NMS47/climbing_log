@@ -205,10 +205,15 @@ class Profile(LoginRequiredMixin, ListView):
         #--
         records = []
         for style in styles:
-            style_record = df_records[df_records['climb_style'] == style]['grade_equivalent'].idxmax()
-            r_grade = df_records.loc[style_record]['grade']
-            r_date = df_records.loc[style_record]['date_of_climb']
-            records.append((r_grade, r_date))
+            try:
+                style_record = df_records[df_records['climb_style'] == style]['grade_equivalent'].idxmax()
+                r_grade = df_records.loc[style_record]['grade']
+                r_date = df_records.loc[style_record]['date_of_climb']
+            except ValueError:
+                r_grade = "-"
+                r_date = "-"
+            finally:
+                records.append((r_grade, r_date))
         context['records'] = records
         #--------------------------------------------------------------
         #Fav place-----------------------------------------------------
@@ -216,10 +221,14 @@ class Profile(LoginRequiredMixin, ListView):
         df_place = pd.DataFrame(context['entries'].values('climb_style', 'place_name__place_name'))
         
         df_fav = df_place.groupby(['climb_style','place_name__place_name'], as_index=False).value_counts()
-        for style in styles:   
-            id = df_fav[df_fav['climb_style']==style]['count'].idxmax()
-            style_fav = df_fav.loc[id].place_name__place_name
-            fav_list.append(style_fav)
+        for style in styles:
+            try:   
+                id = df_fav[df_fav['climb_style']==style]['count'].idxmax()
+                style_fav = df_fav.loc[id].place_name__place_name
+            except ValueError:
+                style_fav = "-"
+            finally:
+                fav_list.append(style_fav)
         context['favorite_places'] = fav_list
         #-------------------------------------------------------------
         #Progression line---------------------------------------------
@@ -233,6 +242,8 @@ class Profile(LoginRequiredMixin, ListView):
 
                           yaxis=dict(color='white', gridcolor='#757575', griddash='dot', gridwidth=0.3, fixedrange=False, labelalias={1: '5', 2: '5+', 3: '6a', 4: '6a+', 5: '6b', 6: '6b+', 7: '6c', 8: '6c+', 9: '7a', 10: '7a+',
                          11: '7b', 12: '7b+', 13: '7c', 14: '8a', 15: '8a+', 16: '8b', 17: '8b+', 18: '8c', 19: '8c+'}, linecolor='#F4F4F4', linewidth=1.5, tickfont_family='Rubik'), height=225, width=500, margin=dict(l=6, r=0, t=26, b=6), yaxis_title=None, xaxis_title=None, legend_font_color='#F4F4F4', legend_font_size=8, legend_borderwidth=0, legend_title=None)
+        fig.update_yaxes(automargin=True)
+        fig.update_xaxes(automargin=True)
         prog_plot = plot(fig, output_type='div')
         context['prog_plot'] = prog_plot
 
