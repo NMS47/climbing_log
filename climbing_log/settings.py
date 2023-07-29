@@ -153,3 +153,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SESSION_COOKIE_AGE = 2678400
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+CSRF_TRUSTED_ORIGINS = ['web-production-1626.up.railway.app', 'https://web-production-1626.up.railway.app ']
