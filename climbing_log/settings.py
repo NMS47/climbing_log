@@ -154,4 +154,4 @@ SESSION_COOKIE_AGE = 2678400
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-# CSRF_TRUSTED_ORIGINS = ['https://web-production-1626.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-1626.up.railway.app']
