@@ -31,7 +31,7 @@ DEBUG = os.getenv("IS_DEVELOPMENT") == 'TRUE'
 
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = [
-    os.getenv("APP_HOST", "127.0.0.1:8000")
+    os.getenv("APP_HOST", "127.0.0.1")
 ]
 
 # Application definition
