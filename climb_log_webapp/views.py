@@ -135,9 +135,11 @@ class Profile(LoginRequiredMixin, ListView):
             return context
 
         today = datetime.now()
+        print(today.month)
         formated_today= today.strftime("%Y-%m-%d")
-        one_ago = today - timedelta(days=365)
-        formated_ago = one_ago.strftime("%Y-%m-%d")
+        four_months_ago = today - timedelta(days=124)
+        # one_ago = today - timedelta(days=365)
+        # formated_ago = one_ago.strftime("%Y-%m-%d")
         # df_download = pd.DataFrame(context['entries'])
         # df_download.to_csv('home/nms/Downloads/')
 
@@ -179,8 +181,8 @@ class Profile(LoginRequiredMixin, ListView):
             showscale=True,
             space_between_plots= 0.1,
             #Automize this!!!!!!!!!!!!!!!!!!!!!!!:
-            start_month=3,
-            end_month=7)
+            start_month=int(four_months_ago.month),
+            end_month=int(today.month))
         
         cal_plot = plot(fig_cal, output_type='div')
         context['calendar_plot'] = cal_plot
