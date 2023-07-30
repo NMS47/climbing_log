@@ -27,11 +27,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("IS_DEVELOPMENT", True)
+DEBUG = os.getenv("IS_DEVELOPMENT") == 'TRUE'
 
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = [
-    os.getenv("APP_HOST", "*")
+    os.getenv("APP_HOST", "127.0.0.1:8000")
 ]
 
 # Application definition
