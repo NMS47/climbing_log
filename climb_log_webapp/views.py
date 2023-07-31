@@ -135,7 +135,6 @@ class Profile(LoginRequiredMixin, ListView):
             return context
 
         today = datetime.now()
-        print(today.month)
         formated_today= today.strftime("%Y-%m-%d")
         four_months_ago = today - timedelta(days=124)
         # one_ago = today - timedelta(days=365)
@@ -180,7 +179,6 @@ class Profile(LoginRequiredMixin, ListView):
             name = 'pegues',
             showscale=True,
             space_between_plots= 0.1,
-            #Automize this!!!!!!!!!!!!!!!!!!!!!!!:
             start_month=int(four_months_ago.month),
             end_month=int(today.month))
         
@@ -237,14 +235,15 @@ class Profile(LoginRequiredMixin, ListView):
         # By creating a month column we can get an accurate monthly max climb grade, should check if there is a better way
         df_records['month'] = pd.DatetimeIndex(df_records['date_of_climb']).month
         df_prog = df_records.groupby(['month','climb_style'], as_index=False).max()
+        print(df_prog)
         
         fig = px.line(df_prog, x='date_of_climb', y="grade_equivalent", color='climb_style', markers=True, color_discrete_sequence=["#2CA02C", "#9467BC", "#1F77B4",], hover_name='date_of_climb', hover_data={'climb_style':False, 'grade_equivalent':False, 'date_of_climb':False}, line_shape='spline')
         fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', 
-                          xaxis=dict(color='white', tickangle=-45, griddash='dot', gridwidth=0.3, fixedrange=False, linecolor='#363636', linewidth=1.5, showgrid=False, spikecolor='#232020', spikedash='solid', spikethickness=1, tickfont_family='Rubik', tickformat='%b',), 
+                          xaxis=dict(color='white', tickangle=-45, griddash='dot', gridwidth=0.3, fixedrange=False, linecolor='white', gridcolor='#757575', linewidth=1.5, spikecolor='#232020', spikedash='solid', spikethickness=1, tickfont_family='Rubik', tickformat='%b',), 
 
-                          yaxis=dict(color='white', gridcolor='#757575', griddash='dot', gridwidth=0.3, fixedrange=False, labelalias={1: '5', 2: '5+', 3: '6a', 4: '6a+', 5: '6b', 6: '6b+', 7: '6c', 8: '6c+', 9: '7a', 10: '7a+',
+                          yaxis=dict(color='white', gridcolor='#757575', griddash='dot', gridwidth=0.3, fixedrange=True, labelalias={1: '5', 2: '5+', 3: '6a', 4: '6a+', 5: '6b', 6: '6b+', 7: '6c', 8: '6c+', 9: '7a', 10: '7a+',
                          11: '7b', 12: '7b+', 13: '7c', 14: '8a', 15: '8a+', 16: '8b', 17: '8b+', 18: '8c', 19: '8c+'}, linecolor='#F4F4F4', linewidth=1.5, tickfont_family='Rubik'), height=225, width=500, margin=dict(l=6, r=0, t=26, b=6), yaxis_title=None, xaxis_title=None, legend_font_color='#F4F4F4', legend_font_size=8, legend_borderwidth=0, legend_title=None)
-        fig.update_yaxes(automargin=True)
+        fig.update_yaxes(automargin=True, ticklabelstep=2)
         fig.update_xaxes(automargin=True)
         prog_plot = plot(fig, output_type='div')
         context['prog_plot'] = prog_plot
@@ -261,7 +260,7 @@ class Profile(LoginRequiredMixin, ListView):
         # https://python-visualization.github.io/folium/modules.html all the params
         df_map = pd.DataFrame(context['entries'].values('place_name__place_name', 'place_name__place_coords', 'place_name__enviroment'))
         df_map.drop_duplicates(inplace=True)
-        print(df_map)
+        
 
         #For setting the map coordinates and initial zoom level
         figure = folium.Figure()
@@ -284,7 +283,6 @@ class Profile(LoginRequiredMixin, ListView):
         ).add_to(m)
         figure.render()
         context["map"] = figure
-
         return context
 
     
@@ -297,11 +295,13 @@ class EntryList(LoginRequiredMixin, ListView):
     #This is the way of filtering the db when using paginator
     def get_queryset(self):
         return ClimbEntry.objects.filter(username_id=self.request.user.id).order_by('-date_of_climb')
+  
     
 class EntryDetail(LoginRequiredMixin, DetailView):
     template_name= 'climb_log_webapp_ES/entry_detail.html'
     model = ClimbEntry
     context_object_name = 'entry'
+
 
 class EntryUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'climb_log_webapp_ES/entry_update.html'
@@ -311,17 +311,13 @@ class EntryUpdate(LoginRequiredMixin, UpdateView):
     context_object_name = 'entry'
     success_url = reverse_lazy('entry-list')
 
+
 class EntryDelete(LoginRequiredMixin, DeleteView):
     template_name = 'climb_log_webapp_ES/entry_confirm_delete.html'
     model = ClimbEntry
     context_object_name = 'entry'
     success_url = reverse_lazy('entry-list')
-
-    def delete(self, request, *args, **kwargs):
-
-        return super().delete(request, *args, **kwargs)
-    
-
+ 
     
 class ContactPage(FormView):
     template_name = 'climb_log_webapp_ES/contact.html' 
