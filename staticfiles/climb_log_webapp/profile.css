@@ -21,10 +21,12 @@ hr{
 
 .record-sport mark{ 
     background-color: #9467BC;
+    border-radius: 25px;
 }
 
 .record-boulder mark{ 
     background-color: #2CA02C;
+    border-radius: 25px;
 }
 
 .bottom{

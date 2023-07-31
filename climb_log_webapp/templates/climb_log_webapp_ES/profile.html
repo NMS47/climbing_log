@@ -24,7 +24,7 @@
     <div class="card col-lg-6" >
         <h1>{{request.user}}</h1>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 d-flex align-items-center">
                 <h5>Estilos</h5>
             </div>
             <div class="col-lg-3">
@@ -35,10 +35,10 @@
         </div>
         <hr>
         <div class="row mt-4">
-            <div class="col-lg-3">
+            <div class="col-lg-3 d-flex align-items-center">
                 <h5>Records</h5>
             </div>
-            <div class="col-lg-4 record-sport">
+            <div class="col-lg-4 d-flex align-items-center record-sport">
                 <h6>Deportiva:</h6>
                 <div>
                    <h6><mark>{{records.0.0}}</mark></h6>
@@ -47,7 +47,7 @@
                     <p>{{records.0.1}}</p>
                 </div>
             </div>
-            <div class="col-lg-4 record-boulder">
+            <div class="col-lg-4 d-flex align-items-center record-boulder">
                 <h6>Boulder:</h6>
                 <div>
                     <h6><mark>{{records.1.0|title}}</mark></h6>
@@ -63,10 +63,10 @@
                 <h5>Lugar favorito</h5>
             </div>
             <div class="col-lg-4 record-sport">
-                <h6>{{favorite_places.0}}</h6>
+                <h6><mark>{{favorite_places.0}}</mark></h6>
             </div>
             <div class="col-lg-4 record-boulder">
-                <h6>{{favorite_places.1}}</h6>
+                <h6><mark>{{favorite_places.1}}</mark></h6>
             </div>
         </div>
     </div>
