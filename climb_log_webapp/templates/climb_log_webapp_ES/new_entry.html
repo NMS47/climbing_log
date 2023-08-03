@@ -37,7 +37,7 @@
                     <label for="place">Lugar: </label>
                 </div>
                 <div class="col-lg-6">
-                        <select class="form-select grade" name="place_name" id="grade" aria-label="grade" >
+                        <select class="form-select grade" name="place_name" id="grade" aria-label="grade" required>
                             <option value selected>---</option>
                             {%for place in places_list%}
                             <option value={{place.0}}>{{place.1}}</option>
@@ -54,21 +54,21 @@
                 <div class="col-lg-3">
                     <label>Estilo: </label>
                 </div>
-                <div class="col-lg-6">
-                    <input onClick="disableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; enableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check" name="climb_style"  id="boulder" value="boulder" autocomplete="off">
-                    <label class="btn btn-outline-success" for="boulder">Boulder </label>
+                <div class="col-lg-6 form-check">
+                    <input onClick="disableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; enableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check form-check-input" name="climb_style"  id="boulder" value="boulder" autocomplete="off" required>
+                    <label class="btn btn-outline-success form-check-label" for="boulder">Boulder </label>
                     
-                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; disableButtons(['#flash', '#V', '#Color'])" type="radio" class="btn-check" name="climb_style" id="sport" value="sport" autocomplete="off">
-                    <label class="btn btn-outline-success" for="sport">Deportiva</label>
+                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; disableButtons(['#flash', '#V', '#Color'])" type="radio" class="btn-check form-check-input" name="climb_style" id="sport" value="sport" autocomplete="off">
+                    <label class="btn btn-outline-success form-check-label" for="sport">Deportiva</label>
                     
-                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; disableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check" name="climb_style" id="trad" value="trad" autocomplete="off">
-                    <label class="btn btn-outline-success" for="trad">Clasica</label>
+                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; disableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check form-check-input" name="climb_style" id="trad" value="trad" autocomplete="off">
+                    <label class="btn btn-outline-success form-check-label" for="trad">Clásica</label>
                 </div>    
             </div>
         </div>
         {%if extended%}
         <hr>
-        <div class="radio-selection form-group" visi>
+        <div class="radio-selection form-group">
             <div class="row">
                 <div class="col-lg-3">
                     <label>Largos: </label>
@@ -98,7 +98,7 @@
                     <label for="grade">Grado:</label>
                 </div>
                 <div class="col-lg-3">
-                    <select class="form-select grade" name="grade" id="grade" aria-label="grade" >
+                    <select class="form-select grade" name="grade" id="grade" aria-label="grade" required>
                         <option value selected>---</option>
                         {%for grade_list in grades_list%}
                         <optgroup id="{{grade_list.0.0}}"label="{{grade_list.0.0}}">   
@@ -119,7 +119,7 @@
                     Posicion en la escalada:
                 </div>
                 <div class="col-lg-6">
-                    <input type="radio" class="btn-check" name="climber_position" id="lead" value="lead" autocomplete="off">
+                    <input type="radio" class="btn-check" name="climber_position" id="lead" value="lead" autocomplete="off" required>
                     <label class="btn btn-outline-success" for="lead">De primero</label>
         
                     <input type="radio" class="btn-check" name="climber_position" id="top-rope" value="top-rope" autocomplete="off">
@@ -129,7 +129,7 @@
         </div>
         <hr>
         {%if extended%}
-        <div class="radio-selection form-group">
+        <div class="radio-selection form-group" required>
             <div class="row">
                 <div class="col-lg-3">
                     <label>Tipo de ascenso:</label>

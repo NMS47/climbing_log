@@ -241,9 +241,9 @@ class Profile(LoginRequiredMixin, ListView):
         fig.update_layout(paper_bgcolor = 'rgba(0, 0, 0, 0)', plot_bgcolor = 'rgba(0, 0, 0, 0)', 
                           xaxis=dict(color='white', tickangle=-45, griddash='dot', gridwidth=0.3, fixedrange=False, linecolor='white', gridcolor='#757575', linewidth=1.5, spikecolor='#232020', spikedash='solid', spikethickness=1, tickfont_family='Rubik', tickformat='%b',), 
 
-                          yaxis=dict(color='white', gridcolor='#757575', griddash='dot', gridwidth=0.3, fixedrange=True, labelalias={1: '5', 2: '5+', 3: '6a', 4: '6a+', 5: '6b', 6: '6b+', 7: '6c', 8: '6c+', 9: '7a', 10: '7a+',
-                         11: '7b', 12: '7b+', 13: '7c', 14: '8a', 15: '8a+', 16: '8b', 17: '8b+', 18: '8c', 19: '8c+'}, linecolor='#F4F4F4', linewidth=1.5, tickfont_family='Rubik'), height=225, margin=dict(l=6, r=0, t=26, b=6), yaxis_title=None, xaxis_title=None, legend_font_color='#F4F4F4', legend_font_size=8, legend_borderwidth=0, legend_title=None)
-        fig.update_yaxes(automargin=True, ticklabelstep=2)
+                          yaxis=dict(color='white', gridcolor='#757575', griddash='dot', gridwidth=0.3, fixedrange=True, labelalias={1: '5', 1.5:' ', 2: '5+', 2.5:' ', 3: '6a',3.5:' ', 4:'6a+', 4.5:' ', 5:'6b', 5.5:' ', 6: '6b+',6.5:' ', 7: '6c', 7.5: ' ', 8: '6c+', 8.5:' ', 9: '7a',  9.5: ' ', 10: '7a+', 10.5: ' ',
+                         11: '7b', 11.5: ' ', 12: '7b+', 12.5: ' ', 13: '7c', 13.5:' ', 14:'8a', 14.5: ' ', 15: '8a+', 15.5:' ', 16: '8b', 16.5:' ', 17:'8b+', 17.5: ' ', 18: '8c', 18.5:' ', 19:'8c+', 19.5:' '}, linecolor='#F4F4F4', linewidth=1.5, tickfont_family='Rubik'), height=225, margin=dict(l=6, r=0, t=26, b=6), yaxis_title=None, xaxis_title=None, legend_font_color='#F4F4F4', legend_font_size=8, legend_borderwidth=0, legend_title=None)
+        fig.update_yaxes(automargin=True, ticklabelstep=1)
         fig.update_xaxes(automargin=True)
         prog_plot = plot(fig, output_type='div', include_plotlyjs=False, show_link=False, config={'staticPlot': True})
         context['prog_plot'] = prog_plot
