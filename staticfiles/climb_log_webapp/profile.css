@@ -1,14 +1,15 @@
 .icon{
-    width: 250px;
+    width: 200px;
 }
 
 .card{
     margin-bottom: 1rem;
     background-color: #363636;
     border-radius: 25px;
+    align-content: center;
 }
-.left-panel{
-    padding: 1rem;
+.top-right{
+    display: grid;
 }
 .calendar{
     padding: 0.5rem;
@@ -56,8 +57,5 @@ hr{
     }
     .card{
         margin-bottom: 1rem;
-    }
-    .left-panel{
-        padding: 0;
     }
 }
