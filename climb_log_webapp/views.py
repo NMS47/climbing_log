@@ -75,7 +75,7 @@ class NewEntryView(LoginRequiredMixin, FormView):
     form_class = NewEntryForm
     extra_context = {'multipitches': False,
                      'num_pitches': 1,
-                     'ascent_type': 'not-specified',
+                    #  'ascent_type': 'not-specified',
                      'num_attempts': 1,
                      'date_today': datetime.today().strftime('%Y-%m-%d'),
                      'attempts': [i for i in range(1,9)],
@@ -97,7 +97,7 @@ class NewEntryView(LoginRequiredMixin, FormView):
 # This is to add a username, grade_equivalent to the climbEntry, otherwise it is not saved to db
     def form_valid(self, form):
         form.instance.grade_equivalent = grades_dict.get(form.instance.grade)
-        form.instance.ascent_type = 'not-specified'
+        # form.instance.ascent_type = 'not-specified'
         number_of_entries = int(self.request.POST.get('multiple_entries','')) 
         form.instance.username = self.request.user
         instance = form.save(commit=False)
