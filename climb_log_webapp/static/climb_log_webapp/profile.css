@@ -1,7 +1,14 @@
+.icon{
+    width: 250px;
+}
+
 .card{
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     background-color: #363636;
     border-radius: 25px;
+}
+.left-panel{
+    padding: 1rem;
 }
 .calendar{
     padding: 0.5rem;
@@ -16,7 +23,11 @@ hr{
 }
 
 .record-sport, .record-boulder{
+    display: flex;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
 .record-sport mark{ 
@@ -38,5 +49,15 @@ hr{
     .bottom{
         min-height: 20rem;
         padding: .2rem .1rem;
+    }
+
+    .icon{
+        width: 100px;
+    }
+    .card{
+        margin-bottom: 1rem;
+    }
+    .left-panel{
+        padding: 0;
     }
 }

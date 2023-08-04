@@ -181,7 +181,7 @@ class Profile(LoginRequiredMixin, ListView):
             space_between_plots= 0.1,
             start_month=int(four_months_ago.month),
             end_month=int(today.month))
-        
+        fig_cal.update_layout(margin=dict(l=6, r=6))
         cal_plot = plot(fig_cal, output_type='div',config={'staticPlot': True})
         context['calendar_plot'] = cal_plot
         #--------------------------------------------------------------------
