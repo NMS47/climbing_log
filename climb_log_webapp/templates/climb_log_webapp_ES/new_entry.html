@@ -6,10 +6,15 @@
 {%endblock%}
 
 {%block content%}
-<div>   
+<div class="container">   
     <h1>Agrega pegues:</h1>
 </div> 
 <div class="container-md mx-auto main">
+    {%if form_type == 'quick_form'%}
+    <a class="btn btn-warning float-end mx-2" href="{% url 'new-entry-form' form_type='extended_form' %}" role="button">Pegue avanzado</a>
+    {%else%}
+    <a class="btn btn-warning float-end mx-2" href="{% url 'new-entry-form' form_type='quick_form' %}" role="button">Pegue rápido</a>
+    {%endif%}
     <form  action="" method="POST">
         {% csrf_token %}
         <div class="form-group">
@@ -47,8 +52,6 @@
             </div>
         </div>
         <hr>
-
-
         <div class="radio-selection form-group">
             <div class="row">
                 <div class="col-lg-3">
@@ -66,7 +69,7 @@
                 </div>    
             </div>
         </div>
-        {%if extended%}
+        {%if form_type == 'extended_form'%}
         <hr>
         <div class="radio-selection form-group">
             <div class="row">
@@ -112,11 +115,10 @@
             </div>
         </div>
         <hr>
-
         <div class="radio-selection form-group">
             <div class="row">
                 <div class="col-lg-3">
-                    Posicion en la escalada:
+                    Posición en la escalada:
                 </div>
                 <div class="col-lg-6">
                     <input type="radio" class="btn-check" name="climber_position" id="lead" value="lead" autocomplete="off" required>
@@ -128,14 +130,13 @@
             </div>
         </div>
         <hr>
-        {%if extended%}
-        <div class="radio-selection form-group" required>
+        <div class="radio-selection form-group">
             <div class="row">
                 <div class="col-lg-3">
                     <label>Tipo de ascenso:</label>
                 </div>
                 <div class="col-lg-6">
-                    <input type="radio" class="btn-check" name="ascent_type" id="onsight" value="on-sight" autocomplete="off">
+                    <input type="radio" class="btn-check" name="ascent_type" id="onsight" value="on-sight" autocomplete="off" required>
                     <label class="btn btn-outline-success" for="onsight">A vista</label>
         
                     <input type="radio" class="btn-check" name="ascent_type" id="red-point" value="red-point" autocomplete="off">
@@ -152,9 +153,8 @@
                 </div>
             </div>
         </div>
-        
         <hr>
-
+        {%if form_type == 'extended_form'%}
         <div class="form-group">
             <div class="row">
                 <div class="col-lg-3">

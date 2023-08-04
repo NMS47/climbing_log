@@ -12,7 +12,7 @@ urlpatterns = [
     path('entry_list/', views.EntryList.as_view(), name='entry-list'),
 
     path('entry_detail/<int:pk>', views.EntryDetail.as_view(), name='entry-detail'),
-    path('add_new_entry/', views.NewEntryView.as_view(), name='new-entry-form'),
+    path('add_new_entry/<form_type>', views.NewEntryView.as_view(), name='new-entry-form'),
     path('entry_update/<int:pk>', views.EntryUpdate.as_view(), name='entry-update'),
     path('entry_delete/<int:pk>', views.EntryDelete.as_view(), name='entry-delete'),
     path('successful_sign_up/', views.SuccessfulSignUp.as_view(), name='successful-sign-up'),

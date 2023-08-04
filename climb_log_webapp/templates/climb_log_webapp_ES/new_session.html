@@ -1,0 +1,146 @@
+{% extends 'climb_log_webapp_ES/base.html' %}
+{% load static %}
+{% block title %}Nueva entrada{%endblock%}
+{%block css_files%}
+<link rel="stylesheet" href="{% static 'climb_log_webapp/new_entry.css' %}">
+{%endblock%}
+
+{%block content%}
+<div class="container">   
+    <h1>Agrega la sesión:</h1>
+</div> 
+<div class="container-md mx-auto main">
+    <form  action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {%if form.errors%}
+            {{form.errors.as_text}}
+            <div class="row">
+                <p class="error">Por favor, comprueba que todas las categorias tengan un valor.</p>
+            </div>
+            {%endif%}
+            <div class="row ">
+                <div class="col-lg-3">
+                    <label for="date">Fecha de la sesión:</label>
+                </div>
+                <div class="col-lg-6">
+                    <input class="themed" type="date" name="date_of_climb" id="date_of_climb" max="{{date_today}}" default="{{date_today}}" value="{{date_today}}">
+                </div>
+                
+            </div>
+        </div>
+        <hr>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label for="place">Lugar:</label>
+                </div>
+                <div class="col-lg-6">
+                        <select class="form-select grade" name="place_name" id="grade" aria-label="grade" required>
+                            <option value selected>---</option>
+                            {%for place in places_list%}
+                            <option value={{place.0}}>{{place.1}}</option>
+                            {%endfor%}
+                        </select>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="radio-selection form-group">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label>Estilo: </label>
+                </div>
+                <div class="col-lg-6 form-check">
+                    <input onClick="disableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; enableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check form-check-input" name="climb_style"  id="boulder" value="boulder" autocomplete="off" required>
+                    <label class="btn btn-outline-success form-check-label" for="boulder">Boulder </label>
+                    
+                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; disableButtons(['#flash', '#V', '#Color'])" type="radio" class="btn-check form-check-input" name="climb_style" id="sport" value="sport" autocomplete="off">
+                    <label class="btn btn-outline-success form-check-label" for="sport">Deportiva</label>
+                    
+                    <input onClick="enableButtons(['#multipitch', '#num_pitches', '#top-rope', '#onsight', '#red-point', '#lead', '#top-rope', '#FR']) ; disableButtons(['#flash','#V', '#Color'])" type="radio" class="btn-check form-check-input" name="climb_style" id="trad" value="trad" autocomplete="off">
+                    <label class="btn btn-outline-success form-check-label" for="trad">Clásica</label>
+                </div>    
+            </div>
+        </div>
+        <hr>
+        <div class="select-grade form-group">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label for="grade">Grado:</label>
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-select grade" name="grade" id="grade" aria-label="grade" required>
+                        <option value selected>---</option>
+                        {%for grade_list in grades_list%}
+                        <optgroup id="{{grade_list.0.0}}"label="{{grade_list.0.0}}">   
+                        {%  for grade in grade_list.1 %}
+                            <option class="themed" value="{{grade}}">{{grade|title}}</option>
+                        {%endfor%}
+                        </optgroup>
+                        {%endfor%}
+                    </select> 
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="radio-selection form-group">
+            <div class="row">
+                <div class="col-lg-3">
+                    Posición en la escalada:
+                </div>
+                <div class="col-lg-6">
+                    <input type="radio" class="btn-check" name="climber_position" id="lead" value="lead" autocomplete="off" required>
+                    <label class="btn btn-outline-success" for="lead">De primero</label>
+        
+                    <input type="radio" class="btn-check" name="climber_position" id="top-rope" value="top-rope" autocomplete="off">
+                    <label class="btn btn-outline-success" for="top-rope">Top Rope</label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="radio-selection form-group" required>
+            <div class="row">
+                <div class="col-lg-3">
+                    <label>Tipo de ascenso:</label>
+                </div>
+                <div class="col-lg-6">
+                    <input type="radio" class="btn-check" name="ascent_type" id="onsight" value="on-sight" autocomplete="off">
+                    <label class="btn btn-outline-success" for="onsight">A vista</label>
+        
+                    <input type="radio" class="btn-check" name="ascent_type" id="red-point" value="red-point" autocomplete="off">
+                    <label class="btn btn-outline-success" for="red-point">Red Point</label>
+        
+                    <input type="radio" class="btn-check" name="ascent_type" id="flash" value="flash" autocomplete="off">
+                    <label class="btn btn-outline-success" for="flash">Flash</label>
+        
+                    <input type="radio" class="btn-check" name="ascent_type" id="fall-take" value="fall-take" autocomplete="off">
+                    <label class="btn btn-outline-success" for="fall-take">Con caida o tensión</label>
+        
+                    <input type="radio" class="btn-check" name="ascent_type" id="incomplete" value="incomplete" autocomplete="off">
+                    <label class="btn btn-outline-success" for="incomplete">No completada</label>  
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label for="multiple_entries">Vias/bloques del mismo grado:</label>
+                </div>
+                <div class="col-lg-6" >
+                    <input type="number" class="form-control medium-num" id="multiple_entries" name="multiple_entries" placeholder="---" required>
+                </div>
+            </div>
+        </div>
+        <br>
+        <input class="btn btn-primary float-end mx-2" type="submit" value="Agregar pegue">
+    </form>
+</div>
+
+{%endblock%}
+{%block bottom_scripts%}
+<script src="{% static 'climb_log_webapp/new_entry.js' %}"></script>
+{%endblock%}

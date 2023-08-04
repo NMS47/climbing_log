@@ -80,7 +80,7 @@ class NewEntryView(LoginRequiredMixin, FormView):
                      'date_today': datetime.today().strftime('%Y-%m-%d'),
                      'attempts': [i for i in range(1,9)],
                      'grades_list': grades_list
-                     }
+                                          }
     success_url =reverse_lazy('successful-new-entry')
     model = ClimbEntry
 
@@ -90,6 +90,8 @@ class NewEntryView(LoginRequiredMixin, FormView):
         queryset = ClimbPlaces.objects.values_list('id','place_name')
         places_list = [[n[0],n[1]] for n in queryset.all()]
         context['places_list'] = places_list
+        context['form_type'] = self.kwargs['form_type']
+        print(context['form_type'])
         return context
 
 # This is to add a username, grade_equivalent to the climbEntry, otherwise it is not saved to db
