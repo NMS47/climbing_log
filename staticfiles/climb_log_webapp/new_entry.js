@@ -28,7 +28,9 @@ function addMoreEntries() {
   let template1 = document.getElementById("template1");
   let clone1 = template1.cloneNode(true); // Clone the template with its content
   // clone.style.display = "block"; // Make the cloned element visible
-  document.getElementById("codeContainer").appendChild(clone1);
+  document.getElementById("templateContainer").appendChild(clone1);
+  let target = document.querySelectorAll(".remove")
+  target[(target.length)-1].removeAttribute("disabled")
 }
 
 function removeEntry(element) {

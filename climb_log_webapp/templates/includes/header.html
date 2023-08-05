@@ -6,6 +6,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
       <div class="navbar-nav mr-auto mt-2 mt-lg-0">
         {% if request.user.is_authenticated%}
+        <a class="nav-item nav-link first" href="{% url 'new-session-form'%}"><strong>AGREGAR SESIÓN</strong></a>
         <a class="nav-item nav-link first" href="{% url 'new-entry-form' form_type='quick_form'%}"><strong>AGREGAR PEGUE</strong></a>
         <a class="nav-item nav-link" href="{% url 'user-profile' %}">PERFIL</a>
         <a class="nav-item nav-link" href="{% url 'logout' %}">CERRAR SESION</a>        

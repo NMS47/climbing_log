@@ -65,37 +65,37 @@
             </div>
         </div>
         <hr>
-        <div class="select-grade form-group" id="template1">
-            <div class="row row-cols-5">
-                <div class="col">
-                    <label for="grade">Grado:</label>
-                </div>
-                <div class="col">
-                    <select class="form-select grade" name="grade" id="grade" aria-label="grade" required>
-                        <option value selected>---</option>
-                        {%for grade_list in grades_list%}
-                        <optgroup id="{{grade_list.0.0}}"label="{{grade_list.0.0}}">   
-                        {%  for grade in grade_list.1 %}
-                            <option class="themed" value="{{grade}}">{{grade|title}}</option>
-                        {%endfor%}
-                        </optgroup>
-                        {%endfor%}
-                    </select> 
-                </div>
-                <div class="col">
-                    <label for="multiple_entries">Cantidad</label>
-                </div>
-                <div class="col" >
-                    <input type="number" class="form-control medium-num" name="multiple_entries" placeholder="---" required>
-                </div>
-                <div class="col removes">
-                    <button class="btn btn-outline-danger remove" onclick="removeEntry(this)">❌</button>
+        <div id="templateContainer">
+            <div class="select-grade form-group" id="template1">
+                <div class="row row-cols-5">
+                    <div class="col">
+                        <label for="grade">Grado:</label>
+                    </div>
+                    <div class="col">
+                        <select class="form-select grade" name="grade" id="grade" aria-label="grade" required>
+                            <option value selected>---</option>
+                            {%for grade_list in grades_list%}
+                            <optgroup id="{{grade_list.0.0}}"label="{{grade_list.0.0}}">   
+                            {%  for grade in grade_list.1 %}
+                                <option class="themed" value="{{grade}}">{{grade|title}}</option>
+                            {%endfor%}
+                            </optgroup>
+                            {%endfor%}
+                        </select> 
+                    </div>
+                    <div class="col">
+                        <label for="multiple_entries">Cantidad</label>
+                    </div>
+                    <div class="col" >
+                        <input type="number" class="form-control medium-num" name="multiple_entries" placeholder="---" required>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-outline-danger btn-sm remove" onclick="removeEntry(this)" disabled>❌</button>
+                    </div>
                 </div>
             </div>
         </div>
         <br>
-        <div id="codeContainer">
-        </div>
         <br>
         <input class="btn btn-outline-warning" id="addAnother" type="button" value="Agregar más pegues" onClick="addMoreEntries()">
         <input class="btn btn-primary float-end mx-2" type="submit" value="Agregar sesión">

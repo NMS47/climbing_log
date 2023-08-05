@@ -32,13 +32,16 @@ backface-visibility: hidden;
 -moz-osx-font-smoothing: grayscale;
 transition-duration: 0.3s;
 transition-property: transform;
-background-color: rgb(87, 88, 86);
+background-color: #f0f1f0;
 }
 
 .icon:hover,
 .icon:focus,
 .icon:active {
     transform: scale(1.2);
+}
+#session{
+  background-color: #ffc107;
 }
 
 .intro{
