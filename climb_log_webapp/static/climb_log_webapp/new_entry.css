@@ -38,6 +38,12 @@ hr {
     font-size: 1.5rem;
     color: rgb(155, 7, 7)
 }
+.select-grade button{
+    visibility: hidden
+}
+.codeContainer button{
+    visibility: visible !important
+}
 
 @media screen and (max-width:992px){
     .main{

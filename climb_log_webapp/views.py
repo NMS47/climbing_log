@@ -91,13 +91,46 @@ class NewEntryView(LoginRequiredMixin, FormView):
         places_list = [[n[0],n[1]] for n in queryset.all()]
         context['places_list'] = places_list
         context['form_type'] = self.kwargs['form_type']
-        print(context['form_type'])
         return context
 
 # This is to add a username, grade_equivalent to the climbEntry, otherwise it is not saved to db
     def form_valid(self, form):
         form.instance.grade_equivalent = grades_dict.get(form.instance.grade)
         # form.instance.ascent_type = 'not-specified'
+        number_of_entries = int(self.request.POST.get('multiple_entries','')) 
+        form.instance.username = self.request.user
+        instance = form.save(commit=False)
+        for n in range(number_of_entries):
+            instance.pk = None
+            instance.save()
+        return super().form_valid(form)
+    
+class NewSessionView(LoginRequiredMixin, FormView):
+    template_name = 'climb_log_webapp_ES/new_session.html'
+    form_class = NewEntryForm
+    extra_context = {'multipitches': False,
+                     'num_pitches': 1,
+                     'ascent_type': 'not-specified',
+                     'num_attempts': 1,
+                     'date_today': datetime.today().strftime('%Y-%m-%d'),
+                     'attempts': [i for i in range(1,9)],
+                     'grades_list': grades_list
+                                          }
+    success_url =reverse_lazy('successful-new-entry')
+    model = ClimbEntry
+
+# This is to pass variables to the template 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        queryset = ClimbPlaces.objects.values_list('id','place_name')
+        places_list = [[n[0],n[1]] for n in queryset.all()]
+        context['places_list'] = places_list
+        return context
+
+# This is to add a username, grade_equivalent to the climbEntry, otherwise it is not saved to db
+    def form_valid(self, form):
+        form.instance.grade_equivalent = grades_dict.get(form.instance.grade)
+        form.instance.ascent_type = 'not-specified'
         number_of_entries = int(self.request.POST.get('multiple_entries','')) 
         form.instance.username = self.request.user
         instance = form.save(commit=False)

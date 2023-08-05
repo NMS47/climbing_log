@@ -23,3 +23,16 @@ function enableButtons(id) {
     }
   }
 }
+
+function addMoreEntries() {
+  let template1 = document.getElementById("template1");
+  let clone1 = template1.cloneNode(true); // Clone the template with its content
+  // clone.style.display = "block"; // Make the cloned element visible
+  document.getElementById("codeContainer").appendChild(clone1);
+}
+
+function removeEntry(element) {
+  let parentDiv = element.closest(".select-grade");
+  parentDiv.remove()
+  
+}

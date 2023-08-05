@@ -65,12 +65,12 @@
             </div>
         </div>
         <hr>
-        <div class="select-grade form-group">
-            <div class="row">
-                <div class="col-lg-3">
+        <div class="select-grade form-group" id="template1">
+            <div class="row row-cols-5">
+                <div class="col">
                     <label for="grade">Grado:</label>
                 </div>
-                <div class="col-lg-3">
+                <div class="col">
                     <select class="form-select grade" name="grade" id="grade" aria-label="grade" required>
                         <option value selected>---</option>
                         {%for grade_list in grades_list%}
@@ -82,26 +82,26 @@
                         {%endfor%}
                     </select> 
                 </div>
-            </div>
-        </div>
-        <hr>
-
-        <div class="radio-selection form-group">
-            <div class="row">
-                <div class="col-lg-3">
-                    Posición en la escalada:
+                <div class="col">
+                    <label for="multiple_entries">Cantidad</label>
                 </div>
-                <div class="col-lg-6">
-                    <input type="radio" class="btn-check" name="climber_position" id="lead" value="lead" autocomplete="off" required>
-                    <label class="btn btn-outline-success" for="lead">De primero</label>
-        
-                    <input type="radio" class="btn-check" name="climber_position" id="top-rope" value="top-rope" autocomplete="off">
-                    <label class="btn btn-outline-success" for="top-rope">Top Rope</label>
+                <div class="col" >
+                    <input type="number" class="form-control medium-num" name="multiple_entries" placeholder="---" required>
+                </div>
+                <div class="col removes">
+                    <button class="btn btn-outline-danger remove" onclick="removeEntry(this)">❌</button>
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="radio-selection form-group" required>
+        <br>
+        <div id="codeContainer">
+        </div>
+        <br>
+        <input class="btn btn-outline-warning" id="addAnother" type="button" value="Agregar más pegues" onClick="addMoreEntries()">
+        <input class="btn btn-primary float-end mx-2" type="submit" value="Agregar sesión">
+    </form>
+</div>
+        {% comment %} <div class="radio-selection form-group" required>
             <div class="row">
                 <div class="col-lg-3">
                     <label>Tipo de ascenso:</label>
@@ -124,22 +124,7 @@
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-lg-3">
-                    <label for="multiple_entries">Vias/bloques del mismo grado:</label>
-                </div>
-                <div class="col-lg-6" >
-                    <input type="number" class="form-control medium-num" id="multiple_entries" name="multiple_entries" placeholder="---" required>
-                </div>
-            </div>
-        </div>
-        <br>
-        <input class="btn btn-primary float-end mx-2" type="submit" value="Agregar pegue">
-    </form>
-</div>
-
+        <hr> {% endcomment %}
 {%endblock%}
 {%block bottom_scripts%}
 <script src="{% static 'climb_log_webapp/new_entry.js' %}"></script>
