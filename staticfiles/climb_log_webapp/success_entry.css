@@ -3,3 +3,23 @@
     display: flex;
     justify-content: center
 }
+.icon {
+    border-radius: 50%;
+    vertical-align: middle;
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    background-color: #f0f1f0;
+    }
+    
+    .icon:hover,
+    .icon:focus,
+    .icon:active {
+        transform: scale(1.2);
+    }
+    #session{
+      background-color: #ffc107;
+    }
