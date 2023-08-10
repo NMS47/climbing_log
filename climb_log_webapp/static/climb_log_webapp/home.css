@@ -1,10 +1,34 @@
+
+.first-section::before{
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  background-image: url('images/spraywall.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.title{
+  display: flex;
+  position: relative;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #dbd6d0;
+}
+
 .subtitle{
  border-radius: 1rem;
  position: relative;
-  
 }
 
-.subtitle:before {
+/* .subtitle:before {
     content: ' ';
     display: block;
     position: absolute;
@@ -13,11 +37,12 @@
     width: 100%;
     height: 100%;
     opacity: 0.3;
-    background-image: url('images/exp-journal.jpg');
+    background-image: url('images/iaphoto2.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-  }
+  } */
+
   
 .cover {
     position: relative;
@@ -48,6 +73,7 @@ background-color: #f0f1f0;
     background-color: black;
     margin-top: 1rem;
     padding: 1rem 3rem;
+    position: relative;
 
 }
 .text{

@@ -5,13 +5,13 @@
 <link rel="stylesheet" href="{% static 'climb_log_webapp/home.css' %}">
 {%endblock%}
 {%block content%}
-{% comment %} <div class="container"> {% endcomment %}
-   <div class="row mt-0 mx-auto">
-      <div class="col-lg-5 p-3">
-         <h1>BIENVENIDO A CLIMBING LOG!</h1>
+<div class="container first-section">
+   <div class="row">
+      <div class="col-lg-5 title">
+         <h1>CLIMBING LOG</h1>
       </div>
       <br><br>
-      <div class="col-lg-6  subtitle p-3">
+      <div class="col-lg-6  subtitle">
          <div class="cover">
          <h2><em>Tu bitácora de escalada para llevar tu progreso en la roca</em></h2>
             <div class="justify-content-center p-3" >
@@ -29,7 +29,35 @@
          </div>
       </div>
    </div>
-   <div class="row mt-2 intro">
+</div>
+
+<div class="container">
+   <div>
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+         <div class="carousel-inner">
+           <div class="carousel-item active">
+             <img src="..." class="d-block w-100" alt="...">
+           </div>
+           <div class="carousel-item">
+             <img src="..." class="d-block w-100" alt="...">
+           </div>
+           <div class="carousel-item">
+             <img src="..." class="d-block w-100" alt="...">
+           </div>
+         </div>
+         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+           <span class="visually-hidden">Previous</span>
+         </button>
+         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+           <span class="visually-hidden">Next</span>
+         </button>
+       </div>
+   </div>
+</div>
+<div class="container">
+   <div class="row intro">
       <div class="col-lg-6">
       <h2>Qué es Climbing Log?</h2>
       <ul class="dashed">
@@ -47,11 +75,12 @@
    
       </div>
    </div>
-   <div class="row mt-2 intro">
+   <div class="row intro">
       <div class="col-lg-6">
          <h4>Cómo funciona?</h4>
          <p>Para que Climbing Log te sea útil necesitas cargarle pegues, mientras más, mejor</p>
          <p>Esto va a permitir representar información más precisa de tu progreso en escalada!</p>
       </div>
    </div>
+</div>
 {%endblock%}
