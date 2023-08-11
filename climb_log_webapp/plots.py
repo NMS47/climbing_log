@@ -105,7 +105,7 @@ def climb_map(context):
     return figure
     
 def fav_place(context):
-    styles= ['sport','boulder']
+    styles= ['sport','boulder', 'trad']
     fav_list = []
     df_place = pd.DataFrame(context)
     
@@ -124,7 +124,7 @@ def grade_record(context):
     df_records = pd.DataFrame(context)
     # This can be done grouping values by climb style, autodetecting trad if there is any.
     # ADD TRAD!
-    styles= ['sport','boulder']
+    styles= ['sport','boulder','trad']
     records = []
     for style in styles:
         try:

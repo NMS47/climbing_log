@@ -203,7 +203,7 @@ class EntryList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return ClimbEntry.objects.filter(username_id=self.request.user.id).order_by('-date_of_climb')
   
-    
+
 class EntryDetail(LoginRequiredMixin, DetailView):
     template_name= 'climb_log_webapp_ES/entry_detail.html'
     model = ClimbEntry

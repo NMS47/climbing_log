@@ -1,4 +1,6 @@
-
+.first-section{
+  margin-bottom: 5rem;
+}
 .first-section::before{
   content: ' ';
   display: block;
@@ -21,6 +23,7 @@
   align-items: center;
   justify-content: center;
   color: #dbd6d0;
+  font-size: 8rem;
 }
 
 .subtitle{
@@ -94,6 +97,10 @@ ul.dashed > li:before {
 }
 
 @media screen and (max-width:992px){
+  .first-section{
+    margin-bottom: 1rem;
+  }
+  
   .carousel-caption{
     bottom:0 !important;
     padding: 0 !important;

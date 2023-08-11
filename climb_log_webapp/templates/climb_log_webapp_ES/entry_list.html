@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{% static 'climb_log_webapp/entry_list.css' %}">
 {%endblock%}
 {%block content%}
-<h1>Hola {{request.user}} </h1>
+<h1>{{request.user}}</h1>
 <h3>Estos son tus pegues registrados:</h3>
 <div>
     <table>
@@ -18,7 +18,7 @@
             <th>Multilargo</th>
             <th>Largos</th>
             <th>Grado</th>
-            <th>Posicion</th>
+            <th>Posición</th>
             <th>Encadenamiento</th>
             <th>Intentos</th>
             <th>Notes</th>
@@ -39,7 +39,7 @@
             <td>{{entry.num_attempts}}</td>
             <td>{{entry.notes|default_if_none:"--"|truncatechars:10}}</td>
             <td>{{entry.date_of_entry}}</td>
-            <td><a href="{% url 'entry-update' entry.id %}">✏️</a>
+            <td><a href="{% url 'entry-update' entry.id %}" disabled>✏️</a>
             <a href="{% url 'entry-delete' entry.id %}">❌</a></td>
         </tr>
         {%endfor%}
@@ -48,8 +48,8 @@
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
             {% endif %}
     
             <span class="current">

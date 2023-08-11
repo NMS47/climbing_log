@@ -1,7 +1,6 @@
 .icon{
     width: 200px;
 }
-
 .card{
     margin-bottom: 1rem;
     background-color: #363636;
@@ -14,33 +13,31 @@
 .calendar{
     padding: 0.5rem;
 }
-
 h1{
     color: #F4F4F4;
 }
-
 hr{
     background-color: whitesmoke;   
 }
-
-.record-sport, .record-boulder{
+.record-sport, .record-boulder, .record-trad{
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
     margin-bottom: 0.5rem;
 }
-
 .record-sport mark{ 
     background-color: #9467BC;
     border-radius: 25px;
 }
-
 .record-boulder mark{ 
     background-color: #2CA02C;
     border-radius: 25px;
 }
-
+.record-trad mark{ 
+    background-color: #1F77B4;
+    border-radius: 25px;
+}
 .bottom{
     min-height: 25rem;
     padding: 2rem 1rem;
