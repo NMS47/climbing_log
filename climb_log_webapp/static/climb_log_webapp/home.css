@@ -1,19 +1,23 @@
 .first-section{
   margin-bottom: 5rem;
 }
-.first-section::before{
-  content: ' ';
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
+
+#sticky_back {
   width: 100%;
-  height: 100%;
-  opacity: 0.5;
+  height: 100vh;
+  position: fixed;
+  top: 0;
   background-image: url('images/spraywall.png');
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
+  opacity: 0.6;
+}
+.all{
+  position: absolute;
+  left: 50%; 
+  margin-top: 5rem;
+  transform: translateX(-50%);
+  width: 80%;
 }
 
 .title{
@@ -80,6 +84,7 @@ background-color: #f0f1f0;
   text-indent: 2rem;
   text-align: justify;
   text-justify: inter-word;
+  opacity: 0.8;
 }
 
 ul {
@@ -104,5 +109,8 @@ ul.dashed > li:before {
   .carousel-caption{
     bottom:0 !important;
     padding: 0 !important;
+  }
+  .intro{
+    padding: 1rem 1rem;
   }
 }

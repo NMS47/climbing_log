@@ -38,6 +38,9 @@ h1 {
 }
 
 footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
     display: inline;
     justify-content: center;
     justify-items: center;
@@ -80,5 +83,9 @@ span + span {
     h1{
         font-size: 3rem;
         text-align: center;
+    }
+    p{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
 }
