@@ -20,6 +20,11 @@ hr {
     border-style: solid;
 }
 
+.grade{
+    min-width: 5rem;
+    padding: 0.1rem !important;
+}
+
 .short-num{
     max-width: 3rem;
     text-align: center;

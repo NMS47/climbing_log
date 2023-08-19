@@ -67,27 +67,36 @@
         <hr>
         <div id="templateContainer">
             <div class="select-grade form-group" id="template1">
-                <div class="row row-cols-5">
+                <div class="row d-flex justify-content-evenly align-items-center">
                     <div class="col">
-                        <label for="grade">Grado:</label>
+                        <div class="row">
+                            <div class="col">
+                                <label for="grade">Grado:</label>
+                            </div>
+                    
+                            <div class="col">
+                                <select class="form-select grade" name="grade" id="grade" aria-label="grade" required>
+                                    <option value selected>---</option>
+                                    {%for grade_list in grades_list%}
+                                    <optgroup id="{{grade_list.0.0}}"label="{{grade_list.0.0}}">   
+                                    {%  for grade in grade_list.1 %}
+                                        <option class="themed" value="{{grade}}">{{grade|title}}</option>
+                                    {%endfor%}
+                                    </optgroup>
+                                    {%endfor%}
+                                </select> 
+                            </div>
+                        </div>
                     </div>
                     <div class="col">
-                        <select class="form-select grade" name="grade" id="grade" aria-label="grade" required>
-                            <option value selected>---</option>
-                            {%for grade_list in grades_list%}
-                            <optgroup id="{{grade_list.0.0}}"label="{{grade_list.0.0}}">   
-                            {%  for grade in grade_list.1 %}
-                                <option class="themed" value="{{grade}}">{{grade|title}}</option>
-                            {%endfor%}
-                            </optgroup>
-                            {%endfor%}
-                        </select> 
-                    </div>
-                    <div class="col">
-                        <label for="multiple_entries">Cantidad</label>
-                    </div>
-                    <div class="col" >
-                        <input type="number" class="form-control medium-num" name="multiple_entries" placeholder="---" required>
+                        <div class="row">
+                            <div class="col">
+                                <label for="multiple_entries">Cantidad</label>
+                            </div>
+                            <div class="col" >
+                                <input type="number" class="form-control medium-num" name="multiple_entries" placeholder="---" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="col">
                         <button class="btn btn-outline-danger btn-sm remove" onclick="removeEntry(this)" disabled>❌</button>

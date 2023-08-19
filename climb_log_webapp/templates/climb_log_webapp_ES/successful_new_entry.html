@@ -6,24 +6,26 @@
 <link rel="stylesheet" href="{% static 'climb_log_webapp/success_entry.css' %}">
 {%endblock%}
 {%block content%}
-<div class="container">
-   <div  class="cover">
-      <h1>Tu pegue ha sido guardado en Climbing Log!!</h1>
-      <br><br>
-      <div class="col-lg-6  subtitle p-3">
-         <div>
-            <div class="justify-content-center p-3" >
-               <a href="{% url 'new-session-form'%}"><img class="icon" id="session" src="{% static 'climb_log_webapp/images/clim3.png' %}" alt="add" width="60" height="60"></a><strong> Agrega una nueva sesión</strong>
-            </div>
-            <div class="justify-content-center p-3" >
-               <a href="{% url 'new-entry-form' form_type='quick_form' %}"><img class="icon" src="{% static 'climb_log_webapp/images/mas.png' %}" alt="add" width="60" height="60"></a><strong> Agrega una nueva entrada</strong>
-            </div>
-            <div class="justify-content-center p-3">
-               <a href="{% url 'entry-list' %}"><img class="icon" src="{% static 'climb_log_webapp/images/list1.png' %}" alt="list" width="60" height="60"></a><strong> Ver la Lista de Pegues</strong>
-            </div>
-            <div class="justify-content-center p-3">
-               <a href="{% url 'user-profile' %}"><img class="icon" src="{% static 'climb_log_webapp/images/curva.png' %}" alt="stats"width="60" height="60"></a><strong> Ver Mis Estadisticas </strong> 
-            </div>
+<div id="sticky_back">
+</div>
+<div class="container all">
+   <div class="row d-flex justify-content-center">
+      <div class="col-lg-5">
+         <h1>Tu pegue ha sido guardado!</h1>
+      </div>
+
+      <div class="col-lg-6 subtitle">
+         <div class="justify-content-center p-3" >
+            <a href="{% url 'new-session-form'%}"><img class="icon" id="session" src="{% static 'climb_log_webapp/images/clim3.png' %}" alt="add" width="60" height="60"></a><strong> Agrega una nueva sesión</strong>
+         </div>
+         <div class="justify-content-center p-3" >
+            <a href="{% url 'new-entry-form' form_type='quick_form' %}"><img class="icon" src="{% static 'climb_log_webapp/images/mas.png' %}" alt="add" width="60" height="60"></a><strong> Agrega una nueva entrada</strong>
+         </div>
+         <div class="justify-content-center p-3">
+            <a href="{% url 'entry-list' %}"><img class="icon" src="{% static 'climb_log_webapp/images/list1.png' %}" alt="list" width="60" height="60"></a><strong> Ver la Lista de Pegues</strong>
+         </div>
+         <div class="justify-content-center p-3">
+            <a href="{% url 'user-profile' %}"><img class="icon" src="{% static 'climb_log_webapp/images/curva.png' %}" alt="stats"width="60" height="60"></a><strong> Ver Mis Estadisticas </strong> 
          </div>
       </div>
    </div>
