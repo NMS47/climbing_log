@@ -7,26 +7,41 @@
 {%endblock%}
 {%block content%}
 <main>
-    <div class="container-flex">
-        <div class="container text-center">
-            <h1>Crear Perfil</h1>
-            <br>
-            <h3>Acá comienza tu bitacora de escalada.</h3>
-            <p>Creá una cuenta para empezar a guardar el historial de tus escaladas</p>
-        </div>  
-        <br>
-    </div>
-    <div class="container sign-up-form">
-        <form  method="POST">
-            {%csrf_token%}
-            {% for field in form %}
-                <div class="fieldWrapper form-group form-field">
-                    {{ field.errors }}
-                    {{ field.label_tag }} {{ field }}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 d-flex align-items-center">
+                <div>
+                    <h1>Crear Perfil</h1>
+                    <br>
+                    <h3>Acá comienza tu bitacora de escalada.</h3>
+                    <p>Creá una cuenta para empezar a guardar el historial de tus escaladas</p>
                 </div>
-            {% endfor %}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
-          </form>
+            </div>  
+    
+            <div class="col-lg-6 ">
+                <h5>Crear cuenta con redes sociales:</h5>
+                <div class="sign-up">
+                    {%load socialaccount%}
+                    <a class="btn btn-outline-primary" href="{% provider_login_url 'google' %}?next=/" role="button">                        <img src="{% static 'climb_log_webapp/images/google.png' %}" width="25" /><span
+                        style="margin-left: 10px;"
+                        >Registrarse con Google</span></a>
+                </div>
+                <h5>O manualmente:</h5>
+                <div class="sign-up">
+                    <form  method="POST">
+                        {%csrf_token%}
+                        {% for field in form %}
+                            <div class="fieldWrapper form-group form-field">
+                                {{ field.errors }}
+                                {{ field.label_tag }} {{ field }}
+                            </div>
+                        {% endfor %}
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 {%endblock%}
