@@ -22,7 +22,7 @@
                 <h5>Crear cuenta con redes sociales:</h5>
                 <div class="sign-up">
                     {%load socialaccount%}
-                    <a class="btn btn-outline-primary" href="{% provider_login_url 'google' %}?next=/" role="button">                        <img src="{% static 'climb_log_webapp/images/google.png' %}" width="25" /><span
+                    <a class="btn btn-outline-success" href="{% provider_login_url 'google' %}?next=/" role="button">                        <img src="{% static 'climb_log_webapp/images/google.png' %}" width="25" /><span
                         style="margin-left: 10px;"
                         >Registrarse con Google</span></a>
                 </div>
@@ -36,7 +36,7 @@
                                 {{ field.label_tag }} {{ field }}
                             </div>
                         {% endfor %}
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
+                        <button class="btn btn-primary btn-block" type="submit">Registrarse</button>
                     </form>
                     </div>
                 </div>
