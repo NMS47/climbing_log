@@ -22,9 +22,9 @@
                 <h5>Crear cuenta con redes sociales:</h5>
                 <div class="sign-up">
                     {%load socialaccount%}
-                    <a class="btn btn-outline-success" href="{% provider_login_url 'google' %}?next=/" role="button">                        <img src="{% static 'climb_log_webapp/images/google.png' %}" width="25" /><span
-                        style="margin-left: 10px;"
-                        >Registrarse con Google</span></a>
+                    <a class="btn btn-outline-success" href="{% provider_login_url 'google' %}?next=/" role="button"><img src="{% static 'climb_log_webapp/images/google.png' %}" width="25" /><span style="margin-left: 10px;">Iniciar sesión con Google</span></a>
+                    <a class="btn btn-outline-success" href="{% provider_login_url 'github' %}?next=/" role="button"><img src="{% static 'climb_log_webapp/images/github-top.png' %}" width="25" /><span style="margin-left: 10px;">Iniciar sesión con GitHub</span></a>
+                    <a class="btn btn-outline-success" href="{% provider_login_url 'facebook' %}?next=/" role="button"><img src="{% static 'climb_log_webapp/images/facebook.png' %}" width="25" /><span style="margin-left: 10px;">Iniciar sesión con Facebook</span></a>
                 </div>
                 <h5>O manualmente:</h5>
                 <div class="sign-up">
