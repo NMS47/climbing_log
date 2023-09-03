@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.facebook',
+    'reactapp'
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -81,7 +82,7 @@ ROOT_URLCONF = 'climbing_log.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'reactapp/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -153,10 +154,15 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static'
+# ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# REACT
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'reactapp/build/static')
+]  
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
