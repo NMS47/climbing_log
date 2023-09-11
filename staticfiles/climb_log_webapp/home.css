@@ -61,7 +61,7 @@ background-color: #f0f1f0;
 }
 
 .intro{
-    background-color: black;
+    background-color: #232020;
     margin-top: 1rem;
     padding: 1rem 3rem;
     position: relative;
@@ -99,6 +99,28 @@ ul.dashed > li {
 ul.dashed > li:before {
   content: "-";
   text-indent: -20px;
+}
+
+.hidden{
+  opacity: 0;
+  filter: blur(5px);
+
+}
+
+.left{
+  transform: translateX(-100%);
+  transition: all 1s;
+}
+
+.right{
+  transform: translateX(100%);
+  transition: all 1s;
+}
+
+.show{
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0);
 }
 
 @media screen and (max-width:992px){
