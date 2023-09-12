@@ -42,20 +42,33 @@
 .icon {
 border-radius: 50%;
 vertical-align: middle;
-transform: translateZ(0);
-box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-backface-visibility: hidden;
--moz-osx-font-smoothing: grayscale;
-transition-duration: 0.3s;
-transition-property: transform;
-background-color: #f0f1f0;
+background-color: #dbd6d0;
+
 }
 
-.icon:hover,
-.icon:focus,
-.icon:active {
-    transform: scale(1.2);
+.icon-link{
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  transition-duration: 0.3s;
+  transition-property: transform;
+  background-color: transparent;
+  border-radius: 16px;
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  text-decoration: none;
+  color: #dbd6d0;
 }
+
+.icon-link:hover,
+.icon-link:focus,
+.icon-link:active {
+    transform: scale(1.2);
+    color: #f0eeec;
+}
+
 #session{
   background-color: #ffc107;
 }
@@ -65,19 +78,8 @@ background-color: #f0f1f0;
     margin-top: 1rem;
     padding: 1rem 3rem;
     position: relative;
+    align-items: center;
 
-}
-
-.carousel > .carousel-inner > .carousel-item > img{
-  aspect-ratio: 16/9;
-  max-height: 300px;
-  object-fit:contain;
-  
-}
-.carousel-caption{
-  background-color: black;
-  opacity: 0.6;
-  left:0 !important;
 }
 
 .text{
@@ -121,6 +123,11 @@ ul.dashed > li:before {
   opacity: 1;
   filter: blur(0);
   transform: translateX(0);
+}
+
+h3{
+  text-align: center;
+  /* text-decoration: underline; */
 }
 
 @media screen and (max-width:992px){

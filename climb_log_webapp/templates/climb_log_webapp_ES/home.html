@@ -19,18 +19,18 @@
             <div class="cover">
             <h2><em>Tu bitácora de escalada para llevar tu progreso en la roca</em></h2>
                <div class="justify-content-center p-3" >
-                  <a href="{% url 'new-session-form'%}"><img class="icon" id="session" src="{% static 'climb_log_webapp/images/clim3.png' %}" alt="add" width="60" height="60"></a><strong> Agrega una nueva sesión</strong>
+                  <a class="icon-link" href="{% url 'new-session-form'%}"><img class="icon" id="session" src="{% static 'climb_log_webapp/images/clim3.png' %}" alt="add" width="60" height="60"><strong> Agrega una nueva sesión</strong></a>
                </div>
                <div class="justify-content-center p-3" >
-                  <a href="{% url 'new-entry-form' form_type='quick_form' %}"><img class="icon" src="{% static 'climb_log_webapp/images/mas.png' %}" alt="add" width="60" height="60"></a><strong> Agrega una nueva entrada</strong>
+                  <a class="icon-link" href="{% url 'new-entry-form' form_type='quick_form' %}"><img class="icon" src="{% static 'climb_log_webapp/images/mas.png' %}" alt="add" width="60" height="60"><strong> Agrega una nueva entrada</strong></a>
                </div>
                <div class="justify-content-center p-3">
-                  <a href="{% url 'entry-list' %}"><img class="icon" src="{% static 'climb_log_webapp/images/list1.png' %}" alt="list" width="60" height="60"></a><strong> Ver la Lista de Pegues</strong>
+                  <a class="icon-link" href="{% url 'entry-list' %}"><img class="icon" src="{% static 'climb_log_webapp/images/list1.png' %}" alt="list" width="60" height="60"><strong> Ver la Lista de Pegues</strong></a>
                </div>
                <div class="justify-content-center p-3">
-                  <a href="{% url 'user-profile' %}"><img class="icon" src="{% static 'climb_log_webapp/images/curva.png' %}" alt="stats"width="60" height="60"></a><strong> Ver Mis Estadisticas </strong> 
+                  <a class="icon-link" href="{% url 'user-profile' %}"><img class="icon" src="{% static 'climb_log_webapp/images/curva.png' %}" alt="stats"width="60" height="60"><strong> Ver Mis Estadisticas </strong></a> 
                </div>
-            </div>
+              </div>
          </div>
       </div>
    </div>
@@ -38,7 +38,7 @@
    <section class="hidden left">
       <div class="row intro">
          <div class="col-lg-6">
-            <h3>Progresión</h3>
+            <h3><strong><em>Progresión</em></strong></h3>
             <p>Sigue tu grado máximo alcanzado cada mes en todos los estilos.</p>
          </div>
          <div class="col-lg-6">
@@ -53,7 +53,7 @@
             <img src="{% static 'climb_log_webapp/images/calendar.png'%}" class="d-block w-100" alt="calendar">
          </div>
          <div class="col-lg-6">
-            <h3>Calendario de escalada</h3>
+            <h3><strong><em>Calendario de escalada</em></strong></h3>
             <p>Representa los días que fuiste a escalar y que tan intensos fueron.</p>
          </div>
       </div>
@@ -62,7 +62,7 @@
    <section class="hidden left">
       <div class="row intro">
          <div class="col-lg-6">
-            <h3>Carga rápida</h3>
+            <h3><strong><em>Carga rápida</em></strong></h3>
             <p>Querés anotar rapidamente todos los pegues del día? Usa agregar sesión! Ojo! Los flash o onsight no quedarán registrados! </p>
          </div>
          <div class="col-lg-6">
@@ -76,8 +76,8 @@
             <img src="{% static 'climb_log_webapp/images/records.png'%}" class="d-block w-100" alt="records">
          </div>
          <div class="col-lg-6">
-            <h3>Records</h3>
-            <p>Manten siempre actualizado tus logros como motivación para seguir escalando!</p>
+            <h3><strong><em>Records</em></strong></h3>
+            <p>Mantén siempre actualizado tus logros como motivación para seguir escalando!</p>
          </div>
       </div>
    </section>
