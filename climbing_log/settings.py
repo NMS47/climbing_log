@@ -113,8 +113,8 @@ DATABASES = {
         'NAME': 'railway',
         'USER': 'postgres',
         'PASSWORD': str(os.getenv('DB_PW')),
-        'HOST': 'containers-us-west-163.railway.app',
-        'PORT': '5769',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '35139',
     }
 }
 
