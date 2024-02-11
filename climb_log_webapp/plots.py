@@ -14,9 +14,9 @@ def heat_cal(context):
 
     today = datetime.now()
     formated_today= today.strftime("%Y-%m-%d")
-    four_months_ago = today - timedelta(days=124)
-    today_month = today.month
-    if int(four_months_ago.month) > int(today.month):
+    four_months_ago = int((today - timedelta(days=124)).month)
+    today_month = int(today.month)
+    if four_months_ago.month > today.month:
         four_months_ago = 1
         today_month = 4
 
@@ -56,8 +56,8 @@ def heat_cal(context):
         name = 'pegues',
         showscale=True,
         space_between_plots= 0.1,
-        start_month=int(four_months_ago.month),
-        end_month=int(today_month))
+        start_month=four_months_ago,
+        end_month=today_month)
     fig_cal.update_layout(margin=dict(l=6, r=6))
     cal_plot = plot(fig_cal, output_type='div',config={'scrollZoom': False, 'displayModeBar': False})
     return cal_plot
