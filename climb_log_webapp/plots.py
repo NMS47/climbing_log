@@ -15,6 +15,10 @@ def heat_cal(context):
     today = datetime.now()
     formated_today= today.strftime("%Y-%m-%d")
     four_months_ago = today - timedelta(days=124)
+    today_month = today.month
+    if four_months_ago > today.month:
+        four_months_ago = 1
+        today_month = 4
 
     df_calendar = pd.DataFrame(context)
     df_calendar["intensity"] = (((df_calendar['num_pitches']**2) + df_calendar['num_attempts'])/2).astype('int64')
@@ -53,7 +57,7 @@ def heat_cal(context):
         showscale=True,
         space_between_plots= 0.1,
         start_month=int(four_months_ago.month),
-        end_month=int(today.month))
+        end_month=int(today_month))
     fig_cal.update_layout(margin=dict(l=6, r=6))
     cal_plot = plot(fig_cal, output_type='div',config={'scrollZoom': False, 'displayModeBar': False})
     return cal_plot
