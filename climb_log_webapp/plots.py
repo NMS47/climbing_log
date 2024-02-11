@@ -16,7 +16,7 @@ def heat_cal(context):
     formated_today= today.strftime("%Y-%m-%d")
     four_months_ago = today - timedelta(days=124)
     today_month = today.month
-    if four_months_ago > today.month:
+    if int(four_months_ago.month) > int(today.month):
         four_months_ago = 1
         today_month = 4
 
